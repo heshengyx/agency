@@ -24,8 +24,8 @@
       <table class="table" id="tableDatas">
         <thead>
           <tr>
-            <th>借款标题</th>
-            <th>信用等级</th>
+            <th>图片</th>
+            <th>楼盘</th>
             <th>年利率</th>
             <th>金额</th>
             <th>期限</th>
@@ -102,12 +102,12 @@
 		  "filter":     false,
 		  "processing": true,
 		  "ajax": {
-			  "url": "${ctx}/house/query?page=1&rows=30",
+			  "url": "${ctx}/trade/queryData?page=1&rows=30",
 		    "type": "POST"
 		  },
 		  "columns": [
         { "data": null },
-        { "data": null },
+        { "data": "buildingName" },
         { "data": null },
         { "data": null },
         { "data": null },
