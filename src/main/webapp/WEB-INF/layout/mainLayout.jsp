@@ -40,9 +40,11 @@
       </div>
     </div>
 
+    <!-- /.container -->
     <div class="container">
       <sitemesh:write property="body" />
-    </div><!-- /.container -->
+    </div>
+    <!-- /.container -->
 
     <footer class="blog-footer">
       <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -50,11 +52,7 @@
         <a href="#">Back to top</a>
       </p>
     </footer>
-	
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster
-    -->
+
     <!-- js -->
     <script src="${ctx}/js/jquery.min.js" ></script>
     <script src="${ctx}/js/bootstrap.min.js"></script>
