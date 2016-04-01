@@ -8,15 +8,16 @@
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
-	<!-- 自动扫描dao和service包(自动注入) -->
+	<!-- 自动扫描dao和service包(自动注入)
 	<context:component-scan base-package="com.myself.finance.security" />
+	 -->
 	
 	<bean id="userService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceUrl">  
-			<value>http://localhost:9080/hessian/userService</value>   
+			<value>http://localhost:9080/agency-core/hessian/userService</value>   
         </property>   
         <property name="serviceInterface">  
-            <value>com.myself.finance.service.IUserService</value>  
+            <value>com.house.agency.service.IUserService</value>  
        	</property>
     </bean>
 	
