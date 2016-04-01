@@ -21,7 +21,7 @@
         <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>       
       </div><!-- /.blog-post -->
 
-      <table class="table" id="table-list">
+      <table class="table" id="tableDatas">
         <thead>
           <tr>
             <th>借款标题</th>
@@ -82,7 +82,39 @@
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script>
   $(document).ready(function() {
-	  
+	  $('#tableDatas').DataTable({
+		  "paging":    false,
+		  "ordering":  false,
+		  "searching": false,
+		  "info":      false,
+		  "language": {
+			  "processing":  "处理中...",
+			  "lengthMenu":  "每页 _MENU_ 条记录",
+			  "zeroRecords": "没有找到记录",
+			  "infoEmpty":   "无记录",
+			  "paginate": {
+				  "first":     "首页",
+	        "previous":  "上页 ",
+	        "next":      "下页 ",
+	        "last":      "末页 "
+			  }
+		  },
+		  "filter":     false,
+		  "processing": true,
+		  "ajax": {
+			  "url": "${ctx}/house/query?page=1&rows=30",
+		    "type": "POST"
+		  },
+		  "columns": [
+        { "data": null },
+        { "data": null },
+        { "data": null },
+        { "data": null },
+        { "data": null },
+        { "data": null },
+        { "data": null }
+      ]
+	  });
   });
   </script>
   </jscript>
