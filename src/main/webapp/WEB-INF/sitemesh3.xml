@@ -9,6 +9,7 @@
 	<mapping path="/css/*" exclude="true"/>
 	<mapping path="/js/*" exclude="true"/>
 	<mapping path="/fonts/*" exclude="true"/>
+	<mapping path="/pictures/*" exclude="pictures"/>
 	
 	<!-- 自定义 tag 规则 -->
 	<content-processor>
