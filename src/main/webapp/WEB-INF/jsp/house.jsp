@@ -47,6 +47,9 @@
 				    <div role="tabpanel" class="tab-pane active search-pane" id="area">
 				      <ul class="list-inline">
 							  <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
+							  <c:forEach var="data" items="${regions}">
+							  <li><button type="button" class="btn btn-link btn-xs">${data.name}</button></li>
+							  </c:forEach>
 							  <li><button type="button" class="btn btn-link btn-xs">福田</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">南山</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">罗湖</button></li>

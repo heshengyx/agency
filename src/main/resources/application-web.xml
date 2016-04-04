@@ -38,6 +38,15 @@
       <value>com.house.agency.service.ITradeService</value>  
     </property>
   </bean>
+  
+  <bean id="regionService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+    <property name="serviceUrl">  
+      <value>http://localhost:9080/agency-core/hessian/regionService</value>   
+    </property>   
+    <property name="serviceInterface">  
+      <value>com.house.agency.service.IRegionService</value>  
+    </property>
+  </bean>
 	
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  
 		<property name="basename" value="messages"/>
