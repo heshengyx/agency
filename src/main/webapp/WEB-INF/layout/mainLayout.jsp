@@ -15,8 +15,6 @@
     <!-- Bootstrap core CSS -->
     <link href="${ctx}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${ctx}/css/style.css" rel="stylesheet">
-    <style type="text/css">
-    </style>
     <sitemesh:write property="head" />
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -31,11 +29,11 @@
     <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
-           <a class="blog-nav-item active" href="#">Home</a>
-          <a class="blog-nav-item" href="#">New features</a>
-          <a class="blog-nav-item" href="#">Press</a>
-          <a class="blog-nav-item" href="#">New hires</a>
-          <a class="blog-nav-item" href="#">About</a>
+          <a class="blog-nav-item" href="#">首页</a>
+          <a class="blog-nav-item" href="#">新房</a>
+          <a class="blog-nav-item active" href="#">二手房</a>
+          <a class="blog-nav-item" href="#">写字楼</a>
+          <a class="blog-nav-item" href="#">商铺</a>
         </nav>
       </div>
     </div>

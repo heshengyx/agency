@@ -3,13 +3,15 @@
 	<!-- 对不同的路径，启用不同的装饰器 -->
 	<mapping path="/index" decorator="/WEB-INF/layout/mainLayout.jsp"/>
 	<mapping path="/house" decorator="/WEB-INF/layout/mainLayout.jsp"/>
+	<mapping path="/house/detail/*" decorator="/WEB-INF/layout/mainLayout.jsp"/>
 	
 	<!-- 排除，不进行装饰的路径 -->
 	<mapping path="/images/*" exclude="true"/>
 	<mapping path="/css/*" exclude="true"/>
 	<mapping path="/js/*" exclude="true"/>
 	<mapping path="/fonts/*" exclude="true"/>
-	<mapping path="/pictures/*" exclude="pictures"/>
+	<mapping path="/pictures/*" exclude="true"/>
+	<mapping path="/thumbs/*" exclude="true"/>
 	
 	<!-- 自定义 tag 规则 -->
 	<content-processor>
