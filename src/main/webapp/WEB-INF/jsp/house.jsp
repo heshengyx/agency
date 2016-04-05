@@ -29,6 +29,7 @@
     margin-top: 5px;
     margin-bottom: 10px;
 	}
+	.search-condition {border-top: 1px solid #ddd;}
 	
 	.img-icon {margin-bottom: 5px;}
 	</style>
@@ -51,27 +52,15 @@
 				  <div class="tab-content search-content">
 				    <div role="tabpanel" class="tab-pane active search-pane" id="area">
 				      <ul class="list-inline" id="citys">
-							  <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
+							  <li><button type="button" class="btn btn-danger btn-xs" onclick="queryRegions('0', this);">不限</button></li>
 							  <c:forEach var="data" items="${regions}">
 							  <li><button type="button" class="btn btn-link btn-xs" onclick="queryRegions('${data.id}', this);">${data.name}</button></li>
 							  </c:forEach> 
-							  <!-- <li><button type="button" class="btn btn-link btn-xs">福田</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">南山</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">罗湖</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">宝安</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">坪山新区</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">光明新区</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">大鹏新区</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">龙华新区</button></li> -->
 							</ul>
 							<div id="districtsPane">
 								<hr>
 								<ul class="list-inline" id="districts">
 	                <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
-	                <li><button type="button" class="btn btn-link btn-xs">福田</button></li>
-	                <li><button type="button" class="btn btn-link btn-xs">南山</button></li>
-	                <li><button type="button" class="btn btn-link btn-xs">罗湖</button></li>
-	                <li><button type="button" class="btn btn-link btn-xs">香蜜湖</button></li>
 	              </ul>
               </div>
 				    </div>
@@ -93,14 +82,14 @@
         <div class="col-md-1"><div class="search-title"><strong>价格：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
-	          <ul class="list-inline">
-	            <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs">100万以下</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs">100万-200万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs">200万-300万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs">300万-400万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs">400万-500万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs">500万-700万</button></li>
+	          <ul class="list-inline" id="prices">
+	            <li><button type="button" class="btn btn-danger btn-xs" onclick="addActived('prices', '0', this);">不限</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">100万以下</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">100万-200万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">200万-300万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">300万-400万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">400万-500万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">500万-700万</button></li>
 	          </ul>
           </div>
         </div>
@@ -109,14 +98,14 @@
         <div class="col-md-1"><div class="search-title"><strong>户型：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
-            <ul class="list-inline">
-              <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">一室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">二室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">三室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">四室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">五室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">五室以上</button></li>
+            <ul class="list-inline" id="patterns">
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActived('patterns', '0', this);">不限</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">一室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">二室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">三室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">四室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">五室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">五室以上</button></li>
             </ul>
           </div>
         </div>
@@ -125,15 +114,25 @@
         <div class="col-md-1"><div class="search-title"><strong>面积：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
-            <ul class="list-inline">
+            <ul class="list-inline" id="areas">
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActived('areas', '0', this);">不限</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '50', this);">50平米以下</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '50-70', this);">50-70平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '70-90', this);">70-90平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '90-120', this);">90-120平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '120-150', this);">120-150平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '150-200', this);">150-200平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '200-300', this);">200-300平米</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row search-condition" id="conditionsPane">
+        <div class="col-md-1"><div class="search-title"><strong>条件：</strong></div></div>
+        <div class="col-md-11">
+          <div class="search-pane">
+            <ul class="list-inline" id="conditions">
               <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">50平米以下</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">50-70平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">70-90平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">90-120平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">120-150平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">150-200平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs">200-300平米</button></li>
             </ul>
           </div>
         </div>
@@ -356,6 +355,7 @@
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script>
   $(document).ready(function() {
+	  $("#conditionsPane").hide();
 	  $("#districtsPane").hide();
 	  /* $('#tableDatas').DataTable({
 		  "paging":    false,
@@ -390,36 +390,47 @@
         { "data": null }
       ]
 	  }); */
+	  //addActived("prices");
+	  //addActived("patterns");
+	  //addActived("areas");
   });
   
   function queryRegions(regionId, _this) {
-	  $("#citys li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-	  $(_this).removeClass("btn-link").addClass("btn-danger");
-	  
+	  addActived("citys", regionId, _this);
 	  var $districts = $("#districts");
 	  $("#districts li").remove();
-	  var url = "${ctx}/house/region?random="+ Math.random();
-    var params = {
-      parentId: regionId
-    };
-    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\">不限</button></li>");
-    $districts.append($htmlLi);
-    
-	  $.post(url, params, function(result) {
-		  if ("500" != result.code) {
-			  for (var i=0; i<result.data.length; i++) {
-				  $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\">" + result.data[i].name + "</button></li>");
-				  $districts.append($htmlLi);
-			  }
-			  $("#districtsPane").show();
-		  }
-	  }, "json");
+	  if (regionId != "0") {
+		  var url = "${ctx}/house/region?random="+ Math.random();
+		    var params = {
+		      parentId: regionId
+		    };
+		    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActived('districts', '0', this);\">不限</button></li>");
+		    $districts.append($htmlLi);
+		    
+		    $.post(url, params, function(result) {
+		      if ("500" != result.code) {
+		        for (var i=0; i<result.data.length; i++) {
+		          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActived('districts', '', this);\">" + result.data[i].name + "</button></li>");
+		          $districts.append($htmlLi);
+		        }
+		        $("#districtsPane").show();
+		      }
+		    }, "json");
+	  } else {
+		  $("#districtsPane").hide();
+	  }
   }
-  function addActived(fieldId, _this) {
-	  var $fields = $("#" + fieldId + " li");
-	  $fields.removeClass("btn-danger");
-	  $(_this).addClass("btn-danger");
+  function addActived(fieldId, val, _this) {
+	  $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+    $(_this).removeClass("btn-link").addClass("btn-danger");
+    $("#conditionsPane").show();
   }
+  /* function addActived(fieldId) {
+	  $("#" + fieldId + " li>button").bind("click", function() {
+      $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+      $(this).removeClass("btn-link").addClass("btn-danger");
+    });
+  } */
   </script>
   </jscript>
 </body>
