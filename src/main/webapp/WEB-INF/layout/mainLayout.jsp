@@ -30,7 +30,7 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item" href="#">首页</a>
-          <a class="blog-nav-item" href="#">新房</a>
+          <a class="blog-nav-item active" href="#">新房</a>
           <a class="blog-nav-item active" href="#">二手房</a>
           <a class="blog-nav-item" href="#">写字楼</a>
           <a class="blog-nav-item" href="#">商铺</a>

@@ -22,7 +22,12 @@
 	}
 	.search-pane {
     margin-left: 10px;
+    margin-right: 10px;
     padding-top: 10px;
+	}
+	.search-pane hr {
+    margin-top: 5px;
+    margin-bottom: 10px;
 	}
 	
 	.img-icon {margin-bottom: 5px;}
@@ -45,20 +50,30 @@
 				  <!-- Tab panes -->
 				  <div class="tab-content search-content">
 				    <div role="tabpanel" class="tab-pane active search-pane" id="area">
-				      <ul class="list-inline">
+				      <ul class="list-inline" id="citys">
 							  <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
 							  <c:forEach var="data" items="${regions}">
-							  <li><button type="button" class="btn btn-link btn-xs">${data.name}</button></li>
-							  </c:forEach>
-							  <li><button type="button" class="btn btn-link btn-xs">福田</button></li>
+							  <li><button type="button" class="btn btn-link btn-xs" onclick="queryRegions('${data.id}', this);">${data.name}</button></li>
+							  </c:forEach> 
+							  <!-- <li><button type="button" class="btn btn-link btn-xs">福田</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">南山</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">罗湖</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">宝安</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">坪山新区</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">光明新区</button></li>
 							  <li><button type="button" class="btn btn-link btn-xs">大鹏新区</button></li>
-							  <li><button type="button" class="btn btn-link btn-xs">龙华新区</button></li>
+							  <li><button type="button" class="btn btn-link btn-xs">龙华新区</button></li> -->
 							</ul>
+							<div id="districtsPane">
+								<hr>
+								<ul class="list-inline" id="districts">
+	                <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
+	                <li><button type="button" class="btn btn-link btn-xs">福田</button></li>
+	                <li><button type="button" class="btn btn-link btn-xs">南山</button></li>
+	                <li><button type="button" class="btn btn-link btn-xs">罗湖</button></li>
+	                <li><button type="button" class="btn btn-link btn-xs">香蜜湖</button></li>
+	              </ul>
+              </div>
 				    </div>
 				    <div role="tabpanel" class="tab-pane search-pane" id="subway">
 				      <ul class="list-inline">
@@ -341,6 +356,7 @@
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script>
   $(document).ready(function() {
+	  $("#districtsPane").hide();
 	  /* $('#tableDatas').DataTable({
 		  "paging":    false,
 		  "ordering":  false,
@@ -375,6 +391,35 @@
       ]
 	  }); */
   });
+  
+  function queryRegions(regionId, _this) {
+	  $("#citys li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+	  $(_this).removeClass("btn-link").addClass("btn-danger");
+	  
+	  var $districts = $("#districts");
+	  $("#districts li").remove();
+	  var url = "${ctx}/house/region?random="+ Math.random();
+    var params = {
+      parentId: regionId
+    };
+    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\">不限</button></li>");
+    $districts.append($htmlLi);
+    
+	  $.post(url, params, function(result) {
+		  if ("500" != result.code) {
+			  for (var i=0; i<result.data.length; i++) {
+				  $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\">" + result.data[i].name + "</button></li>");
+				  $districts.append($htmlLi);
+			  }
+			  $("#districtsPane").show();
+		  }
+	  }, "json");
+  }
+  function addActived(fieldId, _this) {
+	  var $fields = $("#" + fieldId + " li");
+	  $fields.removeClass("btn-danger");
+	  $(_this).addClass("btn-danger");
+  }
   </script>
   </jscript>
 </body>
