@@ -4,6 +4,7 @@
 <html lang="zh-CN">
 <head>
 	<title>爱房网-首页</title>
+	<link href="${ctx}/css/ui-dialog.css" rel="stylesheet">
 	<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet">
 	<style>
 	.table-data {margin-bottom: 0;}
@@ -32,6 +33,12 @@
 	.search-condition {border-top: 1px solid #ddd;}
 	
 	.img-icon {margin-bottom: 5px;}
+	
+	.alert-btn {
+    padding: 3px;
+    margin-bottom: 0;
+	}
+	.alert-dismissible .close-btn {right: -2px;}
 	</style>
 </head>
 
@@ -99,13 +106,13 @@
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="patterns">
-              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActived('patterns', '0', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">一室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">二室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">三室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">四室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">五室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('patterns', '0', this);">五室以上</button></li>
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '0', '', this);">不限</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '一室', this);">一室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '二室', this);">二室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '三室', this);">三室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '四室', this);">四室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '五室', this);">五室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '五室以上', this);">五室以上</button></li>
             </ul>
           </div>
         </div>
@@ -115,14 +122,14 @@
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="areas">
-              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActived('areas', '0', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '50', this);">50平米以下</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '50-70', this);">50-70平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '70-90', this);">70-90平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '90-120', this);">90-120平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '120-150', this);">120-150平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '150-200', this);">150-200平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('areas', '200-300', this);">200-300平米</button></li>
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('areas', '0', '', this);">不限</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50', '50平米以下', this);">50平米以下</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50-70', '50-70平米', this);">50-70平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '70-90', '70-90平米', this);">70-90平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '90-120', '90-120平米', this);">90-120平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '120-150', '120-150平米', this);">120-150平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '150-200', '150-200平米', this);">150-200平米</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '200-300', '200-300平米', this);">200-300平米</button></li>
             </ul>
           </div>
         </div>
@@ -132,11 +139,19 @@
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="conditions">
-              <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
+              <li>
+                <div class="alert alert-warning alert-dismissible fade in alert-btn" role="alert">
+                  <button type="button" class="close close-btn" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <span>南山</span>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
       </div>
+      <input id="pricesName" type="hidden">
+      <input id="patternsName" type="hidden">
+      <input id="areasName" type="hidden">
 	  </div>
 	</div>
 
@@ -241,12 +256,6 @@
         </tbody>
       </table>
 
-      <!-- <nav>
-        <ul class="pager">
-          <li><a href="#">Previous</a></li>
-          <li><a href="#">Next</a></li>
-        </ul>
-      </nav> -->
       <nav class="pager-nav">
 			  <ul class="pagination pagination-sm">
 			    <li>
@@ -321,42 +330,23 @@
          </tbody>
         </table>
 			</div>
-      <!-- <div class="sidebar-module sidebar-module-inset">
-        <h4>热点房源</h4>
-        <p>蘅芳苑小区 龙岗-布吉</p>
-        <p>麒麟花园三期</p>
-        <p>大冲城市花园</p>
-        <p>日出印象</p>
-        <p>天一名居</p>
-        <p>凯丰花园</p>
-      </div> -->
-      <!-- <div class="sidebar-module">
-        <h4>二手房快讯</h4>
-        <ol class="list-unstyled">
-          <li><a href="#">清明楼市二手楼降价盘横飞出市</a></li>
-          <li><a href="#">布吉桂芳园为何卖得那么火爆呢</a></li>
-          <li><a href="#">两百多万南山自贸区的靓盘速览</a></li>
-          <li><a href="#">总价三百多万宝安精装大盘急售</a></li>
-          <li><a href="#">宝安新装婚房二次降价换房急卖</a></li>
-          <li><a href="#">龙岗的二手房低价房源新鲜入市</a></li>
-          <li><a href="#">清明楼市二手楼降价盘横飞出市</a></li>
-          <li><a href="#">布吉桂芳园为何卖得那么火爆呢</a></li>
-          <li><a href="#">两百多万南山自贸区的靓盘速览</a></li>
-          <li><a href="#">总价三百多万宝安精装大盘急售</a></li>
-          <li><a href="#">宝安新装婚房二次降价换房急卖</a></li>
-          <li><a href="#">龙岗的二手房低价房源新鲜入市</a></li>
-        </ol>
-      </div> -->
     </div><!-- /.blog-sidebar -->
 
   </div><!-- /.row -->
   <jscript>
   <script src="${ctx}/js/format.js"></script>
+  <script src="${ctx}/js/dialog-min.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script>
   $(document).ready(function() {
 	  $("#conditionsPane").hide();
 	  $("#districtsPane").hide();
+	  
+	  /* var d = dialog({
+        title: '欢迎',
+        content: '欢迎使用 artDialog 对话框组件！'
+    });
+    d.showModal(); */
 	  /* $('#tableDatas').DataTable({
 		  "paging":    false,
 		  "ordering":  false,
@@ -393,6 +383,7 @@
 	  //addActived("prices");
 	  //addActived("patterns");
 	  //addActived("areas");
+	  
   });
   
   function queryRegions(regionId, _this) {
@@ -420,17 +411,51 @@
 		  $("#districtsPane").hide();
 	  }
   }
-  function addActived(fieldId, val, _this) {
+  /* function addActived(fieldId, val, _this) {
 	  $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
     $(_this).removeClass("btn-link").addClass("btn-danger");
     $("#conditionsPane").show();
-  }
-  /* function addActived(fieldId) {
-	  $("#" + fieldId + " li>button").bind("click", function() {
-      $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-      $(this).removeClass("btn-link").addClass("btn-danger");
-    });
   } */
+  function addActivedName(fieldId, val, name, _this) {
+	  $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+	  $(_this).removeClass("btn-link").addClass("btn-danger");
+	  
+	  if (name) {
+		  $('.alert').unbind('close.bs.alert');
+		  $("#" + fieldId + "Name").val(name);
+		  $("#conditions li").remove();
+		  var patternsName = $("#patternsName").val();
+	    if (patternsName) {
+	      addActived("patterns", patternsName);
+	    }
+		  var areasName = $("#areasName").val();
+		  if (areasName) {
+			  addActived("areas", areasName);
+		  }
+	  }  
+	  
+	  dialog({
+		  title: '房源载入中...'
+	  }).showModal();
+  }
+  function addActived(fieldId, name) {
+	  var $htmlBtn = $("<button type=\"button\" class=\"close close-btn\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>");
+    var $htmlDiv = $("<div class=\"alert alert-warning alert-dismissible fade in alert-btn\" role=\"alert\"></div>");
+    $htmlDiv.append($htmlBtn);
+    $htmlDiv.append($("<span>" + name + "</span>"));
+    var $htmlLi = $("<li class=\"" + fieldId + "\"></li>");
+    $htmlLi.append($htmlDiv);
+    $("#conditions").append($htmlLi);
+    $("#conditionsPane").show();
+    
+    $('.alert').bind('close.bs.alert', function () {
+      var $parentLi = $(this).parent();
+      $parentLi.remove();
+      var parentId = $parentLi.attr("class");
+      $("#" + parentId + "Name").val("");
+      $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+    });
+  }
   </script>
   </jscript>
 </body>
