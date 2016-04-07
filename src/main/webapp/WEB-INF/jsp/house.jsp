@@ -31,7 +31,12 @@
     margin-bottom: 10px;
 	}
 	.search-condition {border-top: 1px solid #ddd;}
+	.search-left {
+    width: 70px;
+    margin-right: -20px;
+	}
 	
+	.col-middle {width: 30px;}
 	.img-icon {margin-bottom: 5px;}
 	
 	.alert-btn {
@@ -46,7 +51,7 @@
   <div class="panel panel-default panel-search">
 	  <div class="panel-body">
       <div class="row">
-        <div class="col-md-1"><div class="search-title"><strong>位置：</strong></div></div>
+        <div class="col-md-1 search-left"><div class="search-title"><strong>位置：</strong></div></div>
         <div class="col-md-11">
           <ul class="nav nav-tabs" role="tablist">
 				    <li role="presentation" class="active"><a href="#area" aria-controls="area" role="tab" data-toggle="tab">区域</a></li>
@@ -58,15 +63,15 @@
 				  <!-- Tab panes -->
 				  <div class="tab-content search-content">
 				    <div role="tabpanel" class="tab-pane active search-pane" id="area">
-				      <ul class="list-inline" id="citys">
-							  <li><button type="button" class="btn btn-danger btn-xs" onclick="queryRegions('0', this);">不限</button></li>
+				      <ul class="list-inline" id="districts">
+							  <li><button type="button" class="btn btn-danger btn-xs" onclick="queryRegions('0', '', this);">不限</button></li>
 							  <c:forEach var="data" items="${regions}">
-							  <li><button type="button" class="btn btn-link btn-xs" onclick="queryRegions('${data.id}', this);">${data.name}</button></li>
+							  <li><button type="button" class="btn btn-link btn-xs" onclick="queryRegions('${data.id}', '${data.name}', this);">${data.name}</button></li>
 							  </c:forEach> 
 							</ul>
-							<div id="districtsPane">
+							<div id="townsPane">
 								<hr>
-								<ul class="list-inline" id="districts">
+								<ul class="list-inline" id="towns">
 	                <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
 	              </ul>
               </div>
@@ -86,39 +91,39 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-1"><div class="search-title"><strong>价格：</strong></div></div>
+        <div class="col-md-1 search-left"><div class="search-title"><strong>价格：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
 	          <ul class="list-inline" id="prices">
-	            <li><button type="button" class="btn btn-danger btn-xs" onclick="addActived('prices', '0', this);">不限</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">100万以下</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">100万-200万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">200万-300万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">300万-400万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">400万-500万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActived('prices', '0', this);">500万-700万</button></li>
+	            <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('prices', '0', '', this);">不限</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '100:lt', '100万以下', this);">100万以下</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '100-200', '100万-200万', this);">100万-200万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '200-300', '200万-300万', this);">200万-300万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '300-400', '300万-400万', this);">300万-400万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '400-500', '400万-500万', this);">400万-500万</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '500-700', '500万-700万', this);">500万-700万</button></li>
 	          </ul>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-1"><div class="search-title"><strong>户型：</strong></div></div>
+        <div class="col-md-1 search-left"><div class="search-title"><strong>户型：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="patterns">
               <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '0', '', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '一室', this);">一室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '二室', this);">二室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '三室', this);">三室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '四室', this);">四室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '五室', this);">五室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '0', '五室以上', this);">五室以上</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '1', '一室', this);">一室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '2', '二室', this);">二室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '3', '三室', this);">三室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '4', '四室', this);">四室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5', '五室', this);">五室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5:gt', '五室以上', this);">五室以上</button></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-1"><div class="search-title"><strong>面积：</strong></div></div>
+        <div class="col-md-1 search-left"><div class="search-title"><strong>面积：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="areas">
@@ -135,7 +140,7 @@
         </div>
       </div>
       <div class="row search-condition" id="conditionsPane">
-        <div class="col-md-1"><div class="search-title"><strong>条件：</strong></div></div>
+        <div class="col-md-1 search-left"><div class="search-title"><strong>条件：</strong></div></div>
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="conditions">
@@ -149,16 +154,19 @@
           </div>
         </div>
       </div>
-      <input id="pricesName" type="hidden">
-      <input id="patternsName" type="hidden">
-      <input id="areasName" type="hidden">
 	  </div>
 	</div>
-
+	
+  <input id="districtsName" type="hidden">
+  <input id="townsName" type="hidden">
+  <input id="pricesName" type="hidden">
+  <input id="patternsName" type="hidden">
+  <input id="areasName" type="hidden">
+  
   <div class="row">
     <div class="col-md-9 content-main">
     
-      <table class="table table-hover table-striped table-data">
+      <table class="table table-hover table-striped table-data" id="tableData" width="100%">
         <thead>
           <tr>
             <td>
@@ -174,86 +182,14 @@
                   </div>
                 </div>
                 <div class="col-sm-4 col-md-3 col-md-offset-3">
-	                <div class="text-right">
-	                 <button type="button" class="btn btn-link btn-sm">价格<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
-	                 <button type="button" class="btn btn-link btn-sm">面积<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button></div>
-	              </div>
+                  <div class="text-right">
+                   <button type="button" class="btn btn-link btn-sm">价格<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
+                   <button type="button" class="btn btn-link btn-sm">面积<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button></div>
+                </div>
               </div>
             </td>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-            <div class="row">
-			        <div class="col-sm-4 col-md-3">
-			          <img class="img-icon" src="${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY.jpg">
-			        </div>
-			        <div class="col-sm-8 col-md-8 col-md-offset-1">
-                <h3 class="text-primary text-title">成熟小区 超值产业 配套齐全 适合住家</h3>
-                <h4 class="text-warning">106㎡&nbsp;&nbsp;<small>3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>
-                <h5 class="text-info">金汇名园&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>宝安中心区-宝安宝城41区翻身大道与甲岸路之交汇处</small></h5>
-                <h3 class="text-danger">349&nbsp;&nbsp;<small>万</small></h3>
-                <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>
-                <a class="btn btn-success btn-xs" href="#" role="button">学位房</a>
-			        </div>
-			      </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            <div class="row">
-              <div class="col-sm-4 col-md-3">
-                <img class="img-icon" src="${ctx}/pictures/dcq2_jg9HbEuTUN9sVHEIov88R8.jpg">
-              </div>
-              <div class="col-sm-8 col-md-8 col-md-offset-1">
-                <h3 class="text-primary text-title">日出印象坐享沃尔玛与九方购物中心</h3>
-                <h4 class="text-warning">76㎡&nbsp;&nbsp;<small>2室2厅&nbsp;&nbsp;|&nbsp;&nbsp;2/11层&nbsp;&nbsp;|&nbsp;&nbsp;南向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>
-                <h5 class="text-info">金港豪庭&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>龙华-龙华镇人民南路与布龙路交汇处</small></h5>
-                <h3 class="text-danger">480&nbsp;&nbsp;<small>万</small></h3>
-                <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>
-                <a class="btn btn-success btn-xs" href="#" role="button">优质教育</a>
-                <a class="btn btn-info btn-xs" href="#" role="button">精装</a>
-              </div>
-            </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            <div class="row">
-              <div class="col-sm-4 col-md-3">
-                <img class="img-icon" src="${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY.jpg">
-              </div>
-              <div class="col-sm-8 col-md-8 col-md-offset-1">
-                <h3 class="text-primary text-title">成熟小区 超值产业 配套齐全 适合住家</h3>
-                <h4 class="text-warning">106㎡&nbsp;&nbsp;<small>3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>
-                <h5 class="text-info">金汇名园&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>宝安中心区-宝安宝城41区翻身大道与甲岸路之交汇处</small></h5>
-                <h3 class="text-danger">349&nbsp;&nbsp;<small>万</small></h3>
-                <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>
-                <a class="btn btn-success btn-xs" href="#" role="button">学位房</a>
-              </div>
-            </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            <div class="row">
-              <div class="col-sm-4 col-md-3">
-                <a href="${ctx}/house/detail/jg9HbEuTUN9sVHEIov88R8" target="_blank"><img class="img-icon" src="${ctx}/pictures/dcq2_jg9HbEuTUN9sVHEIov88R8.jpg"></a>
-              </div>
-              <div class="col-sm-8 col-md-8 col-md-offset-1">
-                <h3 class="text-primary text-title">日出印象坐享沃尔玛与九方购物中心</h3>
-                <h4 class="text-warning">76㎡&nbsp;&nbsp;<small>2室2厅&nbsp;&nbsp;|&nbsp;&nbsp;2/11层&nbsp;&nbsp;|&nbsp;&nbsp;南向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>
-                <h5 class="text-info">金港豪庭&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>龙华-龙华镇人民南路与布龙路交汇处</small></h5>
-                <h3 class="text-danger">480&nbsp;&nbsp;<small>万</small></h3>
-                <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>
-                <a class="btn btn-success btn-xs" href="#" role="button">优质教育</a>
-                <a class="btn btn-info btn-xs" href="#" role="button">精装</a>
-              </div>
-            </div>
-            </td>
-          </tr>
-        </tbody>
       </table>
 
       <nav class="pager-nav">
@@ -340,15 +276,14 @@
   <script>
   $(document).ready(function() {
 	  $("#conditionsPane").hide();
-	  $("#districtsPane").hide();
+	  $("#townsPane").hide();
 	  
-	  /* var d = dialog({
-        title: '欢迎',
-        content: '欢迎使用 artDialog 对话框组件！'
+	  var d = dialog({
+		  title: '房源载入中...'
     });
-    d.showModal(); */
-	  /* $('#tableDatas').DataTable({
-		  "paging":    false,
+    d.showModal();
+	  $('#tableData').DataTable({
+		  "paging":    true,
 		  "ordering":  false,
 		  "searching": false,
 		  "info":      false,
@@ -364,51 +299,65 @@
 	        "last":      "末页 "
 			  }
 		  },
+		  "dom": "rt<'bottom'<'row'<'col-md-12'p>><'clear'>>",
 		  "filter":     false,
 		  "processing": true,
 		  "ajax": {
 			  "url": "${ctx}/trade/queryData?page=1&rows=30",
 		    "type": "POST"
 		  },
+		  "columnDefs": [
+      {
+        "render": function(data, type, row) {
+        	var content = "";
+        	content += "<div class=\"row\">";
+        	content += "  <div class=\"col-sm-4 col-md-3\">";
+        	content += "    <img class=\"img-icon\" src=\"${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY.jpg\">";
+        	content += "  </div>";
+        	content += "  <div class=\"col-md-1 col-middle\"></div>";
+        	content += "  <div class=\"col-sm-8 col-md-8\">";
+        	content += "    <h3 class=\"text-primary text-title\">" + data.title + "</h3>";
+        	content += "    <h4 class=\"text-warning\">" + data.area + "㎡&nbsp;&nbsp;<small>3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>";
+        	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>宝安中心区-宝安宝城41区翻身大道与甲岸路之交汇处</small></h5>";
+        	content += "    <h3 class=\"text-danger\">349&nbsp;&nbsp;<small>万</small></h3>";
+        	content += "    <a class=\"btn btn-info btn-xs\" href=\"#\" role=\"button\">地铁房</a>";
+        	content += "    <a class=\"btn btn-success btn-xs\" href=\"#\" role=\"button\">学位房</a>";
+        	content += "  </div>";
+        	content += "</div>";
+          return content;
+        },
+        "targets": [0]
+      }],
 		  "columns": [
-        { "data": null },
-        { "data": "buildingName" },
-        { "data": null },
-        { "data": null },
-        { "data": null },
-        { "data": null },
         { "data": null }
       ]
-	  }); */
-	  //addActived("prices");
-	  //addActived("patterns");
-	  //addActived("areas");
-	  
+	  });
+	  $('#tableData').removeAttr("style");
   });
   
-  function queryRegions(regionId, _this) {
-	  addActived("citys", regionId, _this);
-	  var $districts = $("#districts");
-	  $("#districts li").remove();
+  function queryRegions(regionId, name, _this) {
+	  addActivedName("districts", regionId, name, _this);
+	  var $districts = $("#towns");
+	  $("#towns li").remove();
 	  if (regionId != "0") {
 		  var url = "${ctx}/house/region?random="+ Math.random();
 		    var params = {
 		      parentId: regionId
 		    };
-		    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActived('districts', '0', this);\">不限</button></li>");
+		    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActivedName('towns', '0', '', this);\">不限</button></li>");
 		    $districts.append($htmlLi);
 		    
 		    $.post(url, params, function(result) {
 		      if ("500" != result.code) {
 		        for (var i=0; i<result.data.length; i++) {
-		          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActived('districts', '', this);\">" + result.data[i].name + "</button></li>");
+		          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
 		          $districts.append($htmlLi);
 		        }
-		        $("#districtsPane").show();
+		        $("#townsPane").show();
 		      }
 		    }, "json");
 	  } else {
-		  $("#districtsPane").hide();
+		  $("#townsPane").hide();
 	  }
   }
   /* function addActived(fieldId, val, _this) {
@@ -424,6 +373,20 @@
 		  $('.alert').unbind('close.bs.alert');
 		  $("#" + fieldId + "Name").val(name);
 		  $("#conditions li").remove();
+		  var townsName = $("#townsName").val();
+		  if (townsName) {
+			  addActived("towns", townsName);
+		  } else {
+			  var districtsName = $("#districtsName").val();
+	      if (districtsName) {
+	        addActived("districts", districtsName);
+	      }
+		  }
+		  
+	    var pricesName = $("#pricesName").val();
+	    if (pricesName) {
+	      addActived("prices", pricesName);
+	    } 
 		  var patternsName = $("#patternsName").val();
 	    if (patternsName) {
 	      addActived("patterns", patternsName);
@@ -440,7 +403,7 @@
   }
   function addActived(fieldId, name) {
 	  var $htmlBtn = $("<button type=\"button\" class=\"close close-btn\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>");
-    var $htmlDiv = $("<div class=\"alert alert-warning alert-dismissible fade in alert-btn\" role=\"alert\"></div>");
+    var $htmlDiv = $("<div class=\"alert alert-warning alert-dismissible fade in alert-btn\" id=\"alert_" + fieldId + "\" role=\"alert\"></div>");
     $htmlDiv.append($htmlBtn);
     $htmlDiv.append($("<span>" + name + "</span>"));
     var $htmlLi = $("<li class=\"" + fieldId + "\"></li>");
@@ -448,12 +411,22 @@
     $("#conditions").append($htmlLi);
     $("#conditionsPane").show();
     
-    $('.alert').bind('close.bs.alert', function () {
+    $("#alert_" + fieldId).bind("close.bs.alert", function () {
       var $parentLi = $(this).parent();
       $parentLi.remove();
       var parentId = $parentLi.attr("class");
       $("#" + parentId + "Name").val("");
-      $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+      $("#" + parentId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+      $("#" + parentId + " li:first-child>button").removeClass("btn-link").addClass("btn-danger");
+
+      dialog({
+        title: '房源载入中...'
+      }).showModal();
+      
+      var length = $("#conditions li").length;
+      if(!length) {
+    	  $("#conditionsPane").hide();
+      }
     });
   }
   </script>

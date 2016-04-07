@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.house.agency.entity.Region;
-import com.house.agency.param.HouseQueryParam;
 import com.house.agency.param.RegionQueryParam;
-import com.house.agency.service.IHouseService;
 import com.house.agency.service.IRegionService;
 import com.myself.common.exception.ServiceException;
 import com.myself.common.message.JsonMessage;
@@ -26,9 +24,6 @@ public class HouseController extends BaseController {
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(HouseController.class);
-	
-	@Autowired
-	private IHouseService houseService;
 	
 	@Autowired
 	private IRegionService regionService;
@@ -73,11 +68,5 @@ public class HouseController extends BaseController {
 		param = productService.getData(param);
 		model.addAttribute("product", param);*/
 		return "house-detail";
-	}
-	
-	@RequestMapping("/query")
-	@ResponseBody
-	public Object query(HouseQueryParam param, int page, int rows) {
-		return houseService.query(param, page, rows);
 	}
 }
