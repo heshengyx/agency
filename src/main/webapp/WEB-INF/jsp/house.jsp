@@ -305,7 +305,7 @@
 		  "filter":     false,
 		  "processing": true,
 		  "ajax": {
-			  "url": "${ctx}/trade/queryData?page=1&rows=30",
+			  "url": "${ctx}/trade/queryData?page=1&rows=3",
 		    "type": "POST"
 		  },
 		  "columnDefs": [
@@ -442,11 +442,12 @@
     });
   }
   function queryHouse() {
-	  var url = "${ctx}/trade/queryData?page=1&rows=30&random="+ Math.random();
+	  var url = "${ctx}/trade/queryData?page=1&rows=3&random="+ Math.random();
     var params = {
     };
 	  $.post(url, params, function(result) {
 		  table.clear().draw();
+		  table.rows.add(result.data).draw();
 	    d.close();
     }, "json");
   }
