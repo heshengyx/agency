@@ -192,7 +192,7 @@
         </thead>
       </table>
 
-      <nav class="pager-nav">
+      <!-- <nav class="pager-nav">
 			  <ul class="pagination pagination-sm">
 			    <li>
 			      <a href="#" aria-label="Previous">
@@ -210,7 +210,7 @@
 			      </a>
 			    </li>
 			  </ul>
-			</nav>
+			</nav> -->
 
     </div><!-- /.blog-main -->
 
@@ -274,15 +274,17 @@
   <script src="${ctx}/js/dialog-min.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script>
+  var d = null;
+  var table = null;
   $(document).ready(function() {
 	  $("#conditionsPane").hide();
 	  $("#townsPane").hide();
 	  
-	  var d = dialog({
+	  d = dialog({
 		  title: '房源载入中...'
     });
     d.showModal();
-	  $('#tableData').DataTable({
+    table = $('#tableData').DataTable({
 		  "paging":    true,
 		  "ordering":  false,
 		  "searching": false,
@@ -309,17 +311,21 @@
 		  "columnDefs": [
       {
         "render": function(data, type, row) {
+        	var symbol = "万";
+        	if (data.type == "2") {
+        		symbol = "元";
+        	}
         	var content = "";
         	content += "<div class=\"row\">";
         	content += "  <div class=\"col-sm-4 col-md-3\">";
-        	content += "    <img class=\"img-icon\" src=\"${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY.jpg\">";
+        	content += "    <img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\">";
         	content += "  </div>";
         	content += "  <div class=\"col-md-1 col-middle\"></div>";
         	content += "  <div class=\"col-sm-8 col-md-8\">";
         	content += "    <h3 class=\"text-primary text-title\">" + data.title + "</h3>";
-        	content += "    <h4 class=\"text-warning\">" + data.area + "㎡&nbsp;&nbsp;<small>3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>";
-        	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>宝安中心区-宝安宝城41区翻身大道与甲岸路之交汇处</small></h5>";
-        	content += "    <h3 class=\"text-danger\">349&nbsp;&nbsp;<small>万</small></h3>";
+        	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>";
+        	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>宝安中心区-" + data.buildingAddress + "</small></h5>";
+        	content += "    <h3 class=\"text-danger\">" + jmoney(data.price) + "&nbsp;&nbsp;<small>" + symbol + "</small></h3>";
         	content += "    <a class=\"btn btn-info btn-xs\" href=\"#\" role=\"button\">地铁房</a>";
         	content += "    <a class=\"btn btn-success btn-xs\" href=\"#\" role=\"button\">学位房</a>";
         	content += "  </div>";
@@ -330,7 +336,10 @@
       }],
 		  "columns": [
         { "data": null }
-      ]
+      ],
+      initComplete: function () {
+    	  d.close();
+      }
 	  });
 	  $('#tableData').removeAttr("style");
   });
@@ -341,21 +350,21 @@
 	  $("#towns li").remove();
 	  if (regionId != "0") {
 		  var url = "${ctx}/house/region?random="+ Math.random();
-		    var params = {
-		      parentId: regionId
-		    };
-		    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActivedName('towns', '0', '', this);\">不限</button></li>");
-		    $districts.append($htmlLi);
-		    
-		    $.post(url, params, function(result) {
-		      if ("500" != result.code) {
-		        for (var i=0; i<result.data.length; i++) {
-		          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
-		          $districts.append($htmlLi);
-		        }
-		        $("#townsPane").show();
-		      }
-		    }, "json");
+	    var params = {
+	      parentId: regionId
+	    };
+	    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActivedName('towns', '0', '', this);\">不限</button></li>");
+	    $districts.append($htmlLi);
+	    
+	    $.post(url, params, function(result) {
+	      if ("500" != result.code) {
+	        for (var i=0; i<result.data.length; i++) {
+	          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
+	          $districts.append($htmlLi);
+	        }
+	        $("#townsPane").show();
+	      }
+	    }, "json");
 	  } else {
 		  $("#townsPane").hide();
 	  }
@@ -397,9 +406,12 @@
 		  }
 	  }  
 	  
-	  dialog({
-		  title: '房源载入中...'
-	  }).showModal();
+	  d = dialog({
+		  title: '房源载入中1...'
+	  });
+	  d.showModal();
+	  
+	  queryHouse();
   }
   function addActived(fieldId, name) {
 	  var $htmlBtn = $("<button type=\"button\" class=\"close close-btn\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>");
@@ -428,6 +440,15 @@
     	  $("#conditionsPane").hide();
       }
     });
+  }
+  function queryHouse() {
+	  var url = "${ctx}/trade/queryData?page=1&rows=30&random="+ Math.random();
+    var params = {
+    };
+	  $.post(url, params, function(result) {
+		  table.clear().draw();
+	    d.close();
+    }, "json");
   }
   </script>
   </jscript>
