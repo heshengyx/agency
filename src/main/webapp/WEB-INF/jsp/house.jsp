@@ -32,11 +32,14 @@
 	}
 	.search-condition {border-top: 1px solid #ddd;}
 	.search-left {
-    width: 70px;
-    margin-right: -20px;
+    /* width: 70px; */
+    margin-right: -30px;
 	}
 	
-	.col-middle {width: 30px;}
+	@media (min-width: 1200px) {
+	  .col-left {margin-right: -30px;}
+	}
+	
 	.img-icon {margin-bottom: 5px;}
 	
 	.alert-btn {
@@ -302,10 +305,13 @@
 			  }
 		  },
 		  "dom": "rt<'bottom'<'row'<'col-md-12'p>><'clear'>>",
+		  //"dom": "<'toolbar'>rt<'bottom'<'row'<'col-xs-2'i><'col-xs-10'p>><'clear'>>",
+		  "pagingType":  "full_numbers",
 		  "filter":     false,
 		  "processing": true,
+		  "serverSide": true,
 		  "ajax": {
-			  "url": "${ctx}/trade/queryData?page=1&rows=3",
+			  "url": "${ctx}/trade/queryData",
 		    "type": "POST"
 		  },
 		  "columnDefs": [
@@ -317,10 +323,10 @@
         	}
         	var content = "";
         	content += "<div class=\"row\">";
-        	content += "  <div class=\"col-sm-4 col-md-3\">";
+        	content += "  <div class=\"col-sm-4 col-md-4 col-left\">";
         	content += "    <img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\">";
         	content += "  </div>";
-        	content += "  <div class=\"col-md-1 col-middle\"></div>";
+        	//content += "  <div class=\"col-sm-1 col-md-1 col-md-offset-1\"></div>";
         	content += "  <div class=\"col-sm-8 col-md-8\">";
         	content += "    <h3 class=\"text-primary text-title\">" + data.title + "</h3>";
         	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>";
@@ -341,7 +347,18 @@
     	  d.close();
       }
 	  });
-	  $('#tableData').removeAttr("style");
+	  //$('#tableData').removeAttr("style");
+    $("#search-btn").click(function() {
+        var search = "?";
+        search += "provinceId=" + $("#s-inputProvince").val();
+        search += "&cityId=" + $("#s-inputCity").val();
+        search += "&districtId=" + $("#s-inputDistrict").val();
+        search += "&townId=" + $("#s-inputTown").val();
+        search += "&buildingName=" + $("#s-inputBuildingName").val();
+        search += "&startDate=" + $("#s-inputStartDate").val();
+        search += "&endDate=" + $("#s-inputEndDate").val();
+      table.ajax.url("${ctx}/manage/building/list" + search).load();
+    });
   });
   
   function queryRegions(regionId, name, _this) {
@@ -442,12 +459,18 @@
     });
   }
   function queryHouse() {
-	  var url = "${ctx}/trade/queryData?page=1&rows=3&random="+ Math.random();
+	  //var search = "";
+	  //table.clear().draw();
+	  //table.ajax.url("${ctx}/trade/queryData" + search).load();
+	  //d.close();
+	  var url = "${ctx}/trade/queryData?random="+ Math.random();
     var params = {
+    	draw: 0,
+    	length: 10
     };
 	  $.post(url, params, function(result) {
 		  table.clear().draw();
-		  table.rows.add(result.data).draw();
+		  //table.rows.add(result.data).draw();
 	    d.close();
     }, "json");
   }

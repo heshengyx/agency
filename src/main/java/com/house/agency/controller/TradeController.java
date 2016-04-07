@@ -22,8 +22,8 @@ public class TradeController extends BaseController {
 	
 	@RequestMapping("/queryData")
 	@ResponseBody
-	public Object queryData(TradeQueryParam param, int page, int rows) {
-		IPage<TradeData> datas = tradeService.queryData(param, page, rows);
+	public Object queryData(TradeQueryParam param) {
+		IPage<TradeData> datas = tradeService.queryData(param, param.getPage(), param.getLength());
 		JsonResult<TradeData> jResult = new JsonResult<TradeData>();
 		jResult.setDraw(param.getDraw());
 		jResult.setRecordsTotal(datas.getTotalRecord());
