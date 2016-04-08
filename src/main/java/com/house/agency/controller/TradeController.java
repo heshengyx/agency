@@ -19,16 +19,17 @@ public class TradeController extends BaseController {
 
 	@Autowired
 	private ITradeService tradeService;
-	
+
 	@RequestMapping("/queryData")
 	@ResponseBody
 	public Object queryData(TradeQueryParam param) {
-		IPage<TradeData> datas = tradeService.queryData(param, param.getPage(), param.getLength());
+		IPage<TradeData> datas = tradeService.queryData(param, param.getPage(),
+				param.getLength());
 		JsonResult<TradeData> jResult = new JsonResult<TradeData>();
 		jResult.setDraw(param.getDraw());
 		jResult.setRecordsTotal(datas.getTotalRecord());
 		jResult.setRecordsFiltered(datas.getTotalRecord());
-		jResult.setData((List<TradeData>)datas.getData());
+		jResult.setData((List<TradeData>) datas.getData());
 		return jResult;
 	}
 }

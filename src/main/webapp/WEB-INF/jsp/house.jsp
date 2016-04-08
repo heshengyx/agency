@@ -5,7 +5,7 @@
 <head>
 	<title>爱房网-首页</title>
 	<link href="${ctx}/css/ui-dialog.css" rel="stylesheet">
-	<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet">
+	<link href="${ctx}/css/dataTables.bootstrap.css" rel="stylesheet">
 	<style>
 	.table-data {margin-bottom: 0;}
 	.table-data tbody tr td {
@@ -131,7 +131,7 @@
           <div class="search-pane">
             <ul class="list-inline" id="areas">
               <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('areas', '0', '', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50', '50平米以下', this);">50平米以下</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '0-50', '50平米以下', this);">50平米以下</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50-70', '50-70平米', this);">50-70平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '70-90', '70-90平米', this);">70-90平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '90-120', '90-120平米', this);">90-120平米</button></li>
@@ -160,6 +160,11 @@
 	  </div>
 	</div>
 	
+	<input id="districtsValue" type="hidden">
+  <input id="townsValue" type="hidden">
+  <input id="pricesValue" type="hidden">
+  <input id="patternsValue" type="hidden">
+  <input id="areasValue" type="hidden">
   <input id="districtsName" type="hidden">
   <input id="townsName" type="hidden">
   <input id="pricesName" type="hidden">
@@ -276,6 +281,7 @@
   <script src="${ctx}/js/format.js"></script>
   <script src="${ctx}/js/dialog-min.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
+  <script src="${ctx}/js/dataTables.bootstrap.js"></script>
   <script>
   var d = null;
   var table = null;
@@ -287,7 +293,28 @@
 		  title: '房源载入中...'
     });
     d.showModal();
-    table = $('#tableData').DataTable({
+    //发送参数
+    //draw请求次数计数器integer
+    //start第一条数据的起始位置0代表第一条数据integer
+    //length服务器每页显示的条数integer
+    //返回的数据
+    //draw强烈要求把这个转换为整数后再返回integer
+    //recordsTotal即没有过滤的记录数（数据库里总共记录数）integer
+    //recordsFiltered过滤后的记录数integer
+    //data表中中需要显示的数据array
+    //error可选。你可以定义一个错误来描述服务器出了问题后的友好提示
+    /* l - Length changing 改变每页显示多少条数据的控件
+		f - Filtering input 即时搜索框控件
+		t - The Table 表格本身
+		i - Information 表格相关信息控件
+		p - Pagination 分页控件
+		r - pRocessing 加载等待显示信息
+		< > - div elements 代表一个div元素 <div><div>
+		<"#id" > - div with an id 指定了id的div元素 <div id='id'><div>
+		<"class" > - div with a class 指定了样式名的div元素 <div class='class'><div>
+		<"#id.class" > - div with an id and class 指定了id和样式的div元素 <div id='id' class='class'><div> */
+		//"DT_RowId": "row_25"每行添加ID
+    table = $("#tableData").DataTable({
 		  "paging":    true,
 		  "ordering":  false,
 		  "searching": false,
@@ -304,16 +331,24 @@
 	        "last":      "末页 "
 			  }
 		  },
-		  "dom": "rt<'bottom'<'row'<'col-md-12'p>><'clear'>>",
-		  //"dom": "<'toolbar'>rt<'bottom'<'row'<'col-xs-2'i><'col-xs-10'p>><'clear'>>",
-		  "pagingType":  "full_numbers",
+		  dom: 'tp',
+		  //"pagingType":  "full_numbers",
 		  "filter":     false,
 		  "processing": true,
-		  "serverSide": true,
+		  "serverSide": true, //开启服务器模式
+		  //"deferRender": true, //开启延迟渲染
 		  "ajax": {
 			  "url": "${ctx}/trade/queryData",
-		    "type": "POST"
+		    "type": "POST",
+		    "data": function ( d ) { //添加额外的参数发送到服务器
+		    	//d.areaBegin = 100;
+		    }
 		  },
+		  /* "ajax": function (data, callback, settings) {
+		    callback(
+		    	JSON.parse( localStorage.getItem('dataTablesData') )
+		    );
+		  }, */
 		  "columnDefs": [
       {
         "render": function(data, type, row) {
@@ -326,11 +361,10 @@
         	content += "  <div class=\"col-sm-4 col-md-4 col-left\">";
         	content += "    <img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\">";
         	content += "  </div>";
-        	//content += "  <div class=\"col-sm-1 col-md-1 col-md-offset-1\"></div>";
         	content += "  <div class=\"col-sm-8 col-md-8\">";
         	content += "    <h3 class=\"text-primary text-title\">" + data.title + "</h3>";
-        	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;3室2厅&nbsp;&nbsp;|&nbsp;&nbsp;12/19层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：2004</small></h4>";
-        	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>宝安中心区-" + data.buildingAddress + "</small></h5>";
+        	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;" + data.room + "室" + data.saloon + "厅&nbsp;&nbsp;|&nbsp;&nbsp;" + data.floor + "/" + data.buildingFloor + "层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：" + data.buildingYear + "</small></h4>";
+        	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>" + data.townName + "-" + data.buildingAddress + "</small></h5>";
         	content += "    <h3 class=\"text-danger\">" + jmoney(data.price) + "&nbsp;&nbsp;<small>" + symbol + "</small></h3>";
         	content += "    <a class=\"btn btn-info btn-xs\" href=\"#\" role=\"button\">地铁房</a>";
         	content += "    <a class=\"btn btn-success btn-xs\" href=\"#\" role=\"button\">学位房</a>";
@@ -359,6 +393,10 @@
         search += "&endDate=" + $("#s-inputEndDate").val();
       table.ajax.url("${ctx}/manage/building/list" + search).load();
     });
+    
+    /* $('#tableData tbody').on('click', 'td', function () {
+        alert( 'Clicked on: '+this.innerHTML );
+    } ); */
   });
   
   function queryRegions(regionId, name, _this) {
@@ -397,6 +435,7 @@
 	  
 	  if (name) {
 		  $('.alert').unbind('close.bs.alert');
+		  $("#" + fieldId + "Value").val(val);
 		  $("#" + fieldId + "Name").val(name);
 		  $("#conditions li").remove();
 		  var townsName = $("#townsName").val();
@@ -459,20 +498,35 @@
     });
   }
   function queryHouse() {
-	  //var search = "";
-	  //table.clear().draw();
-	  //table.ajax.url("${ctx}/trade/queryData" + search).load();
-	  //d.close();
-	  var url = "${ctx}/trade/queryData?random="+ Math.random();
+	  var values = null;
+	  var search = "?random=" + Math.random();
+	  var patternsValue = $("#patternsValue").val();
+    if (patternsValue && patternsValue != "0") {
+      values = patternsValue.split(":");
+      if (values.length > 1) {
+    	  search += "&symbol=" + values[1];
+      }
+      search += "&pattern=" + values[0];
+    }
+	  var areasValue = $("#areasValue").val();
+    if (areasValue && areasValue != "0") {
+    	values = areasValue.split("-");
+    	search += "&areaBegin=" + (parseInt(values[0])*100);
+    	search += "&areaEnd=" + (parseInt(values[1])*100);
+    }
+	  table.ajax.url("${ctx}/trade/queryData" + search).load();
+	  d.close();
+	  /* var url = "${ctx}/trade/queryData?random="+ Math.random();
     var params = {
-    	draw: 0,
-    	length: 10
+    	//draw: 0,
+    	length: 3
     };
 	  $.post(url, params, function(result) {
-		  table.clear().draw();
-		  //table.rows.add(result.data).draw();
+		  table.clear();
+		  //table.rows().remove();
+		  table.rows.add(result.data);
 	    d.close();
-    }, "json");
+    }, "json"); */
   }
   </script>
   </jscript>
