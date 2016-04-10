@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<title>爱房网-首页</title>
+	<title>二手房-爱房网</title>
 	<link href="${ctx}/css/ui-dialog.css" rel="stylesheet">
 	<link href="${ctx}/css/dataTables.bootstrap.css" rel="stylesheet">
 	<link href="${ctx}/css/jquery.autocompleter.css" rel="stylesheet">
@@ -343,7 +343,7 @@
 		  "serverSide": true, //开启服务器模式
 		  //"deferRender": true, //开启延迟渲染
 		  "ajax": {
-			  "url": "${ctx}/trade/queryData",
+			  "url": "${ctx}/house/queryData",
 		    "type": "POST",
 		    "data": function ( d ) { //添加额外的参数发送到服务器
 		    	//d.tag = "release";
@@ -365,7 +365,7 @@
         	var content = "";
         	content += "<div class=\"row\">";
         	content += "  <div class=\"col-sm-4 col-md-4 col-left\">";
-        	content += "    <img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\">";
+        	content += "    <a href=\"${ctx}/house/detail/" + data.tradeId + "\" target=\"_blank\"><img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\" title=\"" + data.buildingName + "\"></a>";
         	content += "  </div>";
         	content += "  <div class=\"col-sm-8 col-md-8\">";
         	content += "    <h3 class=\"text-primary text-title\">" + data.title + "</h3>";
@@ -486,7 +486,7 @@
 	  var $districts = $("#towns");
 	  $("#towns li").remove();
 	  if (regionId != "0") {
-		  var url = "${ctx}/house/region?random="+ Math.random();
+		  var url = "${ctx}/region/list?random="+ Math.random();
 	    var params = {
 	      parentId: regionId
 	    };
@@ -627,9 +627,9 @@
     	search += param;
     }
     //console.log(search);
-	  table.ajax.url("${ctx}/trade/queryData" + search).load();
+	  table.ajax.url("${ctx}/house/queryData" + search).load();
 	  d.close();
-	  /* var url = "${ctx}/trade/queryData?random="+ Math.random();
+	  /* var url = "${ctx}/house/queryData?random="+ Math.random();
     var params = {
     	//draw: 0,
     	length: 3

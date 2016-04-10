@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<title>爱房网-首页</title>
+	<title>${detail.buildingName}-爱房网</title>
 	<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet">
 	<link href="${ctx}/css/jcarousel.connected-carousels.css" rel="stylesheet">
 	<style>
@@ -29,7 +29,7 @@
 </head>
 
 <body>
-  <h3 class="head-title">《优房》华丽花园 红本无税 省一级重点名校 螺岭小学</h3>
+  <h3 class="head-title">${detail.title}</h3>
   <p>
     <span>房源编号：181205490</span>&nbsp;&nbsp;
     <span>房经协房源信息编码：162102125522</span>&nbsp;&nbsp;
@@ -71,13 +71,13 @@
             <tbody>
               <tr>
                 <td class="td-title text-right">价&nbsp;&nbsp;格：</td>
-                <td><h3 class="text-danger td-content"><strong>349</strong>&nbsp;<small><small>万(46023元/㎡)</small></small></h3></td>
+                <td><h3 class="text-danger td-content"><strong>${detail.price}</strong>&nbsp;<small><small>万<br>(46023元/㎡)</small></small></h3></td>
                 <td class="td-title text-right">面&nbsp;&nbsp;积：</td>
-                <td><h3 class="text-info td-content"><strong>68</strong><small><small>㎡</small></small></h3></td>
+                <td><h3 class="text-info td-content"><strong>${detail.area}</strong><small><small>㎡</small></small></h3></td>
               </tr>
               <tr>
                 <td class="td-title text-right">户&nbsp;&nbsp;型：</td>
-                <td><div class="td-content">2室2厅</div></td>
+                <td><div class="td-content">${detail.room}室${detail.saloon}厅</div></td>
                 <td class="td-title text-right">朝&nbsp;&nbsp;向：</td>
                 <td><div class="td-content">西北</div></td>
               </tr>
@@ -91,9 +91,9 @@
               </tr>
               <tr>
                 <td class="td-title text-right">楼&nbsp;&nbsp;层：</td>
-                <td><div class="td-content">第4层(共28层)</div></td>
+                <td><div class="td-content">第${detail.floor}层(共${detail.buildingFloor}层)</div></td>
                 <td class="td-title text-right">年&nbsp;&nbsp;代：</td>
-                <td><div class="td-content">2016年</div></td>
+                <td><div class="td-content">${detail.buildingYear}</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">装&nbsp;&nbsp;修：</td>
@@ -107,11 +107,11 @@
               </tr>
               <tr>
                 <td class="td-title text-right">楼&nbsp;&nbsp;盘：</td>
-                <td colspan="3"><div class="td-content">御林华府（南山&nbsp;前海）</div></td>
+                <td colspan="3"><div class="td-content">${detail.buildingName}（南山&nbsp;${detail.townName}）</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">地&nbsp;&nbsp;址：</td>
-                <td colspan="3"><div class="td-content">前海路与桃园路交汇处</div></td>
+                <td colspan="3"><div class="td-content">${detail.buildingAddress}</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">学&nbsp;&nbsp;校：</td>

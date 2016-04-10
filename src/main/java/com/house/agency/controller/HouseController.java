@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.house.agency.data.HouseDetailData;
+import com.house.agency.data.HouseListData;
 import com.house.agency.entity.Region;
+import com.house.agency.page.IPage;
+import com.house.agency.param.HouseQueryParam;
 import com.house.agency.param.RegionQueryParam;
+import com.house.agency.service.IHouseService;
 import com.house.agency.service.IRegionService;
-import com.myself.common.exception.ServiceException;
-import com.myself.common.message.JsonMessage;
+import com.myself.common.message.JsonResult;
 
 @Controller
 @RequestMapping("/house")
@@ -26,8 +30,11 @@ public class HouseController extends BaseController {
 			.getLogger(HouseController.class);
 	
 	@Autowired
-	private IRegionService regionService;
+	private IHouseService houseService;
 	
+	@Autowired
+	private IRegionService regionService;
+
 	@RequestMapping("")
 	public String page(Model model) {
 		RegionQueryParam param = new RegionQueryParam();
@@ -37,36 +44,23 @@ public class HouseController extends BaseController {
 		return "house";
 	}
 	
-	@RequestMapping("/region")
+	@RequestMapping("/queryData")
 	@ResponseBody
-	public Object region(String parentId) {
-		JsonMessage jMessage = new JsonMessage();
-		RegionQueryParam param = new RegionQueryParam();
-		param.setParentId(parentId);
-		
-		List<Region> regions = null;
-		try {
-			regions = regionService.list(param);
-			jMessage.setCode(JsonMessage.SUCCESS_CODE);
-			jMessage.setData(regions);
-		} catch (Exception e) {
-			jMessage.setCode(JsonMessage.ERROR_CODE);
-			if (e instanceof ServiceException) {
-				jMessage.setMessage(e.getMessage());
-			} else {
-				jMessage.setMessage("系统异常");
-			}
-			logger.error(jMessage.getMessage(), e);
-		}
-		return jMessage;
+	public Object queryData(HouseQueryParam param) {
+		IPage<HouseListData> datas = houseService.queryData(param, param.getPage(),
+				param.getLength());
+		JsonResult<HouseListData> jResult = new JsonResult<HouseListData>();
+		jResult.setDraw(param.getDraw());
+		jResult.setRecordsTotal(datas.getTotalRecord());
+		jResult.setRecordsFiltered(datas.getTotalRecord());
+		jResult.setData((List<HouseListData>) datas.getData());
+		return jResult;
 	}
 	
-	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable String id, Model model) {
-		/*Product param = new Product();
-		param.setId(id);
-		param = productService.getData(param);
-		model.addAttribute("product", param);*/
+	@RequestMapping(value = "/detail/{tradeId}", method = RequestMethod.GET)
+	public String detail(@PathVariable String tradeId, Model model) {
+		HouseDetailData detail = houseService.getData(tradeId);
+		model.addAttribute("detail", detail);
 		return "house-detail";
 	}
 }
