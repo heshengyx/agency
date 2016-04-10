@@ -6,6 +6,8 @@
 	<title>爱房网-首页</title>
 	<link href="${ctx}/css/ui-dialog.css" rel="stylesheet">
 	<link href="${ctx}/css/dataTables.bootstrap.css" rel="stylesheet">
+	<link href="${ctx}/css/jquery.autocompleter.css" rel="stylesheet">
+	<link href="${ctx}/css/autocompleter.css" rel="stylesheet">
 	<style>
 	.table-data {margin-bottom: 0;}
 	.table-data tbody tr td {
@@ -47,6 +49,8 @@
     margin-bottom: 0;
 	}
 	.alert-dismissible .close-btn {right: -2px;}
+	
+	.order {margin-top: 5px;}
 	</style>
 </head>
 
@@ -56,8 +60,8 @@
       <div class="row">
         <div class="col-md-1 search-left"><div class="search-title"><strong>位置：</strong></div></div>
         <div class="col-md-11">
-          <ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" class="active"><a href="#area" aria-controls="area" role="tab" data-toggle="tab">区域</a></li>
+          <ul class="nav nav-tabs" id="navTabs" role="tablist">
+				    <li class="active" role="presentation"><a href="#area" aria-controls="area" role="tab" data-toggle="tab">区域</a></li>
 				    <li role="presentation"><a href="#subway" aria-controls="subway" role="tab" data-toggle="tab">地铁</a></li>
 				    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">学区</a></li>
 				    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">地图</a></li>
@@ -80,12 +84,12 @@
               </div>
 				    </div>
 				    <div role="tabpanel" class="tab-pane search-pane" id="subway">
-				      <ul class="list-inline">
-                <li><button type="button" class="btn btn-danger btn-xs">不限</button></li>
-                <li><button type="button" class="btn btn-link btn-xs">1号线</button></li>
-                <li><button type="button" class="btn btn-link btn-xs">2号线</button></li>
-                <li><button type="button" class="btn btn-link btn-xs">3号线</button></li>
-                <li><button type="button" class="btn btn-link btn-xs">4号线</button></li>
+				      <ul class="list-inline" id="subways">
+                <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('subways', '0', '', this);">不限</button></li>
+                <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '1', '1号线', this);">1号线</button></li>
+                <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '2', '2号线', this);">2号线</button></li>
+                <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '3', '3号线', this);">3号线</button></li>
+                <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '4', '4号线', this);">4号线</button></li>
               </ul>
 				    </div>
 				    <div role="tabpanel" class="tab-pane" id="messages">...</div>
@@ -99,7 +103,7 @@
           <div class="search-pane">
 	          <ul class="list-inline" id="prices">
 	            <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('prices', '0', '', this);">不限</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '100:lt', '100万以下', this);">100万以下</button></li>
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '1-100', '100万以下', this);">100万以下</button></li>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '100-200', '100万-200万', this);">100万-200万</button></li>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '200-300', '200万-300万', this);">200万-300万</button></li>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '300-400', '300万-400万', this);">300万-400万</button></li>
@@ -131,7 +135,7 @@
           <div class="search-pane">
             <ul class="list-inline" id="areas">
               <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('areas', '0', '', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '0-50', '50平米以下', this);">50平米以下</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '1-50', '50平米以下', this);">50平米以下</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50-70', '50-70平米', this);">50-70平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '70-90', '70-90平米', this);">70-90平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '90-120', '90-120平米', this);">90-120平米</button></li>
@@ -147,12 +151,7 @@
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="conditions">
-              <li>
-                <div class="alert alert-warning alert-dismissible fade in alert-btn" role="alert">
-                  <button type="button" class="close close-btn" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <span>南山</span>
-                </div>
-              </li>
+              <li></li>
             </ul>
           </div>
         </div>
@@ -170,29 +169,34 @@
   <input id="pricesName" type="hidden">
   <input id="patternsName" type="hidden">
   <input id="areasName" type="hidden">
+  <input id="subwaysValue" type="hidden">
+  <input id="subwaysName" type="hidden">
+  <input id="tag" type="hidden">
+  <input id="sort" type="hidden" value="desc">
   
   <div class="row">
     <div class="col-md-9 content-main">
-    
       <table class="table table-hover table-striped table-data" id="tableData" width="100%">
         <thead>
           <tr>
             <td>
               <div class="row">
                 <div class="col-sm-8 col-md-6">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="小区名称">
+                  <div class="input-group field">
+                    <input class="form-control" id="buildingName" type="text" placeholder="小区名称">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">
+                      <button class="btn btn-default" id="search-btn" type="button">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                       </button>
                     </span>
                   </div>
                 </div>
-                <div class="col-sm-4 col-md-3 col-md-offset-3">
-                  <div class="text-right">
-                   <button type="button" class="btn btn-link btn-sm">价格<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
-                   <button type="button" class="btn btn-link btn-sm">面积<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button></div>
+                <div class="col-sm-4 col-md-4 col-md-offset-2">
+                  <div class="text-right order">
+                   <button type="button" class="btn btn-link btn-xs" onclick="orders('price', this);">价格<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
+                   <button type="button" class="btn btn-link btn-xs" onclick="orders('area', this);">面积<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
+                   <button type="button" class="btn btn-info btn-xs" onclick="orders('release', this);">发布时间<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
+                  </div>
                 </div>
               </div>
             </td>
@@ -282,6 +286,7 @@
   <script src="${ctx}/js/dialog-min.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script src="${ctx}/js/dataTables.bootstrap.js"></script>
+  <script src="${ctx}/js/jquery.autocompleter.js"></script>
   <script>
   var d = null;
   var table = null;
@@ -341,7 +346,8 @@
 			  "url": "${ctx}/trade/queryData",
 		    "type": "POST",
 		    "data": function ( d ) { //添加额外的参数发送到服务器
-		    	//d.areaBegin = 100;
+		    	//d.tag = "release";
+		    	//d.sort = $("#sort").val();
 		    }
 		  },
 		  /* "ajax": function (data, callback, settings) {
@@ -382,7 +388,7 @@
       }
 	  });
 	  //$('#tableData').removeAttr("style");
-    $("#search-btn").click(function() {
+    /* $("#search-btn").click(function() {
         var search = "?";
         search += "provinceId=" + $("#s-inputProvince").val();
         search += "&cityId=" + $("#s-inputCity").val();
@@ -392,11 +398,87 @@
         search += "&startDate=" + $("#s-inputStartDate").val();
         search += "&endDate=" + $("#s-inputEndDate").val();
       table.ajax.url("${ctx}/manage/building/list" + search).load();
-    });
+    }); */
     
     /* $('#tableData tbody').on('click', 'td', function () {
         alert( 'Clicked on: '+this.innerHTML );
     } ); */
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+   	  //e.target // newly activated tab
+   	  //e.relatedTarget // previous active tab
+   	  var target = $(e.target).attr("aria-controls");
+   	  var relatedTarget = $(e.relatedTarget).attr("aria-controls");
+
+   	  if (relatedTarget == "area") {
+   		  var $li = $("#conditions li[data-value='districts']");
+   		  if ($li.length) {
+   			  $li.remove();
+   		  }
+   		  $li = $("#conditions li[data-value='towns']");
+   		  if ($li.length) {
+          $li.remove();
+        }
+   		  $("#districts li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+        $("#districts li>button:first").removeClass("btn-link").addClass("btn-danger");
+        $("#towns li").remove();
+        $("#townsPane").hide();
+        
+        $("#districtsName").val("");
+        $("#townsName").val("");
+        $("#districtsValue").val("");
+        $("#townsValue").val("");
+   	  } else {
+   		  $("#conditions li[data-value='" + relatedTarget + "s']").remove();
+   		  $("#" + relatedTarget + "s li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
+        $("#" + relatedTarget + "s li>button:first").removeClass("btn-link").addClass("btn-danger");
+        
+        $("#" + relatedTarget + "sName").val("");
+        $("#" + relatedTarget + "sValue").val("");
+   	  }
+   	  
+	   	var length = $("#conditions li").length;
+	    if(!length) {
+	      $("#conditionsPane").hide();
+	    }
+   	});
+
+    $("#buildingName").autocompleter({
+      // marker for autocomplete matches
+      highlightMatches: true,
+      // object to local or url to remote search
+      source: '${ctx}/building/search',
+      // custom template
+      template: '{{ label }} <span>({{ districtName }}-{{ townName }})</span>',
+      // show hint
+      hint: true,
+      // abort source if empty field
+      empty: false,
+      // max results
+      //limit: 1,
+      combine: function() {
+    	  var districtId = $("#districtsValue").val();
+    	  var townId = $("#townsValue").val();
+    	  if (townId) {
+    		  districtId = "";
+    	  } else {
+    		  townId = "";
+    	  }
+    	  return {
+    		  buildingName: $("#buildingName").val(),
+    		  districtId: districtId,
+    		  townId: townId
+    	  }
+      },
+      callback: function (value, index, selected) {
+        /* if (selected) {
+       	  $('.icon').css('background-color', selected.hex);
+        } */
+      }
+    });
+    
+    $("#search-btn").click(function() {
+    	loadHouse();
+    });
   });
   
   function queryRegions(regionId, name, _this) {
@@ -409,13 +491,13 @@
 	      parentId: regionId
 	    };
 	    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActivedName('towns', '0', '', this);\">不限</button></li>");
-	    $districts.append($htmlLi);
+	    $districts.append($htmlLi).append("\n");
 	    
 	    $.post(url, params, function(result) {
 	      if ("500" != result.code) {
 	        for (var i=0; i<result.data.length; i++) {
 	          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
-	          $districts.append($htmlLi);
+	          $districts.append($htmlLi).append("\n");
 	        }
 	        $("#townsPane").show();
 	      }
@@ -448,6 +530,11 @@
 	      }
 		  }
 		  
+		  var subwaysName = $("#subwaysName").val();
+		  if (subwaysName) {
+        addActived("subways", subwaysName);
+      } 
+		  
 	    var pricesName = $("#pricesName").val();
 	    if (pricesName) {
 	      addActived("prices", pricesName);
@@ -462,19 +549,14 @@
 		  }
 	  }  
 	  
-	  d = dialog({
-		  title: '房源载入中1...'
-	  });
-	  d.showModal();
-	  
-	  queryHouse();
+	  loadHouse();
   }
   function addActived(fieldId, name) {
 	  var $htmlBtn = $("<button type=\"button\" class=\"close close-btn\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>");
     var $htmlDiv = $("<div class=\"alert alert-warning alert-dismissible fade in alert-btn\" id=\"alert_" + fieldId + "\" role=\"alert\"></div>");
     $htmlDiv.append($htmlBtn);
     $htmlDiv.append($("<span>" + name + "</span>"));
-    var $htmlLi = $("<li class=\"" + fieldId + "\"></li>");
+    var $htmlLi = $("<li data-value=\"" + fieldId + "\"></li>");
     $htmlLi.append($htmlDiv);
     $("#conditions").append($htmlLi);
     $("#conditionsPane").show();
@@ -482,24 +564,51 @@
     $("#alert_" + fieldId).bind("close.bs.alert", function () {
       var $parentLi = $(this).parent();
       $parentLi.remove();
-      var parentId = $parentLi.attr("class");
+      var parentId = $parentLi.attr("data-value");
+      $("#" + parentId + "Value").val("");
       $("#" + parentId + "Name").val("");
       $("#" + parentId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
       $("#" + parentId + " li:first-child>button").removeClass("btn-link").addClass("btn-danger");
 
-      dialog({
-        title: '房源载入中...'
-      }).showModal();
-      
       var length = $("#conditions li").length;
       if(!length) {
     	  $("#conditionsPane").hide();
       }
+      if (parentId == "districts") {
+    	  $("#towns li").remove();
+    	  $("#townsPane").hide();
+      }
+      
+      loadHouse();
     });
   }
-  function queryHouse() {
+  function queryHouse(param) {
 	  var values = null;
 	  var search = "?random=" + Math.random();
+	  var tabName = $("#navTabs li.active").children().attr("aria-controls");
+	  if (tabName == "area") {
+		  var townsValue = $("#townsValue").val();
+	    if (townsValue && townsValue != "0") {
+	      search += "&townId=" + townsValue;
+	    } else {
+	      var districtsValue = $("#districtsValue").val();
+	      if (districtsValue && districtsValue != "0") {
+	        search += "&districtId=" + districtsValue;
+	      }
+	    }
+	  } else {
+		  var tabValue = $("#" + tabName + "sValue").val();
+		  if (tabValue && tabValue != "0") {
+			  search += "&" + tabName + "=" + tabValue;
+		  }
+	  }
+
+	  var pricesValue = $("#pricesValue").val();
+    if (pricesValue && pricesValue != "0") {
+      values = pricesValue.split("-");
+      search += "&priceBegin=" + (parseInt(values[0])*100);
+      search += "&priceEnd=" + (parseInt(values[1])*100);
+    }
 	  var patternsValue = $("#patternsValue").val();
     if (patternsValue && patternsValue != "0") {
       values = patternsValue.split(":");
@@ -514,6 +623,10 @@
     	search += "&areaBegin=" + (parseInt(values[0])*100);
     	search += "&areaEnd=" + (parseInt(values[1])*100);
     }
+    if (param) {
+    	search += param;
+    }
+    //console.log(search);
 	  table.ajax.url("${ctx}/trade/queryData" + search).load();
 	  d.close();
 	  /* var url = "${ctx}/trade/queryData?random="+ Math.random();
@@ -527,6 +640,48 @@
 		  table.rows.add(result.data);
 	    d.close();
     }, "json"); */
+  }
+  function loadHouse() {
+	  var param = "";
+	  var buildingName = $("#buildingName").val();
+    if (buildingName) {
+    	param += "&buildingName=" + buildingName;
+    }
+	  
+	  var tag = $("#tag").val();
+	  if (!tag) {
+		  tag = "release";
+	  }
+    var sort = $("#sort").val();
+    param += "&tag=" + tag + "&sort=" + sort;
+    
+    d = dialog({
+      title: '房源载入中...'
+    });
+    d.showModal();
+
+    queryHouse(param);
+  }
+  function orders(tag, _this) {
+	  var flag = $(_this).hasClass("btn-info");
+	  if(!flag) {
+		  var $parent = $(_this).parent();
+		  $parent.children(".btn-info").removeClass("btn-info").addClass("btn-link");
+		  $(_this).removeClass("btn-link").addClass("btn-info");
+	  }
+	  
+	  var $sort = $("#sort");
+	  $("#tag").val(tag);
+	  var sort = $sort.val();
+	  if (sort == "asc") {
+		  $sort.val("desc");
+		  $(_this).children().removeClass("glyphicon-arrow-up").addClass("glyphicon-arrow-down");
+	  } else {
+		  $sort.val("asc");
+		  $(_this).children().removeClass("glyphicon-arrow-down").addClass("glyphicon-arrow-up");
+	  }
+	  
+	  loadHouse();
   }
   </script>
   </jscript>
