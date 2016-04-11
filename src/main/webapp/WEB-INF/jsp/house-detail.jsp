@@ -5,7 +5,6 @@
 <head>
 	<title>${detail.buildingName}-爱房网</title>
 	<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet">
-	<link href="${ctx}/css/jcarousel.connected-carousels.css" rel="stylesheet">
 	<style>
 	.head-title {margin-top: 20px;}
 	.table-unbordered>tbody>tr>td {border: 0;}
@@ -21,11 +20,11 @@
     margin-right: -15px;
     /* padding-left: 10px; */
   }
-  
   .tab-box {
     padding: 15px;
   }
 	</style>
+	<link href="${ctx}/css/carousel.css" rel="stylesheet">
 </head>
 
 <body>
@@ -41,42 +40,32 @@
       <div class="row">
         <div class="col-sm-6 col-md-7">
           
-          <%-- <img class="img-responsive" src="${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY-1.jpg"> --%>
-		      <div class="connected-carousels">
-		        <div class="carousel carousel-stage">
-		          <ul>
-		            <%-- <li><img class="img-responsive" src="${ctx}/pictures/600x600_01.jpg" alt=""></li>
-		            <li><img class="img-responsive" src="${ctx}/pictures/600x600_02.jpg" alt=""></li>
-		            <li><img class="img-responsive" src="${ctx}/pictures/600x600_03.jpg" alt=""></li> --%>
-		            <c:forEach var="image" items="${images}">
-		            <li><img class="img-responsive" src="${ctx}/pictures/${image.url}" alt=""></li>
-		            </c:forEach>
-		            <c:forEach var="image" items="${houseImages}">
-                <li><img class="img-responsive" src="${ctx}/pictures/${image.url}" alt=""></li>
+          <div class="banner">
+				    <div class="large_box">
+				      <ul>
+				        <c:forEach var="image" items="${images}">
+				        <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="caption">${image.title}</div></li>
+				        </c:forEach>
+				        <c:forEach var="image" items="${houseImages}">
+                <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="caption">${image.title}</div></li>
                 </c:forEach>
-		          </ul>
-		        </div>
-		        <a href="#" class="prev prev-stage"><span>&lsaquo;</span></a> 
-		        <a href="#" class="next next-stage"><span>&rsaquo;</span></a>
-		
-			      <div class="navigation">
-			        <a href="#" class="prev prev-navigation">&lsaquo;</a> 
-			        <a href="#"class="next next-navigation">&rsaquo;</a>
-			        <div class="carousel carousel-navigation">
-			          <ul>
-			            <%-- <li><img src="${ctx}/thumbs/84x60_01.jpg" width="50" height="50" alt=""></li>
-			            <li><img src="${ctx}/thumbs/84x60_02.jpg" width="50" height="50" alt=""></li>
-			            <li><img src="${ctx}/thumbs/84x60_03.jpg" width="50" height="50" alt=""></li> --%>
-			            <c:forEach var="image" items="${images}">
-			            <li><img src="${ctx}/pictures/${image.url}" width="50" height="50" alt=""></li>
-			            </c:forEach>
-			            <c:forEach var="image" items="${houseImages}">
-                  <li><img src="${ctx}/pictures/${image.url}" width="50" height="50" alt=""></li>
+				      </ul>
+				    </div>
+				    <div class="small_box">
+				      <span class="btn left_btn"></span>
+				      <div class="small_list">
+				        <ul>
+				          <c:forEach var="image" items="${images}" varStatus="status">
+                  <li<c:if test="${status.first}"> class="on"</c:if>><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="bun_bg"></div></li>
                   </c:forEach>
-			          </ul>
-			        </div>
-			      </div>
-		      </div>
+                  <c:forEach var="image" items="${houseImages}">
+                  <li><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="bun_bg"></div></li>
+                  </c:forEach>
+				        </ul>
+				      </div>
+				      <span class="btn right_btn"></span>
+				    </div>
+				  </div>
         </div>
         <div class="col-sm-6 col-md-5">
           <table class="table table-unbordered">
@@ -204,11 +193,16 @@
   <jscript>
   <script src="${ctx}/js/format.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
-  <script src="${ctx}/js/jquery.jcarousel.min.js"></script>
-  <script src="${ctx}/js/jcarousel.connected-carousels.js"></script>
+  <script src="${ctx}/js/carousel.min.js"></script>
   <script>
   $(document).ready(function() {
-	  
+	  $(".banner").thumbnailImg({
+		  large_elem: ".large_box",
+		  small_elem: ".small_list",
+		  left_btn: ".left_btn",
+		  right_btn: ".right_btn"
+		});
+	  $(".caption:not(':first')").hide();
   });
   </script>
   </jscript>
