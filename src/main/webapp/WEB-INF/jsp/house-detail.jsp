@@ -29,11 +29,11 @@
 </head>
 
 <body>
-  <h3 class="head-title">${detail.title}</h3>
+  <h3 class="text-primary head-title">${detail.title}</h3>
   <p>
-    <span>房源编号：181205490</span>&nbsp;&nbsp;
-    <span>房经协房源信息编码：162102125522</span>&nbsp;&nbsp;
-    <span>发布时间：2016-04-02</span>
+    <span>房源编号：${detail.code}</span>&nbsp;&nbsp;
+    <span>房经协房源信息编码：${detail.encode}</span>&nbsp;&nbsp;
+    <span>发布时间：<fmt:formatDate value="${detail.releaseTime}" pattern="yyyy-MM-dd" /></span>
   </p>
   
 	<div class="row">
@@ -41,7 +41,6 @@
       <div class="row">
         <div class="col-sm-6 col-md-7">
           <%-- <img class="img-responsive" src="${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY-1.jpg"> --%>
-
 		      <div class="connected-carousels">
 		        <div class="carousel carousel-stage">
 		          <ul>
@@ -71,21 +70,29 @@
             <tbody>
               <tr>
                 <td class="td-title text-right">价&nbsp;&nbsp;格：</td>
-                <td><h3 class="text-danger td-content"><strong>${detail.price}</strong>&nbsp;<small><small>万<br>(46023元/㎡)</small></small></h3></td>
+                <td>
+                  <h3 class="text-danger td-content"><strong><fmt:formatNumber value="${detail.price/100}" pattern="#,#00.0#"/></strong><small>&nbsp;
+                  <small><c:if test="${detail.type == '1'}">万<br>(<fmt:formatNumber value="${(detail.price/detail.area)*100}" pattern="#,#00.0#"/>元/㎡)</c:if></small></small></h3></td>
                 <td class="td-title text-right">面&nbsp;&nbsp;积：</td>
-                <td><h3 class="text-info td-content"><strong>${detail.area}</strong><small><small>㎡</small></small></h3></td>
+                <td><h3 class="text-info td-content"><strong><fmt:formatNumber value="${detail.area/100}" pattern="#,#00.0#"/></strong><small><small>㎡</small></small></h3></td>
               </tr>
               <tr>
                 <td class="td-title text-right">户&nbsp;&nbsp;型：</td>
-                <td><div class="td-content">${detail.room}室${detail.saloon}厅</div></td>
+                <td><div class="td-content">${detail.room}室${detail.saloon}厅${detail.toilet}卫</div></td>
                 <td class="td-title text-right">朝&nbsp;&nbsp;向：</td>
-                <td><div class="td-content">西北</div></td>
+                <td><div class="td-content">${detail.faceName}</div></td>
               </tr>
               <tr>
                 <td class="bg-info" colspan="4">
 				          <h3 class="text-icon text-center">
 				            <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-				            <span class="text-muted"><strong>13612345678</strong>&nbsp;&nbsp;陈迪武</span>
+				            <span class="text-muted">
+				              <strong>
+				              <c:if test="${!empty detail.phone}">${detail.phone}</c:if>
+				              <c:if test="${empty detail.phone}"><del>xxx-xxxxxxxx</del></c:if></strong>&nbsp;
+				              <c:if test="${!empty detail.username}">${detail.username}</c:if>
+				              <c:if test="${empty detail.username}"><del>暂无</del></c:if>
+				            </span>
 				          </h3>
                 </td>
               </tr>
@@ -97,17 +104,17 @@
               </tr>
               <tr>
                 <td class="td-title text-right">装&nbsp;&nbsp;修：</td>
-                <td><div class="td-content">精装修</div></td>
+                <td><div class="td-content">${detail.fitmentName}</div></td>
                 <td class="td-title text-right">类&nbsp;&nbsp;型：</td>
-                <td><div class="td-content">住宅</div></td>
+                <td><div class="td-content">${detail.buildingTypeName}</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">产&nbsp;&nbsp;权：</td>
-                <td colspan="3"><div class="td-content">个人产权</div></td>
+                <td colspan="3"><div class="td-content">${detail.ownerName}</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">楼&nbsp;&nbsp;盘：</td>
-                <td colspan="3"><div class="td-content">${detail.buildingName}（南山&nbsp;${detail.townName}）</div></td>
+                <td colspan="3"><div class="td-content">${detail.buildingName}（${detail.districtName}&nbsp;${detail.townName}）</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">地&nbsp;&nbsp;址：</td>
@@ -152,7 +159,10 @@
       <div class="thumbnail">
 	      <img class="img-circle" src="${ctx}/pictures/120_163517736_11.jpg" alt="...">
 	      <div class="caption">
-	        <h4 class="text-center">陈迪武</h4>
+	        <h4 class="text-center">
+	        <c:if test="${!empty detail.username}">${detail.username}</c:if>
+	        <c:if test="${empty detail.username}"><del>暂无</del></c:if>
+	        </h4>
 	        <p><ins>您的满意是我最开心的事</ins></p>
 	        <p class="text-center">
             <a href="#" class="btn btn-primary btn-xs" role="button">关注</a>
