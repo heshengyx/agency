@@ -35,11 +35,12 @@
     <span>房经协房源信息编码：${detail.encode}</span>&nbsp;&nbsp;
     <span>发布时间：<fmt:formatDate value="${detail.releaseTime}" pattern="yyyy-MM-dd" /></span>
   </p>
-  
+
 	<div class="row">
     <div class="col-md-10 content-main">
       <div class="row">
         <div class="col-sm-6 col-md-7">
+          
           <%-- <img class="img-responsive" src="${ctx}/pictures/FpW5nXd5jnIpe-T0EWmceMlfycdY-1.jpg"> --%>
 		      <div class="connected-carousels">
 		        <div class="carousel carousel-stage">
