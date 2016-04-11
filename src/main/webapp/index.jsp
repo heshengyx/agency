@@ -11,7 +11,7 @@ ul{list-style:none;}
 img{border:0;}
 
 .banner{margin:200px auto 0;width:530px;overflow:hidden;}
-.large_box{margin-bottom:10px;width:530px;height:350px;overflow:hidden;}
+.large_box{position: relative;margin-bottom:10px;width:530px;height:350px;overflow:hidden;}
 .large_box img{display:block;}
 .small_box{width:530px;height:73px;overflow:hidden;}
 .small_list{position:relative;float:left;width:480px;height:73px;overflow:hidden;}
@@ -24,6 +24,11 @@ img{border:0;}
 .btn:hover{background-color:#e7000e;}
 .left_btn{float:left;margin-right:10px;background-image:url(http://www.jq22.com/demo/jQuerybanner20151216/images/left_btn.png);}
 .right_btn{float:right;background-image:url(http://www.jq22.com/demo/jQuerybanner20151216/images/right_btn.png);}
+
+.large_box .caption {position: absolute; font-size: 11px; 
+      color: #fafafa; padding: 10px; text-align: right; bottom: 10px; right: 10px;}
+.large_box .caption p {padding: 0; margin: 0; line-height: 14px;}
+
 </style>
 </head>
 
@@ -32,18 +37,15 @@ img{border:0;}
 	<div class="banner">
 		<div class="large_box">
 			<ul>
-				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img1.jpg" width="530" height="350">
-				</li>
-				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img2.jpg" width="530" height="350">
-				</li>
-				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img3.jpg" width="530" height="350">
-				</li>
-				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img4.jpg" width="530" height="350">
+				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img1.jpg" width="530" height="350"><div class="caption">jCarousel is supported and can be integrated!</div></li>
+				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img2.jpg" width="530" height="350"><div class="caption">jCarousel is with PikaChoose!</div></li>
+				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img3.jpg" width="530" height="350"><div class="caption">jCarousel is supported and with PikaChoose!</div></li>
+				<!-- <li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img4.jpg" width="530" height="350">
 				</li>
 				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img5.jpg" width="530" height="350">
 				</li>
 				<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/img6.jpg" width="530" height="350">
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		<div class="small_box">
@@ -57,12 +59,12 @@ img{border:0;}
 						<div class="bun_bg"></div></li>
 					<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/thum3.jpg" width="110" height="73">
 						<div class="bun_bg"></div></li>
-					<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/thum4.jpg" width="110" height="73">
+					<!-- <li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/thum4.jpg" width="110" height="73">
 						<div class="bun_bg"></div></li>
 					<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/thum5.jpg" width="110" height="73">
 						<div class="bun_bg"></div></li>
 					<li><img src="http://www.jq22.com/demo/jQuerybanner20151216/images/thum6.jpg" width="110" height="73">
-						<div class="bun_bg"></div></li>
+						<div class="bun_bg"></div></li> -->
 				</ul>
 			</div>
 			<span class="btn right_btn"></span>
