@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.house.agency.data.HouseDetailData;
 import com.house.agency.data.HouseListData;
+import com.house.agency.entity.Image;
 import com.house.agency.entity.Region;
 import com.house.agency.page.IPage;
 import com.house.agency.param.HouseQueryParam;
+import com.house.agency.param.ImageQueryParam;
 import com.house.agency.param.RegionQueryParam;
 import com.house.agency.service.IHouseService;
+import com.house.agency.service.IImageService;
 import com.house.agency.service.IRegionService;
 import com.myself.common.message.JsonResult;
 
@@ -34,6 +37,9 @@ public class HouseController extends BaseController {
 	
 	@Autowired
 	private IRegionService regionService;
+	
+	@Autowired
+	private IImageService imageService;
 
 	@RequestMapping("")
 	public String page(Model model) {
@@ -61,6 +67,25 @@ public class HouseController extends BaseController {
 	public String detail(@PathVariable String tradeId, Model model) {
 		HouseDetailData detail = houseService.getData(tradeId);
 		model.addAttribute("detail", detail);
+		
+		ImageQueryParam param = new ImageQueryParam();
+		param.setTradeId(tradeId);
+		List<Image> images = imageService.queryData(param);
+		model.addAttribute("images", images);
+		
+		param = new ImageQueryParam();
+		param.setTradeId(tradeId);
+		param.setForeignId(detail.getBuildingId());
+		param.setType("1");
+		images = imageService.listData(param);
+		model.addAttribute("buildingImages", images);
+		
+		param = new ImageQueryParam();
+		param.setTradeId(tradeId);
+		param.setForeignId(detail.getHouseId());
+		param.setType("2");
+		images = imageService.listData(param);
+		model.addAttribute("houseImages", images);
 		return "house-detail";
 	}
 }
