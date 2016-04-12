@@ -162,9 +162,13 @@
         <div role="tabpanel" class="tab-pane tab-box" id="images">
           <c:forEach var="image" items="${images}">
           <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
+          <P>${image.title}</P>
+          <hr>
           </c:forEach>
           <c:forEach var="image" items="${houseImages}">
           <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
+          <P>${image.title}</P>
+          <hr>
           </c:forEach>
           <c:forEach var="image" items="${buildingImages}">
           <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
