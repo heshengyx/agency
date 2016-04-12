@@ -43,8 +43,6 @@
 	<mvc:resources location="/js/" mapping="/js/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/fonts/" mapping="/fonts/**" />
-	<mvc:resources location="/locales/" mapping="/locales/**" />
-	<mvc:resources location="/plugins/" mapping="/plugins/**" />
 	<mvc:resources location="/pictures/" mapping="/pictures/**" />
 	<mvc:resources location="/thumbs/" mapping="/thumbs/**" />
 	

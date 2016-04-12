@@ -344,7 +344,7 @@
 	        "last":      "末页 "
 			  }
 		  },
-		  dom: 'tp',
+		  "dom": 'tp',
 		  //"pagingType":  "full_numbers",
 		  "filter":     false,
 		  "processing": true,
