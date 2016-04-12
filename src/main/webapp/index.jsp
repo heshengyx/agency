@@ -4,7 +4,7 @@
 <html lang="zh-CN">
 <head>
 <link href="${ctx}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${ctx}/css/style.css" rel="stylesheet">
+<link href="${ctx}/css/style.css" rel="stylesheet">
 <style type="text/css">
 body,div,ul,li{margin:0;padding:0;}
 ul{list-style:none;}
@@ -28,7 +28,7 @@ img{border:0;}
 .large_box .caption {position: absolute; font-size: 11px; 
       color: #fafafa; padding: 10px; text-align: right; bottom: 10px; right: 10px;}
 .large_box .caption p {padding: 0; margin: 0; line-height: 14px;}
-
+#allmap {width: 800px;height: 500px;overflow: hidden;margin:0;}
 </style>
 </head>
 
@@ -69,11 +69,23 @@ img{border:0;}
 			</div>
 			<span class="btn right_btn"></span>
 		</div>
-	</div>
+		
+		<div>百度地图</div>
+	  <table>
+	    <tr>
+	      <td><input type="button" value="中心" onclick="showCenter();" /></td>
+	      <td><input type="button" value="范围" onclick="showCircle();" /></td>
+	      <td><input type="button" value="路径" onclick="showWay();" /></td>
+	    </tr>
+	  </table>
+	  <div id="allmap"></div>
+	      当前坐标：<input type="text" id="result" value="" />
+		</div>
 
 	<script src="${ctx}/js/jquery.min.js"></script>
 	<script src="${ctx}/js/bootstrap.min.js"></script>
 	<script src="${ctx}/js/carousel.min.js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=CrfAyNgjXIv8p9Agk11UaBT2"></script>
 	<script type="text/javascript">
      $(function(){
          /* 商品轮播图（带缩略图的轮播效果） */
@@ -83,7 +95,124 @@ img{border:0;}
              left_btn: ".left_btn",
              right_btn: ".right_btn"
          });
+         
+         
      });
+     var map = new BMap.Map("allmap");
+     var point = new BMap.Point(114.064349, 22.53145);
+     map.centerAndZoom(point, 16);  //初始化时，即可设置中心点和地图缩放级别。
+     map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+      
+     //var marker1 = new BMap.Marker(new BMap.Point(114.04915, 22.526543));  // 创建标注
+     //map.addOverlay(marker1);              // 将标注添加到地图中
+     //var marker2 = new BMap.Marker(new BMap.Point(114.053534, 22.524156));  // 创建标注
+     //map.addOverlay(marker2);              // 将标注添加到地图中
+     //var circle = new BMap.Circle(point,500);
+     //map.addOverlay(circle); //
+     //var pointA = new BMap.Point(106.486654,29.490295);  // 创建点坐标A--大渡口区
+     //var pointB = new BMap.Point(106.581515,29.615467);  // 创建点坐标B--江北区
+     //alert('从大渡口区到江北区的距离是：'+map.getDistance(pointA,pointB)+' 米。');     //获取两点距离
+      
+     //var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+     //map.addOverlay(polyline);   //添加折线到地图上
+      
+     map.addEventListener("click", function(e){
+       document.getElementById("result").value = e.point.lng + ", " + e.point.lat;
+     });
+     function showCenter() {
+    	  var marker = new BMap.Marker(point);  // 创建标注
+    	  map.addOverlay(marker); 
+    	}
+    	 
+    	var limit = 500;
+    	function showCircle() {
+    	  var circle = new BMap.Circle(point, limit);
+    	  map.addOverlay(circle); //
+    	}
+    	 
+    	var points = new Array(8);
+    	function showWay() {
+    	  window.setTimeout(showOverlayB, 2000); //2秒
+    	  window.setTimeout(showOverlayC, 4000); //2秒
+    	  window.setTimeout(showOverlayD, 6000); //2秒
+    	  window.setTimeout(showOverlayE, 8000); //2秒
+    	  window.setTimeout(showOverlayF, 10000); //2秒
+    	  window.setTimeout(showOverlayG, 12000); //2秒
+    	  window.setTimeout(showOverlayH, 14000); //2秒
+    	}
+    	function alertDistince(point1, point2, limit) {
+    	  var distance = map.getDistance(point1, point2);
+    	  if (distance > limit) {
+    	    alert('你现在的活动已超出规定范围：'+distance+' 米。');     //获取两点距离
+    	  }
+    	}
+    	function showOverlayB() {
+    	  //114.05012, 22.52701
+    	  points[0] = point;
+    	  points[1] = new BMap.Point(114.05012, 22.52701);  // 创建点坐标B
+    	  var marker = new BMap.Marker(points[1]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[0], points[1]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	  alertDistince(points[0], points[1], limit);
+    	}
+    	 
+    	function showOverlayC() {
+    	  //114.050623, 22.527378
+    	  points[2] = new BMap.Point(114.050623, 22.527378);  // 创建点坐标C
+    	  var marker = new BMap.Marker(points[2]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[1], points[2]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	  alertDistince(points[0], points[2], limit);
+    	}
+    	 
+    	function showOverlayD() {
+    	  //114.051198, 22.527077
+    	  points[3] = new BMap.Point(114.051198, 22.527077);  // 创建点坐标D
+    	  var marker = new BMap.Marker(points[3]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[2], points[3]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	  alertDistince(points[0], points[3], limit);
+    	}
+    	 
+    	function showOverlayE() {
+    	  //114.051881, 22.526887
+    	  points[4] = new BMap.Point(114.051881, 22.526887);  // 创建点坐标
+    	  var marker = new BMap.Marker(points[4]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[3], points[4]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	}
+    	 
+    	function showOverlayF() {
+    	  //114.0526, 22.526643
+    	  points[5] = new BMap.Point(114.0526, 22.526643);  // 创建点坐标
+    	  var marker = new BMap.Marker(points[5]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[4], points[5]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	}
+    	 
+    	function showOverlayG() {
+    	  //114.05339, 22.526309
+    	  points[6] = new BMap.Point(114.05339, 22.526309);  // 创建点坐标
+    	  var marker = new BMap.Marker(points[6]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[5], points[6]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	}
+    	 
+    	function showOverlayH() {
+    	  //114.054432, 22.525775
+    	  points[7] = new BMap.Point(114.054432, 22.525775);  // 创建点坐标
+    	  var marker = new BMap.Marker(points[7]);  // 创建标注
+    	  map.addOverlay(marker);
+    	  var polyline = new BMap.Polyline([points[6], points[7]], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+    	  map.addOverlay(polyline);   //添加折线到地图上
+    	  alertDistince(points[0], points[7], limit);
+    	}
  </script>
 </body>
 </html>

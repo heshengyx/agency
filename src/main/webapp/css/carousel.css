@@ -12,7 +12,7 @@
 	overflow: hidden;
 }
 
-.large_box {
+.large-box {
 	position: relative;
 	margin-bottom: 10px;
 	width: 530px;
@@ -20,17 +20,17 @@
 	overflow: hidden;
 }
 
-.large_box img {
+.large-box img {
 	display: block;
 }
 
-.small_box {
+.small-box {
 	width: 530px;
 	height: 73px;
 	overflow: hidden;
 }
 
-.small_list {
+.small-list {
 	position: relative;
 	float: left;
 	width: 460px;
@@ -38,24 +38,24 @@
 	overflow: hidden;
 }
 
-.small_list ul {
+.small-list ul {
 	height: 73px;
 	overflow: hidden;
 }
 
-.small_list ul li {
+.small-list ul li {
 	position: relative;
 	float: left;
 	margin-right: 8px;
 	width: 111px;
 }
 
-.small_list ul li img {
+.small-list ul li img {
 	display: block;
 	cursor: pointer;
 }
 
-.small_list ul li .bun_bg {
+.small-list ul li .active-bg {
 	display: none;
 	position: absolute;
 	top: 0;
@@ -69,11 +69,11 @@
 	opacity: 0.6;
 }
 
-.small_list ul li.on .bun_bg {
+.small-list ul li.on .active-bg {
 	display: block;
 }
 
-.small_box .btn {
+.small-box .btn {
 	display: block;
 	width: 20px;
 	height: 73px;
@@ -83,22 +83,22 @@
 	cursor: pointer;
 }
 
-.small_box .btn:hover {
+.small-box .btn:hover {
 	background-color: #e7000e;
 }
 
-.left_btn {
+.left-btn {
 	float: left;
 	margin-right: 8px;
 	background-image: url(../images/left_btn.png);
 }
 
-.right_btn {
+.right-btn {
 	float: right;
 	background-image: url(../images/right_btn.png);
 }
 
-.large_box .caption {
+.large-box .title-tip {
 	position: absolute;
 	font-size: 11px;
 	color: #fafafa;

@@ -51,6 +51,12 @@
 	.alert-dismissible .close-btn {right: -2px;}
 	
 	.order {margin-top: 5px;}
+	
+	.input-xs {
+    width: 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 	</style>
 </head>
 
@@ -109,23 +115,8 @@
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '300-400', '300万-400万', this);">300万-400万</button></li>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '400-500', '400万-500万', this);">400万-500万</button></li>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '500-700', '500万-700万', this);">500万-700万</button></li>
+	            <li><input type="text" class="input-xs" id="priceBegin">&nbsp;~&nbsp;<input type="text" class="input-xs" id="priceEnd">&nbsp;万&nbsp;<button type="button" class="btn btn-info btn-xs" id="searchHouseByPrice">确定</button></li>
 	          </ul>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 search-left"><div class="search-title"><strong>户型：</strong></div></div>
-        <div class="col-md-11">
-          <div class="search-pane">
-            <ul class="list-inline" id="patterns">
-              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '0', '', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '1', '一室', this);">一室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '2', '二室', this);">二室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '3', '三室', this);">三室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '4', '四室', this);">四室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5', '五室', this);">五室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5:gt', '五室以上', this);">五室以上</button></li>
-            </ul>
           </div>
         </div>
       </div>
@@ -142,6 +133,23 @@
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '120-150', '120-150平米', this);">120-150平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '150-200', '150-200平米', this);">150-200平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '200-300', '200-300平米', this);">200-300平米</button></li>
+              <li><input type="text" class="input-xs" id="areaBegin">&nbsp;~&nbsp;<input type="text" class="input-xs" id="areaEnd">&nbsp;平米&nbsp;<button type="button" class="btn btn-info btn-xs" id="searchHouseByArea">确定</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 search-left"><div class="search-title"><strong>户型：</strong></div></div>
+        <div class="col-md-11">
+          <div class="search-pane">
+            <ul class="list-inline" id="patterns">
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '0', '', this);">不限</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '1', '一室', this);">一室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '2', '二室', this);">二室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '3', '三室', this);">三室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '4', '四室', this);">四室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5', '五室', this);">五室</button></li>
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5:gt', '五室以上', this);">五室以上</button></li>
             </ul>
           </div>
         </div>
@@ -185,7 +193,7 @@
                   <div class="input-group field">
                     <input class="form-control" id="buildingName" type="text" placeholder="小区名称">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" id="search-btn" type="button">
+                      <button class="btn btn-default" id="searchHouse" type="button">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                       </button>
                     </span>
@@ -388,7 +396,7 @@
       }
 	  });
 	  //$('#tableData').removeAttr("style");
-    /* $("#search-btn").click(function() {
+    /* $("#searchHouse").click(function() {
         var search = "?";
         search += "provinceId=" + $("#s-inputProvince").val();
         search += "&cityId=" + $("#s-inputCity").val();
@@ -406,7 +414,7 @@
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
    	  //e.target // newly activated tab
    	  //e.relatedTarget // previous active tab
-   	  var target = $(e.target).attr("aria-controls");
+   	  //var target = $(e.target).attr("aria-controls");
    	  var relatedTarget = $(e.relatedTarget).attr("aria-controls");
 
    	  if (relatedTarget == "area") {
@@ -467,7 +475,7 @@
     		  buildingName: $("#buildingName").val(),
     		  districtId: districtId,
     		  townId: townId
-    	  }
+    	  };
       },
       callback: function (value, index, selected) {
         /* if (selected) {
@@ -476,9 +484,24 @@
       }
     });
     
-    $("#search-btn").click(function() {
+    $("#searchHouse").click(function() {
     	loadHouse();
     });
+    
+    $("#searchHouseByPrice").click(function() {
+    	var valBegin = $("#priceBegin").val();
+    	var valEnd = $("#priceEnd").val();
+    	var val = valBegin + "-" + valEnd;
+    	var name = val + "万";
+    	addActivedName('prices', val, name, null);
+    });
+    $("#searchHouseByArea").click(function() {
+    	var valBegin = $("#areaBegin").val();
+       var valEnd = $("#areaEnd").val();
+       var val = valBegin + "-" + valEnd;
+       var name = val + "平米";
+       addActivedName('areas', val, name, null);
+     });
   });
   
   function queryRegions(regionId, name, _this) {
@@ -513,7 +536,9 @@
   } */
   function addActivedName(fieldId, val, name, _this) {
 	  $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-	  $(_this).removeClass("btn-link").addClass("btn-danger");
+	  if (_this) {
+		  $(_this).removeClass("btn-link").addClass("btn-danger");
+	  }
 	  
 	  if (name) {
 		  $('.alert').unbind('close.bs.alert');
@@ -606,8 +631,8 @@
 	  var pricesValue = $("#pricesValue").val();
     if (pricesValue && pricesValue != "0") {
       values = pricesValue.split("-");
-      search += "&priceBegin=" + (parseInt(values[0])*100);
-      search += "&priceEnd=" + (parseInt(values[1])*100);
+      search += "&priceBegin=" + (Number(values[0])*100);
+      search += "&priceEnd=" + (Number(values[1])*100);
     }
 	  var patternsValue = $("#patternsValue").val();
     if (patternsValue && patternsValue != "0") {
@@ -620,8 +645,8 @@
 	  var areasValue = $("#areasValue").val();
     if (areasValue && areasValue != "0") {
     	values = areasValue.split("-");
-    	search += "&areaBegin=" + (parseInt(values[0])*100);
-    	search += "&areaEnd=" + (parseInt(values[1])*100);
+    	search += "&areaBegin=" + (Number(values[0])*100);
+    	search += "&areaEnd=" + (Number(values[1])*100);
     }
     if (param) {
     	search += param;

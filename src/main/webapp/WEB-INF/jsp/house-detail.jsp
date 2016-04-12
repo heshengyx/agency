@@ -5,6 +5,7 @@
 <head>
 	<title>${detail.buildingName}-爱房网</title>
 	<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet">
+	<link href="${ctx}/css/carousel.css" rel="stylesheet">
 	<style>
 	.head-title {margin-top: 20px;}
 	.table-unbordered>tbody>tr>td {border: 0;}
@@ -23,8 +24,12 @@
   .tab-box {
     padding: 15px;
   }
+  #mapLocation {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+  }
 	</style>
-	<link href="${ctx}/css/carousel.css" rel="stylesheet">
 </head>
 
 <body>
@@ -41,29 +46,29 @@
         <div class="col-sm-6 col-md-7">
           
           <div class="banner">
-				    <div class="large_box">
+				    <div class="large-box">
 				      <ul>
 				        <c:forEach var="image" items="${images}">
-				        <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="caption">${image.title}</div></li>
+				        <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="title-tip">${image.title}</div></li>
 				        </c:forEach>
 				        <c:forEach var="image" items="${houseImages}">
-                <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="caption">${image.title}</div></li>
+                <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="title-tip">${image.title}</div></li>
                 </c:forEach>
 				      </ul>
 				    </div>
-				    <div class="small_box">
-				      <span class="btn left_btn"></span>
-				      <div class="small_list">
+				    <div class="small-box">
+				      <span class="btn left-btn"></span>
+				      <div class="small-list">
 				        <ul>
 				          <c:forEach var="image" items="${images}" varStatus="status">
-                  <li<c:if test="${status.first}"> class="on"</c:if>><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="bun_bg"></div></li>
+                  <li<c:if test="${status.first}"> class="on"</c:if>><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
                   </c:forEach>
                   <c:forEach var="image" items="${houseImages}">
-                  <li><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="bun_bg"></div></li>
+                  <li><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
                   </c:forEach>
 				        </ul>
 				      </div>
-				      <span class="btn right_btn"></span>
+				      <span class="btn right-btn"></span>
 				    </div>
 				  </div>
         </div>
@@ -145,7 +150,7 @@
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#desc" aria-controls="desc" role="tab" data-toggle="tab">房源描述</a></li>
         <li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">房源图片</a></li>
-        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">成交记录</a></li>
+        <li role="presentation"><a href="#location" aria-controls="location" role="tab" data-toggle="tab">地图位置</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">小区简介</a></li>
       </ul>
       
@@ -156,20 +161,17 @@
         </div>
         <div role="tabpanel" class="tab-pane tab-box" id="images">
           <c:forEach var="image" items="${images}">
-          <p>
-          <img src="${ctx}/pictures/${image.url}">
-          </p>
+          <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
           </c:forEach>
           <c:forEach var="image" items="${houseImages}">
-          <p>
-          <img src="${ctx}/pictures/${image.url}">
-          </p>
+          <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
           </c:forEach>
           <c:forEach var="image" items="${buildingImages}">
-          <p>
-          <img src="${ctx}/pictures/${image.url}">
-          </p>
+          <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
           </c:forEach>
+        </div>
+        <div role="tabpanel" class="tab-pane tab-box text-center" id="location">
+          <div id="mapLocation"></div>
         </div>
       </div><!-- Tab panes -->
     </div><!-- /.blog-main -->
@@ -194,15 +196,21 @@
   <script src="${ctx}/js/format.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script src="${ctx}/js/carousel.min.js"></script>
+  <script src="http://api.map.baidu.com/api?v=2.0&ak=CrfAyNgjXIv8p9Agk11UaBT2"></script>
   <script>
   $(document).ready(function() {
 	  $(".banner").thumbnailImg({
-		  large_elem: ".large_box",
-		  small_elem: ".small_list",
-		  left_btn: ".left_btn",
-		  right_btn: ".right_btn"
+		  large_elem: ".large-box",
+		  small_elem: ".small-list",
+		  left_btn: ".left-btn",
+		  right_btn: ".right-btn"
 		});
-	  $(".caption:not(':first')").hide();
+	  $(".title-tip:not(':first')").hide();
+	  
+	  var map = new BMap.Map("mapLocation");
+	  var point = new BMap.Point(114.064385, 22.531584);
+	  map.centerAndZoom(point, 16);  //初始化时，即可设置中心点和地图缩放级别。
+	  map.enableScrollWheelZoom();
   });
   </script>
   </jscript>
