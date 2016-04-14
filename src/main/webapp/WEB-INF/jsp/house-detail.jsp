@@ -28,6 +28,7 @@
     width: 100%;
     height: 500px;
     overflow: hidden;
+    margin: 0;
   }
 	</style>
 </head>
@@ -182,7 +183,7 @@
 
     <div class="col-sm-12 col-md-2 hidden-sm hidden-xs">
       <div class="thumbnail">
-	      <img class="img-circle" src="${ctx}/pictures/120_163517736_11.jpg" alt="...">
+	      <img class="img-circle" src="${ctx}/pictures/photo/personal.png" width="120" alt="...">
 	      <div class="caption">
 	        <h4 class="text-center">
 	        <c:if test="${!empty detail.username}">${detail.username}</c:if>
@@ -211,11 +212,29 @@
 		});
 	  $(".title-tip:not(':first')").hide();
 	  
+	  
 	  var map = new BMap.Map("mapLocation");
-	  var point = new BMap.Point(114.064385, 22.531584);
-	  map.centerAndZoom(point, 16);  //初始化时，即可设置中心点和地图缩放级别。
+	  map.centerAndZoom("深圳", 16);
 	  map.enableScrollWheelZoom();
+	  
+	  var point = new BMap.Point(114.082638, 22.530649);
+	  //map.centerAndZoom(point, 16);  //初始化时，即可设置中心点和地图缩放级别。
+	  //map.panTo(point);
+	  
+	  
+	  var marker = new BMap.Marker(point);  // 创建标注
+	  map.addOverlay(marker);
+	  
+	  /* var bs = map.getBounds();   //获取可视区域
+	  var bssw = bs.getSouthWest();   //可视区域左下角
+	  var bsne = bs.getNorthEast();   //可视区域右上角
+	  alert("当前地图可视范围是：" + bssw.lng + "," + bssw.lat + "到" + bsne.lng + "," + bsne.lat); */
+	  //0.0160 0.008
+	  //map.panTo(new BMap.Point(114.066433, 22.539061));
+    //GeoPpoint gpoint = new GeoPoint((int)(114.064*1e6),(int)(22.531*1e6));
+    //map.getController().setCenter(gpoint);
   });
+  
   </script>
   </jscript>
 </body>
