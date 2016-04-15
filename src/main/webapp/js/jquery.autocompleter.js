@@ -321,7 +321,7 @@
                     limit: data.limit,
                     query: data.query
                 }, data.combine());
-                //console.log(ajaxData);
+
                 data.jqxhr = $.ajax({
                     url:        data.source,
                     dataType:   "json",
@@ -444,7 +444,6 @@
                 var hintText = hint.replace(hintReg, "<span>"+data.query+"</span>");
                 data.$autocompleter.find('.autocompleter-hint').addClass('autocompleter-hint-show').html(hintText);
                 data.hintText = hintText;
-                console.log(hintText);
             }
         }
 

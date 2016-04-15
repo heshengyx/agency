@@ -506,7 +506,7 @@
   
   function queryRegions(regionId, name, _this) {
 	  addActivedName("districts", regionId, name, _this);
-	  var $districts = $("#towns");
+	  var $towns = $("#towns");
 	  $("#towns li").remove();
 	  if (regionId != "0") {
 		  var url = "${ctx}/region/list?random="+ Math.random();
@@ -514,13 +514,13 @@
 	      parentId: regionId
 	    };
 	    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActivedName('towns', '0', '', this);\">不限</button></li>");
-	    $districts.append($htmlLi).append("\n");
+	    $towns.append($htmlLi).append("\n");
 	    
 	    $.post(url, params, function(result) {
 	      if ("500" != result.code) {
 	        for (var i=0; i<result.data.length; i++) {
 	          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
-	          $districts.append($htmlLi).append("\n");
+	          $towns.append($htmlLi).append("\n");
 	        }
 	        $("#townsPane").show();
 	      }
