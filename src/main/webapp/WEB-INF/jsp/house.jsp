@@ -376,7 +376,7 @@
         	content += "    <a href=\"${ctx}/house/detail/" + data.tradeId + "\" target=\"_blank\"><img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\" title=\"" + data.buildingName + "\"></a>";
         	content += "  </div>";
         	content += "  <div class=\"col-sm-8 col-md-8\">";
-        	content += "    <h3 class=\"text-primary text-title\">" + data.title + "</h3>";
+        	content += "    <h3 class=\"text-primary text-title\"><a href=\"${ctx}/house/detail/" + data.tradeId + "\" target=\"_blank\">" + data.title + "</a></h3>";
         	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;" + data.room + "室" + data.saloon + "厅&nbsp;&nbsp;|&nbsp;&nbsp;" + data.floor + "/" + data.buildingFloor + "层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：" + data.buildingYear + "</small></h4>";
         	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>" + data.townName + "-" + data.buildingAddress + "</small></h5>";
         	content += "    <h3 class=\"text-danger\">" + jmoney(data.price) + "&nbsp;&nbsp;<small>" + symbol + "</small></h3>";
@@ -505,6 +505,8 @@
   });
   
   function queryRegions(regionId, name, _this) {
+    $("#townsValue").val("");
+    $("#townsName").val("");
 	  addActivedName("districts", regionId, name, _this);
 	  var $towns = $("#towns");
 	  $("#towns li").remove();
@@ -595,13 +597,19 @@
       $("#" + parentId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
       $("#" + parentId + " li:first-child>button").removeClass("btn-link").addClass("btn-danger");
 
+      if (parentId == "districts") {
+        $("#towns li").remove();
+        $("#townsPane").hide();
+      } else if (parentId == "towns") {
+        var districtsName = $("#districtsName").val();
+        if (districtsName) {
+          addActived("districts", districtsName);
+        }
+      }
+      
       var length = $("#conditions li").length;
       if(!length) {
-    	  $("#conditionsPane").hide();
-      }
-      if (parentId == "districts") {
-    	  $("#towns li").remove();
-    	  $("#townsPane").hide();
+        $("#conditionsPane").hide();
       }
       
       loadHouse();
