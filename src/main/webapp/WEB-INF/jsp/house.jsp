@@ -170,7 +170,7 @@
 	<input id="districtsValue" type="hidden">
   <input id="townsValue" type="hidden">
   <input id="pricesValue" type="hidden">
-  <input id="patternsValue" type="hidden">
+  <input id="roomsValue" type="hidden">
   <input id="areasValue" type="hidden">
   <input id="districtsName" type="hidden">
   <input id="townsName" type="hidden">
@@ -634,13 +634,13 @@
       search += "&priceBegin=" + (Number(values[0])*100);
       search += "&priceEnd=" + (Number(values[1])*100);
     }
-	  var patternsValue = $("#patternsValue").val();
-    if (patternsValue && patternsValue != "0") {
-      values = patternsValue.split(":");
+	  var roomsValue = $("#roomsValue").val();
+    if (roomsValue && roomsValue != "0") {
+      values = roomsValue.split(":");
       if (values.length > 1) {
     	  search += "&symbol=" + values[1];
       }
-      search += "&pattern=" + values[0];
+      search += "&room=" + values[0];
     }
 	  var areasValue = $("#areasValue").val();
     if (areasValue && areasValue != "0") {
