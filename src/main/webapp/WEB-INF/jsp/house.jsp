@@ -519,7 +519,7 @@
 	    $towns.append($htmlLi).append("\n");
 	    
 	    $.post(url, params, function(result) {
-	      if ("500" != result.code) {
+	      if (result.status) {
 	        for (var i=0; i<result.data.length; i++) {
 	          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
 	          $towns.append($htmlLi).append("\n");
