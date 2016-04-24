@@ -373,10 +373,10 @@
         	var content = "";
         	content += "<div class=\"row\">";
         	content += "  <div class=\"col-sm-4 col-md-4 col-left\">";
-        	content += "    <a href=\"${ctx}/house/detail/" + data.tradeId + "\" target=\"_blank\"><img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\" title=\"" + data.buildingName + "\"></a>";
+        	content += "    <a href=\"${ctx}/house/info/" + data.tradeId + "\" target=\"_blank\"><img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\" title=\"" + data.buildingName + "\"></a>";
         	content += "  </div>";
         	content += "  <div class=\"col-sm-8 col-md-8\">";
-        	content += "    <h3 class=\"text-primary text-title\"><a href=\"${ctx}/house/detail/" + data.tradeId + "\" target=\"_blank\">" + data.title + "</a></h3>";
+        	content += "    <h3 class=\"text-primary text-title\"><a href=\"${ctx}/house/info/" + data.tradeId + "\" target=\"_blank\">" + data.title + "</a></h3>";
         	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;" + data.room + "室" + data.saloon + "厅&nbsp;&nbsp;|&nbsp;&nbsp;" + data.floor + "/" + data.buildingFloor + "层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：" + data.buildingYear + "</small></h4>";
         	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>" + data.townName + "-" + data.buildingAddress + "</small></h5>";
         	content += "    <h3 class=\"text-danger\">" + jmoney(data.price) + "&nbsp;&nbsp;<small>" + symbol + "</small></h3>";

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.house.agency.data.HouseDetailData;
-import com.house.agency.data.HouseListData;
+import com.house.agency.data.HouseInfoData;
+import com.house.agency.data.HouseData;
 import com.house.agency.entity.Image;
 import com.house.agency.entity.Region;
 import com.house.agency.page.IPage;
@@ -53,19 +53,19 @@ public class HouseController extends BaseController {
 	@RequestMapping("/queryData")
 	@ResponseBody
 	public Object queryData(HouseQueryParam param) {
-		IPage<HouseListData> datas = houseService.queryData(param, param.getPage(),
+		IPage<HouseData> datas = houseService.queryData(param, param.getPage(),
 				param.getLength());
-		JsonResult<HouseListData> jResult = new JsonResult<HouseListData>();
+		JsonResult<HouseData> jResult = new JsonResult<HouseData>();
 		jResult.setDraw(param.getDraw());
 		jResult.setRecordsTotal(datas.getTotalRecord());
 		jResult.setRecordsFiltered(datas.getTotalRecord());
-		jResult.setData((List<HouseListData>) datas.getData());
+		jResult.setData((List<HouseData>) datas.getData());
 		return jResult;
 	}
 	
-	@RequestMapping(value = "/detail/{tradeId}", method = RequestMethod.GET)
-	public String detail(@PathVariable String tradeId, Model model) {
-		HouseDetailData detail = houseService.getData(tradeId);
+	@RequestMapping(value = "/info/{tradeId}", method = RequestMethod.GET)
+	public String info(@PathVariable String tradeId, Model model) {
+		HouseInfoData detail = houseService.getData(tradeId);
 		model.addAttribute("detail", detail);
 		
 		ImageQueryParam param = new ImageQueryParam();
@@ -86,6 +86,6 @@ public class HouseController extends BaseController {
 		param.setType("2");
 		images = imageService.listData(param);
 		model.addAttribute("houseImages", images);
-		return "house-detail";
+		return "houseInfo";
 	}
 }
