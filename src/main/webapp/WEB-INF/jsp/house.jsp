@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="/common/include.jsp"%>  
+<%@ include file="/common/include.jsp"%>
+<%@ taglib uri="/WEB-INF/tld/image-tag.tld" prefix="ImageTag" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -212,26 +213,6 @@
         </thead>
       </table>
 
-      <!-- <nav class="pager-nav">
-			  <ul class="pagination pagination-sm">
-			    <li>
-			      <a href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li class="active"><a href="#">1</a></li>
-			    <li><a href="#">2</a></li>
-			    <li><a href="#">3</a></li>
-			    <li><a href="#">4</a></li>
-			    <li><a href="#">5</a></li>
-			    <li>
-			      <a href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav> -->
-
     </div><!-- /.blog-main -->
 
     <div class="col-sm-12 col-md-3 hidden-sm hidden-xs">
@@ -346,17 +327,17 @@
       },
       'dom': 'tp',
       //'pagingType':  'full_numbers',
-      'filter':     false,
+      //'filter':     false,
       'processing': true,
       'serverSide': true, //开启服务器模式
       //'deferRender': true, //开启延迟渲染
       'ajax': {
         'url': '${ctx}/house/queryData',
-        'type': 'POST',
-        'data': function ( d ) { //添加额外的参数发送到服务器
+        'type': 'POST'
+        //'data': function ( d ) { //添加额外的参数发送到服务器
           //d.tag = 'release';
           //d.sort = $('#sort').val();
-        }
+        //}
       },
 		  /* "ajax": function (data, callback, settings) {
 		    callback(
@@ -365,15 +346,17 @@
 		  }, */
 		  'columnDefs': [
       {
-        'render': function(data, type, row) {
+    	  'targets': 0, 'render': function(data, type, row) {
         	var symbol = '万';
         	if (data.type == '2') {
         		symbol = '元';
         	}
+        	console.log(data.url);
         	var content = '';
         	content += '<div class="row">';
           content += '  <div class="col-sm-4 col-md-4 col-left">';
-          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank"><img class="img-icon" src="http://127.0.0.1:8000/' + data.url + '" title="' + data.buildingName + '" width="202" height="150"></a>';
+          //content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank"><img class="img-icon" src="http://127.0.0.1:8000/' + data.url + '" title="' + data.buildingName + '" width="202" height="150"></a>';
+          content += '  <ImageTag:image src="' + data.url + '" width="202" height="150" path="${uploadFolder}" base="${imageUrl}"/>';
           content += '  </div>';
           content += '  <div class="col-sm-8 col-md-8">';
           content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';
@@ -385,8 +368,7 @@
           content += '  </div>';
           content += '</div>';
           return content;
-        },
-        'targets': [0]
+        }
       }],
 		  'columns': [
         { 'data': null }
@@ -472,10 +454,10 @@
     });
     
     $('#searchHouse').click(function() {
-      loadHouse();
+      //loadHouse();
     });
     
-    $('#searchHouseByPrice').click(function() {
+    /* $('#searchHouseByPrice').click(function() {
       var valBegin = $('#priceBegin').val();
       var valEnd = $('#priceEnd').val();
       var val = valBegin + '-' + valEnd;
@@ -488,7 +470,7 @@
       var val = valBegin + '-' + valEnd;
       var name = val + '平米';
       addActivedName('areas', val, name, null);
-    });
+    }); */
   });
   
   function queryRegions(regionId, name, _this) {
@@ -637,7 +619,7 @@
     if (param) {
       search += param;
     }
-    table.ajax.url('${ctx}/house/queryData' + search).load();
+    table.ajax.url('${ctx}/house/queryData1' + search).load();
     d.close();
   }
   function loadHouse() {

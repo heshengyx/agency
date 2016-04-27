@@ -20,6 +20,7 @@ import com.house.agency.page.IPage;
 import com.house.agency.param.HouseQueryParam;
 import com.house.agency.param.ImageQueryParam;
 import com.house.agency.param.RegionQueryParam;
+import com.house.agency.service.IConfigureService;
 import com.house.agency.service.IHouseService;
 import com.house.agency.service.IImageService;
 import com.house.agency.service.IRegionService;
@@ -40,6 +41,9 @@ public class HouseController extends BaseController {
 	
 	@Autowired
 	private IImageService imageService;
+	
+	@Autowired
+	private IConfigureService configureService;
 
 	@RequestMapping("")
 	public String page(Model model) {
@@ -47,6 +51,11 @@ public class HouseController extends BaseController {
 		param.setCode("SZ");
 		List<Region> regions = regionService.list(param);
 		model.addAttribute("regions", regions);
+		
+		String uploadFolder = configureService.getValueByKey("upload_folder");
+		String imageUrl = configureService.getValueByKey("image_url");
+		model.addAttribute("uploadFolder", uploadFolder);
+		model.addAttribute("imageUrl", imageUrl);
 		return "house";
 	}
 	
