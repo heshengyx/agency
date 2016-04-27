@@ -299,8 +299,8 @@
   var d = null;
   var table = null;
   $(document).ready(function() {
-	  $("#conditionsPane").hide();
-	  $("#townsPane").hide();
+	  $('#conditionsPane').hide();
+	  $('#townsPane').hide();
 	  
 	  d = dialog({
 		  title: '房源载入中...'
@@ -327,87 +327,74 @@
 		<"class" > - div with a class 指定了样式名的div元素 <div class='class'><div>
 		<"#id.class" > - div with an id and class 指定了id和样式的div元素 <div id='id' class='class'><div> */
 		//"DT_RowId": "row_25"每行添加ID
-    table = $("#tableData").DataTable({
-		  "paging":    true,
-		  "ordering":  false,
-		  "searching": false,
-		  "info":      false,
-		  "language": {
-			  "processing":  "处理中...",
-			  "lengthMenu":  "每页 _MENU_ 条记录",
-			  "zeroRecords": "没有找到记录",
-			  "infoEmpty":   "无记录",
-			  "paginate": {
-				  "first":     "首页",
-	        "previous":  "上页 ",
-	        "next":      "下页 ",
-	        "last":      "末页 "
-			  }
-		  },
-		  "dom": 'tp',
-		  //"pagingType":  "full_numbers",
-		  "filter":     false,
-		  "processing": true,
-		  "serverSide": true, //开启服务器模式
-		  //"deferRender": true, //开启延迟渲染
-		  "ajax": {
-			  "url": "${ctx}/house/queryData",
-		    "type": "POST",
-		    "data": function ( d ) { //添加额外的参数发送到服务器
-		    	//d.tag = "release";
-		    	//d.sort = $("#sort").val();
-		    }
-		  },
+    table = $('#tableData').DataTable({
+    	'paging':    true,
+      'ordering':  false,
+      'searching': false,
+      'info':      false,
+      'language': {
+        'processing':  '处理中...',
+        'lengthMenu':  '每页 _MENU_ 条记录',
+        'zeroRecords': '没有找到记录',
+        'infoEmpty':   '无记录',
+        'paginate': {
+          'first':     '首页',
+          'previous':  '上页 ',
+          'next':      '下页 ',
+          'last':      '末页 '
+        }
+      },
+      'dom': 'tp',
+      //'pagingType':  'full_numbers',
+      'filter':     false,
+      'processing': true,
+      'serverSide': true, //开启服务器模式
+      //'deferRender': true, //开启延迟渲染
+      'ajax': {
+        'url': '${ctx}/house/queryData',
+        'type': 'POST',
+        'data': function ( d ) { //添加额外的参数发送到服务器
+          //d.tag = 'release';
+          //d.sort = $('#sort').val();
+        }
+      },
 		  /* "ajax": function (data, callback, settings) {
 		    callback(
 		    	JSON.parse( localStorage.getItem('dataTablesData') )
 		    );
 		  }, */
-		  "columnDefs": [
+		  'columnDefs': [
       {
-        "render": function(data, type, row) {
-        	var symbol = "万";
-        	if (data.type == "2") {
-        		symbol = "元";
+        'render': function(data, type, row) {
+        	var symbol = '万';
+        	if (data.type == '2') {
+        		symbol = '元';
         	}
-        	var content = "";
-        	content += "<div class=\"row\">";
-        	content += "  <div class=\"col-sm-4 col-md-4 col-left\">";
-        	content += "    <a href=\"${ctx}/house/info/" + data.tradeId + "\" target=\"_blank\"><img class=\"img-icon\" src=\"${ctx}/pictures/" + data.url + "\" title=\"" + data.buildingName + "\"></a>";
-        	content += "  </div>";
-        	content += "  <div class=\"col-sm-8 col-md-8\">";
-        	content += "    <h3 class=\"text-primary text-title\"><a href=\"${ctx}/house/info/" + data.tradeId + "\" target=\"_blank\">" + data.title + "</a></h3>";
-        	content += "    <h4 class=\"text-warning\">" + jmoney(data.area) + "<small>㎡&nbsp;&nbsp;" + data.room + "室" + data.saloon + "厅&nbsp;&nbsp;|&nbsp;&nbsp;" + data.floor + "/" + data.buildingFloor + "层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：" + data.buildingYear + "</small></h4>";
-        	content += "    <h5 class=\"text-info\">" + data.buildingName + "&nbsp;&nbsp;<small><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span>" + data.townName + "-" + data.buildingAddress + "</small></h5>";
-        	content += "    <h3 class=\"text-danger\">" + jmoney(data.price) + "&nbsp;&nbsp;<small>" + symbol + "</small></h3>";
-        	content += "    <a class=\"btn btn-info btn-xs\" href=\"#\" role=\"button\">地铁房</a>";
-        	content += "    <a class=\"btn btn-success btn-xs\" href=\"#\" role=\"button\">学位房</a>";
-        	content += "  </div>";
-        	content += "</div>";
+        	var content = '';
+        	content += '<div class="row">';
+          content += '  <div class="col-sm-4 col-md-4 col-left">';
+          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank"><img class="img-icon" src="http://127.0.0.1:8000/' + data.url + '" title="' + data.buildingName + '" width="202" height="150"></a>';
+          content += '  </div>';
+          content += '  <div class="col-sm-8 col-md-8">';
+          content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';
+          content += '    <h4 class="text-warning">' + jmoney(data.area) + '<small>㎡&nbsp;&nbsp;' + data.room + '室' + data.saloon + '厅&nbsp;&nbsp;|&nbsp;&nbsp;' + data.floor + '/' + data.buildingFloor + '层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：' + data.buildingYear + '</small></h4>';
+          content += '    <h5 class="text-info">' + data.buildingName + '&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>' + data.townName + '-' + data.buildingAddress + '</small></h5>';
+          content += '    <h3 class="text-danger">' + jmoney(data.price) + '&nbsp;&nbsp;<small>' + symbol + '</small></h3>';
+          content += '    <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>';
+          content += '    <a class="btn btn-success btn-xs" href="#" role="button">学位房</a>';
+          content += '  </div>';
+          content += '</div>';
           return content;
         },
-        "targets": [0]
+        'targets': [0]
       }],
-		  "columns": [
-        { "data": null }
+		  'columns': [
+        { 'data': null }
       ],
       initComplete: function () {
     	  d.close();
       }
 	  });
-	  //$('#tableData').removeAttr("style");
-    /* $("#searchHouse").click(function() {
-        var search = "?";
-        search += "provinceId=" + $("#s-inputProvince").val();
-        search += "&cityId=" + $("#s-inputCity").val();
-        search += "&districtId=" + $("#s-inputDistrict").val();
-        search += "&townId=" + $("#s-inputTown").val();
-        search += "&buildingName=" + $("#s-inputBuildingName").val();
-        search += "&startDate=" + $("#s-inputStartDate").val();
-        search += "&endDate=" + $("#s-inputEndDate").val();
-      table.ajax.url("${ctx}/manage/building/list" + search).load();
-    }); */
-    
     /* $('#tableData tbody').on('click', 'td', function () {
         alert( 'Clicked on: '+this.innerHTML );
     } ); */
@@ -415,42 +402,42 @@
    	  //e.target // newly activated tab
    	  //e.relatedTarget // previous active tab
    	  //var target = $(e.target).attr("aria-controls");
-   	  var relatedTarget = $(e.relatedTarget).attr("aria-controls");
+   	  var relatedTarget = $(e.relatedTarget).attr('aria-controls');
 
-   	  if (relatedTarget == "area") {
-   		  var $li = $("#conditions li[data-value='districts']");
-   		  if ($li.length) {
-   			  $li.remove();
-   		  }
-   		  $li = $("#conditions li[data-value='towns']");
-   		  if ($li.length) {
+      if (relatedTarget == 'area') {
+        var $li = $('#conditions li[data-value="districts"]');
+        if ($li.length) {
           $li.remove();
         }
-   		  $("#districts li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-        $("#districts li>button:first").removeClass("btn-link").addClass("btn-danger");
-        $("#towns li").remove();
-        $("#townsPane").hide();
+        $li = $('#conditions li[data-value="towns"]');
+        if ($li.length) {
+          $li.remove();
+        }
+        $('#districts li>button.btn-danger').removeClass('btn-danger').addClass('btn-link');
+        $('#districts li>button:first').removeClass('btn-link').addClass('btn-danger');
+        $('#towns li').remove();
+        $('#townsPane').hide();
         
-        $("#districtsName").val("");
-        $("#townsName").val("");
-        $("#districtsValue").val("");
-        $("#townsValue").val("");
+        $('#districtsName').val('');
+        $('#townsName').val('');
+        $('#districtsValue').val('');
+        $('#townsValue').val('');
    	  } else {
-   		  $("#conditions li[data-value='" + relatedTarget + "s']").remove();
-   		  $("#" + relatedTarget + "s li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-        $("#" + relatedTarget + "s li>button:first").removeClass("btn-link").addClass("btn-danger");
+   		  $('#conditions li[data-value="' + relatedTarget + 's"]').remove();
+        $('#' + relatedTarget + 's li>button.btn-danger').removeClass('btn-danger').addClass('btn-link');
+        $('#' + relatedTarget + 's li>button:first').removeClass('btn-link').addClass('btn-danger');
         
-        $("#" + relatedTarget + "sName").val("");
-        $("#" + relatedTarget + "sValue").val("");
+        $('#' + relatedTarget + 'sName').val('');
+        $('#' + relatedTarget + 'sValue').val('');
    	  }
    	  
-	   	var length = $("#conditions li").length;
+	   	var length = $('#conditions li').length;
 	    if(!length) {
-	      $("#conditionsPane").hide();
+	      $('#conditionsPane').hide();
 	    }
    	});
 
-    $("#buildingName").autocompleter({
+    $('#buildingName').autocompleter({
       // marker for autocomplete matches
       highlightMatches: true,
       // object to local or url to remote search
@@ -464,15 +451,15 @@
       // max results
       //limit: 1,
       combine: function() {
-    	  var districtId = $("#districtsValue").val();
-    	  var townId = $("#townsValue").val();
+    	  var districtId = $('#districtsValue').val();
+    	  var townId = $('#townsValue').val();
     	  if (townId) {
-    		  districtId = "";
+    		  districtId = '';
     	  } else {
-    		  townId = "";
+    		  townId = '';
     	  }
     	  return {
-    		  buildingName: $("#buildingName").val(),
+    		  buildingName: $('#buildingName').val(),
     		  districtId: districtId,
     		  townId: townId
     	  };
@@ -484,209 +471,188 @@
       }
     });
     
-    $("#searchHouse").click(function() {
-    	loadHouse();
+    $('#searchHouse').click(function() {
+      loadHouse();
     });
     
-    $("#searchHouseByPrice").click(function() {
-    	var valBegin = $("#priceBegin").val();
-    	var valEnd = $("#priceEnd").val();
-    	var val = valBegin + "-" + valEnd;
-    	var name = val + "万";
-    	addActivedName('prices', val, name, null);
+    $('#searchHouseByPrice').click(function() {
+      var valBegin = $('#priceBegin').val();
+      var valEnd = $('#priceEnd').val();
+      var val = valBegin + '-' + valEnd;
+      var name = val + '万';
+      addActivedName('prices', val, name, null);
     });
-    $("#searchHouseByArea").click(function() {
-    	var valBegin = $("#areaBegin").val();
-       var valEnd = $("#areaEnd").val();
-       var val = valBegin + "-" + valEnd;
-       var name = val + "平米";
-       addActivedName('areas', val, name, null);
-     });
+    $('#searchHouseByArea').click(function() {
+      var valBegin = $('#areaBegin').val();
+      var valEnd = $('#areaEnd').val();
+      var val = valBegin + '-' + valEnd;
+      var name = val + '平米';
+      addActivedName('areas', val, name, null);
+    });
   });
   
   function queryRegions(regionId, name, _this) {
-    $("#townsValue").val("");
-    $("#townsName").val("");
-	  addActivedName("districts", regionId, name, _this);
-	  var $towns = $("#towns");
-	  $("#towns li").remove();
-	  if (regionId != "0") {
-		  var url = "${ctx}/region/list?random="+ Math.random();
-	    var params = {
-	      parentId: regionId
-	    };
-	    var $htmlLi = $("<li><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"addActivedName('towns', '0', '', this);\">不限</button></li>");
-	    $towns.append($htmlLi).append("\n");
-	    
-	    $.post(url, params, function(result) {
-	      if (result.status) {
-	        for (var i=0; i<result.data.length; i++) {
-	          $htmlLi = $("<li><button type=\"button\" class=\"btn btn-link btn-xs\" onclick=\"addActivedName('towns', '" + result.data[i].id + "', '" + result.data[i].name + "', this);\">" + result.data[i].name + "</button></li>");
-	          $towns.append($htmlLi).append("\n");
-	        }
-	        $("#townsPane").show();
-	      }
-	    }, "json");
-	  } else {
-		  $("#townsPane").hide();
-	  }
+    $('#townsValue').val('');
+    $('#townsName').val('');
+    addActivedName('districts', regionId, name, _this);
+    var $towns = $('#towns');
+    $('#towns li').remove();
+    if (regionId != '0') {
+      var url = '${ctx}/region/list?random='+ Math.random();
+      var params = {
+        parentId: regionId
+      };
+      var $htmlLi = $('<li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName(\'towns\', \'0\', \'\', this);">不限</button></li>');
+      $towns.append($htmlLi).append('\n');
+      
+      $.post(url, params, function(result) {
+        if (result.status) {
+          for (var i=0; i<result.data.length; i++) {
+            $htmlLi = $('<li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName(\'towns\', \'' + result.data[i].id + '\', \'' + result.data[i].name + '\', this);">' + result.data[i].name + '</button></li>');
+            $towns.append($htmlLi).append('\n');
+          }
+          $('#townsPane').show();
+        }
+      }, 'json');
+    } else {
+      $('#townsPane').hide();
+    }
   }
-  /* function addActived(fieldId, val, _this) {
-	  $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-    $(_this).removeClass("btn-link").addClass("btn-danger");
-    $("#conditionsPane").show();
-  } */
   function addActivedName(fieldId, val, name, _this) {
-	  $("#" + fieldId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-	  if (_this) {
-		  $(_this).removeClass("btn-link").addClass("btn-danger");
-	  }
-	  
-	  if (name) {
-		  $('.alert').unbind('close.bs.alert');
-		  $("#" + fieldId + "Value").val(val);
-		  $("#" + fieldId + "Name").val(name);
-		  $("#conditions li").remove();
-		  var townsName = $("#townsName").val();
-		  if (townsName) {
-			  addActived("towns", townsName);
-		  } else {
-			  var districtsName = $("#districtsName").val();
-	      if (districtsName) {
-	        addActived("districts", districtsName);
-	      }
-		  }
-		  
-		  var subwaysName = $("#subwaysName").val();
-		  if (subwaysName) {
-        addActived("subways", subwaysName);
-      } 
-		  
-	    var pricesName = $("#pricesName").val();
-	    if (pricesName) {
-	      addActived("prices", pricesName);
-	    } 
-		  var patternsName = $("#patternsName").val();
-	    if (patternsName) {
-	      addActived("patterns", patternsName);
-	    }
-		  var areasName = $("#areasName").val();
-		  if (areasName) {
-			  addActived("areas", areasName);
-		  }
-	  }  
-	  
-	  loadHouse();
-  }
-  function addActived(fieldId, name) {
-	  var $htmlBtn = $("<button type=\"button\" class=\"close close-btn\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>");
-    var $htmlDiv = $("<div class=\"alert alert-warning alert-dismissible fade in alert-btn\" id=\"alert_" + fieldId + "\" role=\"alert\"></div>");
-    $htmlDiv.append($htmlBtn);
-    $htmlDiv.append($("<span>" + name + "</span>"));
-    var $htmlLi = $("<li data-value=\"" + fieldId + "\"></li>");
-    $htmlLi.append($htmlDiv);
-    $("#conditions").append($htmlLi);
-    $("#conditionsPane").show();
+    $('#' + fieldId + ' li>button.btn-danger').removeClass('btn-danger').addClass('btn-link');
+    if (_this) {
+      $(_this).removeClass('btn-link').addClass('btn-danger');
+    }
     
-    $("#alert_" + fieldId).bind("close.bs.alert", function () {
-      var $parentLi = $(this).parent();
-      $parentLi.remove();
-      var parentId = $parentLi.attr("data-value");
-      $("#" + parentId + "Value").val("");
-      $("#" + parentId + "Name").val("");
-      $("#" + parentId + " li>button.btn-danger").removeClass("btn-danger").addClass("btn-link");
-      $("#" + parentId + " li:first-child>button").removeClass("btn-link").addClass("btn-danger");
-
-      if (parentId == "districts") {
-        $("#towns li").remove();
-        $("#townsPane").hide();
-      } else if (parentId == "towns") {
-        var districtsName = $("#districtsName").val();
+    if (name) {
+      $('.alert').unbind('close.bs.alert');
+      $('#' + fieldId + 'Value').val(val);
+      $('#' + fieldId + 'Name').val(name);
+      $('#conditions li').remove();
+      var townsName = $('#townsName').val();
+      if (townsName) {
+        addActived('towns', townsName);
+      } else {
+        var districtsName = $('#districtsName').val();
         if (districtsName) {
-          addActived("districts", districtsName);
+          addActived('districts', districtsName);
         }
       }
       
-      var length = $("#conditions li").length;
-      if(!length) {
-        $("#conditionsPane").hide();
-      }
+      var subwaysName = $('#subwaysName').val();
+      if (subwaysName) {
+        addActived('subways', subwaysName);
+      } 
       
+      var pricesName = $('#pricesName').val();
+      if (pricesName) {
+        addActived('prices', pricesName);
+      } 
+      var patternsName = $('#patternsName').val();
+      if (patternsName) {
+        addActived('patterns', patternsName);
+      }
+      var areasName = $('#areasName').val();
+      if (areasName) {
+        addActived('areas', areasName);
+      }
+    }  
+    loadHouse();
+  }
+  function addActived(fieldId, name) {
+    var $htmlBtn = $('<button type="button" class="close close-btn" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
+    var $htmlDiv = $('<div class="alert alert-warning alert-dismissible fade in alert-btn" id="alert_' + fieldId + '" role="alert"></div>');
+    $htmlDiv.append($htmlBtn);
+    $htmlDiv.append($('<span>' + name + '</span>'));
+    var $htmlLi = $('<li data-value="' + fieldId + '"></li>');
+    $htmlLi.append($htmlDiv);
+    $('#conditions').append($htmlLi);
+    $('#conditionsPane').show();
+    
+    $('#alert_' + fieldId).bind('close.bs.alert', function () {
+      var $parentLi = $(this).parent();
+      $parentLi.remove();
+      var parentId = $parentLi.attr('data-value');
+      $('#' + parentId + 'Value').val('');
+      $('#' + parentId + 'Name').val('');
+      $('#' + parentId + ' li>button.btn-danger').removeClass('btn-danger').addClass('btn-link');
+      $('#' + parentId + ' li:first-child>button').removeClass('btn-link').addClass('btn-danger');
+
+      if (parentId == 'districts') {
+        $('#towns li').remove();
+        $('#townsPane').hide();
+      } else if (parentId == 'towns') {
+        var districtsName = $('#districtsName').val();
+        if (districtsName) {
+          addActived('districts', districtsName);
+        }
+      }
+      var length = $('#conditions li').length;
+      if(!length) {
+        $('#conditionsPane').hide();
+      }
       loadHouse();
     });
   }
   function queryHouse(param) {
-	  var values = null;
-	  var search = "?random=" + Math.random();
-	  var tabName = $("#navTabs li.active").children().attr("aria-controls");
-	  if (tabName == "area") {
-		  var townsValue = $("#townsValue").val();
-	    if (townsValue && townsValue != "0") {
-	      search += "&townId=" + townsValue;
-	    } else {
-	      var districtsValue = $("#districtsValue").val();
-	      if (districtsValue && districtsValue != "0") {
-	        search += "&districtId=" + districtsValue;
-	      }
-	    }
-	  } else {
-		  var tabValue = $("#" + tabName + "sValue").val();
-		  if (tabValue && tabValue != "0") {
-			  search += "&" + tabName + "=" + tabValue;
-		  }
-	  }
-
-	  var pricesValue = $("#pricesValue").val();
-    if (pricesValue && pricesValue != "0") {
-      values = pricesValue.split("-");
-      search += "&priceBegin=" + (Number(values[0])*100);
-      search += "&priceEnd=" + (Number(values[1])*100);
-    }
-	  var roomsValue = $("#roomsValue").val();
-    if (roomsValue && roomsValue != "0") {
-      values = roomsValue.split(":");
-      if (values.length > 1) {
-    	  search += "&symbol=" + values[1];
+    var values = null;
+    var search = '?random=' + Math.random();
+    var tabName = $('#navTabs li.active').children().attr('aria-controls');
+    if (tabName == 'area') {
+      var townsValue = $('#townsValue').val();
+      if (townsValue && townsValue != '0') {
+        search += '&townId=' + townsValue;
+      } else {
+        var districtsValue = $('#districtsValue').val();
+        if (districtsValue && districtsValue != '0') {
+          search += '&districtId=' + districtsValue;
+        }
       }
-      search += "&room=" + values[0];
+    } else {
+      var tabValue = $('#' + tabName + 'sValue').val();
+      if (tabValue && tabValue != '0') {
+        search += '&' + tabName + '=' + tabValue;
+      }
     }
-	  var areasValue = $("#areasValue").val();
-    if (areasValue && areasValue != "0") {
-    	values = areasValue.split("-");
-    	search += "&areaBegin=" + (Number(values[0])*100);
-    	search += "&areaEnd=" + (Number(values[1])*100);
+    var pricesValue = $('#pricesValue').val();
+    if (pricesValue && pricesValue != '0') {
+      values = pricesValue.split('-');
+      search += '&priceBegin=' + (Number(values[0])*100);
+      search += '&priceEnd=' + (Number(values[1])*100);
+    }
+    var roomsValue = $('#roomsValue').val();
+    if (roomsValue && roomsValue != '0') {
+      values = roomsValue.split(':');
+      if (values.length > 1) {
+        search += '&symbol=' + values[1];
+      }
+      search += '&room=' + values[0];
+    }
+    var areasValue = $('#areasValue').val();
+    if (areasValue && areasValue != '0') {
+      values = areasValue.split('-');
+      search += '&areaBegin=' + (Number(values[0])*100);
+      search += '&areaEnd=' + (Number(values[1])*100);
     }
     if (param) {
-    	search += param;
+      search += param;
     }
-    //console.log(search);
-	  table.ajax.url("${ctx}/house/queryData" + search).load();
-	  d.close();
-	  /* var url = "${ctx}/house/queryData?random="+ Math.random();
-    var params = {
-    	//draw: 0,
-    	length: 3
-    };
-	  $.post(url, params, function(result) {
-		  table.clear();
-		  //table.rows().remove();
-		  table.rows.add(result.data);
-	    d.close();
-    }, "json"); */
+    table.ajax.url('${ctx}/house/queryData' + search).load();
+    d.close();
   }
   function loadHouse() {
-	  var param = "";
-	  var buildingName = $("#buildingName").val();
+    var param = '';
+    var buildingName = $('#buildingName').val();
     if (buildingName) {
-    	param += "&buildingName=" + buildingName;
+      param += '&buildingName=' + buildingName;
     }
-	  
-	  var tag = $("#tag").val();
-	  if (!tag) {
-		  tag = "release";
-	  }
-    var sort = $("#sort").val();
-    param += "&tag=" + tag + "&sort=" + sort;
+    
+    var tag = $('#tag').val();
+    if (!tag) {
+      tag = 'release';
+    }
+    var sort = $('#sort').val();
+    param += '&tag=' + tag + '&sort=' + sort;
     
     d = dialog({
       title: '房源载入中...'
@@ -696,25 +662,24 @@
     queryHouse(param);
   }
   function orders(tag, _this) {
-	  var flag = $(_this).hasClass("btn-info");
-	  if(!flag) {
-		  var $parent = $(_this).parent();
-		  $parent.children(".btn-info").removeClass("btn-info").addClass("btn-link");
-		  $(_this).removeClass("btn-link").addClass("btn-info");
-	  }
-	  
-	  var $sort = $("#sort");
-	  $("#tag").val(tag);
-	  var sort = $sort.val();
-	  if (sort == "asc") {
-		  $sort.val("desc");
-		  $(_this).children().removeClass("glyphicon-arrow-up").addClass("glyphicon-arrow-down");
-	  } else {
-		  $sort.val("asc");
-		  $(_this).children().removeClass("glyphicon-arrow-down").addClass("glyphicon-arrow-up");
-	  }
-	  
-	  loadHouse();
+    var flag = $(_this).hasClass('btn-info');
+    if(!flag) {
+      var $parent = $(_this).parent();
+      $parent.children('.btn-info').removeClass('btn-info').addClass('btn-link');
+      $(_this).removeClass('btn-link').addClass('btn-info');
+    }
+    
+    var $sort = $('#sort');
+    $('#tag').val(tag);
+    var sort = $sort.val();
+    if (sort == 'asc') {
+      $sort.val('desc');
+      $(_this).children().removeClass('glyphicon-arrow-up').addClass('glyphicon-arrow-down');
+    } else {
+      $sort.val('asc');
+      $(_this).children().removeClass('glyphicon-arrow-down').addClass('glyphicon-arrow-up');
+    }
+    loadHouse();
   }
   </script>
   </jscript>
