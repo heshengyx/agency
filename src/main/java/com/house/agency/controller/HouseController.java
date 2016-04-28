@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.house.agency.data.HouseInfoData;
 import com.house.agency.data.HouseData;
+import com.house.agency.data.HouseInfoData;
 import com.house.agency.entity.Image;
 import com.house.agency.entity.Region;
 import com.house.agency.page.IPage;
@@ -52,9 +52,7 @@ public class HouseController extends BaseController {
 		List<Region> regions = regionService.list(param);
 		model.addAttribute("regions", regions);
 		
-		String uploadFolder = configureService.getValueByKey("upload_folder");
 		String imageUrl = configureService.getValueByKey("image_url");
-		model.addAttribute("uploadFolder", uploadFolder);
 		model.addAttribute("imageUrl", imageUrl);
 		return "house";
 	}

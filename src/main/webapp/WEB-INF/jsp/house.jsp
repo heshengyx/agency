@@ -43,7 +43,12 @@
 	  .col-left {margin-right: -30px;}
 	}
 	
-	.img-icon {margin-bottom: 5px;}
+	/* .img-icon {margin-bottom: 5px;} */
+	
+	.img-thumbnail {
+	  margin-bottom: 0;
+	  border: 0;
+	}
 	
 	.alert-btn {
     padding: 3px;
@@ -333,11 +338,11 @@
       //'deferRender': true, //开启延迟渲染
       'ajax': {
         'url': '${ctx}/house/queryData',
-        'type': 'POST'
-        //'data': function ( d ) { //添加额外的参数发送到服务器
+        'type': 'POST',
+        'data': function ( d ) { //添加额外的参数发送到服务器
           //d.tag = 'release';
           //d.sort = $('#sort').val();
-        //}
+        }
       },
 		  /* "ajax": function (data, callback, settings) {
 		    callback(
@@ -351,12 +356,11 @@
         	if (data.type == '2') {
         		symbol = '元';
         	}
-        	console.log(data.url);
+        	
         	var content = '';
         	content += '<div class="row">';
-          content += '  <div class="col-sm-4 col-md-4 col-left">';
-          //content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank"><img class="img-icon" src="http://127.0.0.1:8000/' + data.url + '" title="' + data.buildingName + '" width="202" height="150"></a>';
-          content += '  <ImageTag:image src="' + data.url + '" width="202" height="150" path="${uploadFolder}" base="${imageUrl}"/>';
+          content += '  <div class="col-sm-4 col-md-4">';
+          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank" class="thumbnail img-thumbnail" title="' + data.buildingName + '"><img src="${imageUrl}' + data.url + '"></a>';
           content += '  </div>';
           content += '  <div class="col-sm-8 col-md-8">';
           content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';
@@ -454,10 +458,10 @@
     });
     
     $('#searchHouse').click(function() {
-      //loadHouse();
+      loadHouse();
     });
     
-    /* $('#searchHouseByPrice').click(function() {
+    $('#searchHouseByPrice').click(function() {
       var valBegin = $('#priceBegin').val();
       var valEnd = $('#priceEnd').val();
       var val = valBegin + '-' + valEnd;
@@ -470,7 +474,7 @@
       var val = valBegin + '-' + valEnd;
       var name = val + '平米';
       addActivedName('areas', val, name, null);
-    }); */
+    });
   });
   
   function queryRegions(regionId, name, _this) {
