@@ -6,6 +6,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.springframework.util.StringUtils;
+
 import com.myself.common.utils.ImageUtil;
 
 public class ImageTag extends TagSupport {
@@ -19,7 +21,25 @@ public class ImageTag extends TagSupport {
 	private int width; // 图片宽
 	private int height; // 图片高
 	private String alt; // 图片描述
-	private String base;
+	private String base; //URL
+	private String clazz; //样式
+	private String id; //
+
+	public String getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getBase() {
 		return base;
@@ -82,16 +102,22 @@ public class ImageTag extends TagSupport {
 		}
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("<img src=\"");
-		if (base != null && !"".equals(base)) {
+		sb.append("<img ");
+		if (!StringUtils.isEmpty(clazz)) {
+			sb.append("class=\"").append(clazz).append("\" ");
+		}
+		if (!StringUtils.isEmpty(id)) {
+			sb.append("id=\"").append(id).append("\" ");
+		}
+		sb.append("src=\"");
+		if (!StringUtils.isEmpty(base)) {
 			sb.append(base);
 		}
-		sb.append(image + "\" ");
-		if (alt != null && !"".equals(alt)) {
-			sb.append("alt=\"");
-			sb.append(alt + "\"");
+		sb.append(image).append("\" ");
+		if (!StringUtils.isEmpty(alt)) {
+			sb.append("alt=\"").append(alt).append("\" ");
 		}
-		sb.append(" />");
+		sb.append("/>");
 		JspWriter out = pageContext.getOut();
 		try {
 			out.print(sb.toString());

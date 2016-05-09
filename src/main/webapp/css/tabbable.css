@@ -1,3 +1,5 @@
+.tabbable {margin-top: 15px;}
+
 .tabbable:before,.tabbable:after {
   display: table;
   content: " "
@@ -28,7 +30,7 @@
   top: auto;
   margin-bottom: 0;
   border-color: #c5d0dc;
-  float: right
+  float: right;
 }
 
 .tabs-right>.nav-tabs>li {

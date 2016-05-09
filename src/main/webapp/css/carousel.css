@@ -38,8 +38,8 @@
 	position: relative;
 	float: left;
 	width: 460px;
+	overflow: hidden;
 }
-
 
 .small-list ul li {
 	position: relative;
@@ -51,7 +51,6 @@
 .small-list ul li a {
 	display: block;
 	height: 75px;
-	overflow: hidden;
 	cursor: pointer;
 	background: #F9F9F9;
 	text-align: center;
@@ -79,7 +78,7 @@
 .small-box .btn {
 	display: block;
 	width: 20px;
-	height: 73px;
+	height: 75px;
 	background-color: #777;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -109,5 +108,5 @@
 	color: #fff;
 	padding: 5px;
 	text-align: left;
-	background-color: #3a87ad!important;
+	background-color: #ddd!important;
 }

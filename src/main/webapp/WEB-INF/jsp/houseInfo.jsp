@@ -19,7 +19,7 @@
     margin-left: -10px;
     margin-right: -15px;
   }
-  .tab-box {padding: 15px 15px 15px 0;}
+  .tab-box {padding: 0 15px 15px 0;}
   .bg-badge {background-color: #337ab7;}
 
   #mapLocation {
@@ -28,13 +28,11 @@
     overflow: hidden;
     margin: 0;
   }
-  .nav-tabs>li>a {
-	  border-bottom: 0;
-	}
 	.tabbable-content {
+	  border-top: 1px solid #ddd;
 	  border-right: 1px solid #ddd;
-	  height: 800px;
 	}
+	.active-header {margin-top: 20px;}
 	</style>
 </head>
 
@@ -55,13 +53,13 @@
 				    <div class="large-box">
 				      <ul>
 				        <c:forEach var="image" items="${images}">
-				        <li><a href="#"><img class="img-responsive" src="${imageUrl}/${image.url}"></a><div class="label-tip">${image.title}</div></li>
+				        <li><a href="#"><ImageTag:image src="${image.url}" width="528" height="396" path="${uploadFolder}" base="${imageUrl}/" clazz="img-responsive center-block"/></a><div class="label-tip">${image.title}</div></li>
 				        </c:forEach>
 				        <c:forEach var="image" items="${houseImages}">
-                <li><a href="#"><img class="img-responsive" src="${imageUrl}/${image.url}"></a><div class="label-tip">${image.title}</div></li>
+                <li><a href="#"><ImageTag:image src="${image.url}" width="528" height="396" path="${uploadFolder}" base="${imageUrl}/" clazz="img-responsive center-block"/></a><div class="label-tip">${image.title}</div></li>
                 </c:forEach>
                 <c:forEach var="image" items="${buildingImages}">
-                <li><a href="#"><img class="img-responsive" src="${imageUrl}/${image.url}"></a><div class="label-tip">${image.title}</div></li>
+                <li><a href="#"><ImageTag:image src="${image.url}" width="528" height="396" path="${uploadFolder}" base="${imageUrl}/" clazz="img-responsive center-block"/></a><div class="label-tip">${image.title}</div></li>
                 </c:forEach>
 				      </ul>
 				    </div>
@@ -171,59 +169,34 @@
       </c:forEach>
       
       <div class="tabbable tabs-right">
-        <ul class="nav nav-tabs" id="myTab3">
-          <li class="active"><a data-toggle="tab" href="#home3">房源描述</a></li>
-          <li><a data-toggle="tab" href="#profile3">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
-          <li><a data-toggle="tab" href="#dropdown13"></a></li>
+        <ul class="nav nav-tabs navbar-tabs">
+          <li class="active"><a href="#desc">房源描述</a></li>
+          <li><a href="#images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
+          <li><a href="#mapLocation">地图位置</a></li>
         </ul>
 
         <div class="tab-content tabbable-content">
-          <div id="home3" class="tab-pane in active">
-            <h3 class="page-header">房源描述</h3>
-            <p>${detail.content}</p>
-          </div>
-
-          <div id="profile3" class="tab-pane">
-            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
-            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-          </div>
-
-          <div id="dropdown13" class="tab-pane">
-            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-          </div>
+          <div data-spy="scroll" data-target=".navbar-tabs" class="tab-pane active tab-box">
+	          <h4 id="desc" class="page-header active-header">房源描述</h4>
+	          <p>${detail.content}</p>
+	          <h4 id="images" class="page-header">房源图片<span class="badge bg-badge">${imagesNum}</span></h4>
+	          <c:forEach var="image" items="${images}">
+	          <img class="img-responsive" src="${imageUrl}/${image.url}">
+	          <p>${image.title}</p>
+	          </c:forEach>
+	          <c:forEach var="image" items="${houseImages}">
+	          <img class="img-responsive" src="${imageUrl}/${image.url}">
+	          <P>${image.title}</P>
+	          </c:forEach>
+	          <c:forEach var="image" items="${buildingImages}">
+	          <img class="img-responsive" src="${imageUrl}/${image.url}">
+	          <P>${image.title}</P>
+	          </c:forEach>
+	          <h4 id="location" class="page-header">地图位置</h4>
+	          <div id="mapLocation"></div>
+	        </div>
         </div>
       </div>
-
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#content" data-toggle="tab" role="tab" aria-controls="content">房源描述</a></li>
-        <li role="presentation"><a href="#images" data-toggle="tab" role="tab" aria-controls="images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
-        <li role="presentation"><a href="#location" data-toggle="tab" role="tab" aria-controls="location">地图位置</a></li>
-        <li role="presentation"><a href="#settings" data-toggle="tab" role="tab" aria-controls="settings">小区简介</a></li>
-      </ul>
-      
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active tab-box" id="content">
-          <p>${detail.content}</p>       
-        </div>
-        <div role="tabpanel" class="tab-pane tab-box" id="images">
-          <c:forEach var="image" items="${images}">
-          <img class="img-responsive" src="${imageUrl}/${image.url}">
-          <p>${image.title}</p>
-          </c:forEach>
-          <c:forEach var="image" items="${houseImages}">
-          <img class="img-responsive" src="${imageUrl}/${image.url}">
-          <P>${image.title}</P>
-          </c:forEach>
-          <c:forEach var="image" items="${buildingImages}">
-          <img class="img-responsive" src="${imageUrl}/${image.url}">
-          </c:forEach>
-        </div>
-        <div role="tabpanel" class="tab-pane tab-box" id="location">
-          <div id="mapLocation"></div>
-        </div>
-      </div><!-- Tab panes -->
     </div><!-- /.blog-main -->
 
     <div class="col-sm-12 col-md-2 hidden-sm hidden-xs">
