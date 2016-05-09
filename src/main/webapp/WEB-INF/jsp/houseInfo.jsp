@@ -21,9 +21,8 @@
     margin-right: -15px;
     /* padding-left: 10px; */
   }
-  .tab-box {
-    padding: 15px;
-  }
+  .tab-box {padding: 15px 15px 15px 0;}
+  .bg-badge {background-color: #337ab7;}
   #mapLocation {
     width: 100%;
     height: 500px;
@@ -50,10 +49,10 @@
 				    <div class="large-box">
 				      <ul>
 				        <c:forEach var="image" items="${images}">
-				        <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="title-tip">${image.title}</div></li>
+				        <li><img class="img-responsive" src="${imageUrl}/${image.url}"><div class="label-tip">${image.title}</div></li>
 				        </c:forEach>
 				        <c:forEach var="image" items="${houseImages}">
-                <li><img class="img-responsive" src="${ctx}/pictures/${image.url}"><div class="title-tip">${image.title}</div></li>
+                <li><img class="img-responsive" src="${imageUrl}/${image.url}"><div class="label-tip">${image.title}</div></li>
                 </c:forEach>
 				      </ul>
 				    </div>
@@ -62,10 +61,10 @@
 				      <div class="small-list">
 				        <ul>
 				          <c:forEach var="image" items="${images}" varStatus="status">
-                  <li<c:if test="${status.first}"> class="on"</c:if>><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
+                  <li<c:if test="${status.first}"> class="on"</c:if>><img src="${imageUrl}/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
                   </c:forEach>
                   <c:forEach var="image" items="${houseImages}">
-                  <li><img src="${ctx}/pictures/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
+                  <li><img src="${imageUrl}/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
                   </c:forEach>
 				        </ul>
 				      </div>
@@ -148,34 +147,95 @@
         </div>
       </div>
       
+      <c:set var="imagesNum" value="0" />
+      <c:forEach var="image" items="${images}">
+      <c:set var="imagesNum" value="${imagesNum + 1}" />
+      </c:forEach>
+
+      <nav id="navbar-example" class="navbar" role="navigation">
+      <ul class="nav nav-tabs">
+         <li><a href="#ios">iOS</a></li>
+         <li><a href="#svn">SVN</a></li>
+         <li class="dropdown">
+            <a href="#" id="navbarDrop1" class="dropdown-toggle" 
+               data-toggle="dropdown">Java
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" 
+               aria-labelledby="navbarDrop1">
+               <li><a href="#jmeter" tabindex="-1">jmeter</a></li>
+               <li><a href="#ejb" tabindex="-1">ejb</a></li>
+               <li class="divider"></li>
+               <li><a href="#spring" tabindex="-1">spring</a></li>
+            </ul>
+         </li>
+      </ul>
+</nav>
+<div data-spy="scroll" data-target="#navbar-example" data-offset="0" 
+   style="height:200px;overflow:auto; position: relative;">
+   <h4 id="ios">iOS</h4>
+   <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
+      TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。
+   </p>
+   <h4 id="svn">SVN</h4>
+   <p>Apache Subversion，通常缩写为 SVN，是一款开源的版本控制系统软件。Subversion 由 CollabNet 公司在 2000 年创建。但是现在它已经发展为 Apache Software Foundation 的一个项目，因此拥有丰富的开发人员和用户社区。
+   </p>
+   <h4 id="jmeter">jMeter</h4>
+   <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。
+   </p>
+   <h4 id="ejb">EJB</h4>
+   <p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
+   </p>
+   <h4 id="spring">Spring</h4>
+   <p>Spring 框架是一个开源的 Java 平台，为快速开发功能强大的 Java 应用程序提供了完备的基础设施支持。
+   </p>
+   <p>Spring 框架最初是由 Rod Johnson 编写的，在 2003 年 6 月首次发布于 Apache 2.0 许可证下。
+   </p>
+</div>
+      <div class="bs-docs-sidebar1">  
+			    <ul class="nav bs-docs-sidebar">  
+			        <li><a href="#one">hello Bootstrp 3</a></li>  
+			        <li><a href="#two">hello jQuery</a></li>  
+			        <li><a href="#three">hello ScrollSpy</a></li>  
+			    </ul>  
+			</div> 
+			<div>  
+			    <h2 id="one" class="tile">This is one.</h2>  
+			    <p>${detail.content}</p>
+			    <p>${detail.content}</p>  
+			    <h2 id="two" class="tile">This is two.</h2>  
+			    <p>......</p>
+			    <p>${detail.content}</p>
+			    <p>${detail.content}</p>
+			    <p>${detail.content}</p>  
+			    <h2 id="three" class="tile">This is three.</h2>  
+			    <p>......</p>  
+			</div>
+      
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#desc" aria-controls="desc" role="tab" data-toggle="tab">房源描述</a></li>
-        <li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">房源图片</a></li>
-        <li role="presentation"><a href="#location" aria-controls="location" role="tab" data-toggle="tab">地图位置</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">小区简介</a></li>
+        <li role="presentation"><a href="#desc" aria-controls="desc">房源描述</a></li>
+        <li role="presentation"><a href="#images" aria-controls="images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
+        <li role="presentation"><a href="#location" aria-controls="location">地图位置</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings">小区简介</a></li>
       </ul>
       
       <!-- Tab panes -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active tab-box" id="desc">
-          <p>精装公寓房 首付五成 70年产权 不限名额 带学位 全新家私 还未住人 可拎包入住 自住、出租的好房子。房子在横岗地铁站附近，有横岗中学，六约学校学位，环境优美设施齐全，绿化率高，周围有各种档次酒店饭馆，生活便利，小区物业完善，管理严格，居住安全。门口就是公交站，交通便利，出行方便。房屋朝南，户型方正，居家装修保养完好，可直接入住。高楼层，无遮挡，采光充足，视野开阔。现在房子空置，看房方便。</p>
-        </div>
-        <div role="tabpanel" class="tab-pane tab-box" id="images">
+        <div role="tabpanel" class="tab-pane active tab-box">
+          <p>${detail.content}</p>
+          <h5 id="images" class="page-header">房源图片<span class="badge bg-badge">${imagesNum}</span></h5>
           <c:forEach var="image" items="${images}">
-          <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
-          <P>${image.title}</P>
-          <hr>
+          <img class="img-responsive" src="${imageUrl}/${image.url}">
+          <p>${image.title}</p>
           </c:forEach>
           <c:forEach var="image" items="${houseImages}">
-          <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
+          <img class="img-responsive" src="${imageUrl}/${image.url}">
           <P>${image.title}</P>
-          <hr>
           </c:forEach>
           <c:forEach var="image" items="${buildingImages}">
-          <p><img class="img-responsive" src="${ctx}/pictures/${image.url}"></p>
+          <img class="img-responsive" src="${imageUrl}/${image.url}">
           </c:forEach>
-        </div>
-        <div role="tabpanel" class="tab-pane tab-box text-center" id="location">
+          <h5 id="location" class="page-header">地图位置</h5>
           <div id="mapLocation"></div>
         </div>
       </div><!-- Tab panes -->
@@ -183,7 +243,7 @@
 
     <div class="col-sm-12 col-md-2 hidden-sm hidden-xs">
       <div class="thumbnail">
-	      <img class="img-circle" src="${ctx}/pictures/photo/personal.png" width="120" alt="...">
+	      <img class="img-circle" src="${imageUrl}/${profileBlank}" width="120" alt="...">
 	      <div class="caption">
 	        <h4 class="text-center">
 	        <c:if test="${!empty detail.username}">${detail.username}</c:if>
@@ -204,14 +264,22 @@
   <script src="http://api.map.baidu.com/api?v=2.0&ak=CrfAyNgjXIv8p9Agk11UaBT2"></script>
   <script>
   $(document).ready(function() {
+	  $('.tile').on('scrollSpy:enter', function() {
+	    console.log('enter:', $(this).attr('id'));
+	  });
+
+	  $('.tile').on('scrollSpy:exit', function() {
+	    console.log('exit:', $(this).attr('id'));
+	  });
+	  //$('#navbar-example').scrollspy();
+	  $('body').scrollspy({ target: '#navbar-example', offset: 50});
 	  $(".banner").thumbnailImg({
 		  large_elem: ".large-box",
 		  small_elem: ".small-list",
 		  left_btn: ".left-btn",
 		  right_btn: ".right-btn"
 		});
-	  $(".title-tip:not(':first')").hide();
-	  
+	  $(".label-tip:not(':first')").hide();
 	  
 	  var map = new BMap.Map("mapLocation");
 	  map.centerAndZoom("深圳", 16);

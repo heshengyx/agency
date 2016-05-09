@@ -98,12 +98,13 @@
 	background-image: url(../images/right_btn.png);
 }
 
-.large-box .title-tip {
+.large-box .label-tip {
 	position: absolute;
+	bottom: 0;
+  left: 0;
 	font-size: 11px;
-	color: #fafafa;
+	color: #fff;
 	padding: 5px;
 	text-align: left;
-	bottom: 10px;
-	left: 10px;
+	background-color: #3a87ad!important;
 }

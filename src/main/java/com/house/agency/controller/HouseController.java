@@ -72,6 +72,11 @@ public class HouseController extends BaseController {
 	
 	@RequestMapping(value = "/info/{tradeId}", method = RequestMethod.GET)
 	public String info(@PathVariable String tradeId, Model model) {
+		String imageUrl = configureService.getValueByKey("image_url");
+		model.addAttribute("imageUrl", imageUrl);
+		String profileBlank = configureService.getValueByKey("profile_blank");
+		model.addAttribute("profileBlank", profileBlank);
+		
 		HouseInfoData detail = houseService.getData(tradeId);
 		model.addAttribute("detail", detail);
 		
@@ -80,7 +85,7 @@ public class HouseController extends BaseController {
 		List<Image> images = imageService.queryData(param);
 		model.addAttribute("images", images);
 		
-		param = new ImageQueryParam();
+		/*param = new ImageQueryParam();
 		param.setTradeId(tradeId);
 		param.setForeignId(detail.getBuildingId());
 		param.setType("1");
@@ -92,7 +97,7 @@ public class HouseController extends BaseController {
 		param.setForeignId(detail.getHouseId());
 		param.setType("2");
 		images = imageService.listData(param);
-		model.addAttribute("houseImages", images);
+		model.addAttribute("houseImages", images);*/
 		return "houseInfo";
 	}
 }
