@@ -1,34 +1,40 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="/common/include.jsp"%>  
+<%@ include file="/common/include.jsp"%>
+<%@ taglib uri="/WEB-INF/tld/image-tag.tld" prefix="ImageTag" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 	<title>${detail.buildingName}-爱房网</title>
 	<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet">
 	<link href="${ctx}/css/carousel.css" rel="stylesheet">
+	<link href="${ctx}/css/tabbable.css" rel="stylesheet">
 	<style>
 	.head-title {margin-top: 20px;}
 	.table-unbordered>tbody>tr>td {border: 0;}
 	
 	.td-title {width: 55px;}
-	.td-content {
-    margin-left: -10px;
-	}
+	.td-content {margin-left: -10px;}
 	.text-icon {
-    /* height: 50px; */
     margin-top: 10px;
     margin-left: -10px;
     margin-right: -15px;
-    /* padding-left: 10px; */
   }
   .tab-box {padding: 15px 15px 15px 0;}
   .bg-badge {background-color: #337ab7;}
+
   #mapLocation {
     width: 100%;
     height: 500px;
     overflow: hidden;
     margin: 0;
   }
+  .nav-tabs>li>a {
+	  border-bottom: 0;
+	}
+	.tabbable-content {
+	  border-right: 1px solid #ddd;
+	  height: 800px;
+	}
 	</style>
 </head>
 
@@ -49,10 +55,13 @@
 				    <div class="large-box">
 				      <ul>
 				        <c:forEach var="image" items="${images}">
-				        <li><img class="img-responsive" src="${imageUrl}/${image.url}"><div class="label-tip">${image.title}</div></li>
+				        <li><a href="#"><img class="img-responsive" src="${imageUrl}/${image.url}"></a><div class="label-tip">${image.title}</div></li>
 				        </c:forEach>
 				        <c:forEach var="image" items="${houseImages}">
-                <li><img class="img-responsive" src="${imageUrl}/${image.url}"><div class="label-tip">${image.title}</div></li>
+                <li><a href="#"><img class="img-responsive" src="${imageUrl}/${image.url}"></a><div class="label-tip">${image.title}</div></li>
+                </c:forEach>
+                <c:forEach var="image" items="${buildingImages}">
+                <li><a href="#"><img class="img-responsive" src="${imageUrl}/${image.url}"></a><div class="label-tip">${image.title}</div></li>
                 </c:forEach>
 				      </ul>
 				    </div>
@@ -61,10 +70,13 @@
 				      <div class="small-list">
 				        <ul>
 				          <c:forEach var="image" items="${images}" varStatus="status">
-                  <li<c:if test="${status.first}"> class="on"</c:if>><img src="${imageUrl}/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
+                  <li<c:if test="${status.first}"> class="on"</c:if>><a href="#"><ImageTag:image src="${image.url}" width="110" height="73" path="${uploadFolder}" base="${imageUrl}/"/></a><div class="active-bg"></div></li>
                   </c:forEach>
                   <c:forEach var="image" items="${houseImages}">
-                  <li><img src="${imageUrl}/${image.url}" width="110" height="73"><div class="active-bg"></div></li>
+                  <li><a href="#"><ImageTag:image src="${image.url}" width="110" height="73" path="${uploadFolder}" base="${imageUrl}/"/></a><div class="active-bg"></div></li>
+                  </c:forEach>
+                  <c:forEach var="image" items="${buildingImages}">
+                  <li><a href="#"><ImageTag:image src="${image.url}" width="110" height="73" path="${uploadFolder}" base="${imageUrl}/"/></a><div class="active-bg"></div></li>
                   </c:forEach>
 				        </ul>
 				      </div>
@@ -151,79 +163,51 @@
       <c:forEach var="image" items="${images}">
       <c:set var="imagesNum" value="${imagesNum + 1}" />
       </c:forEach>
-
-      <nav id="navbar-example" class="navbar" role="navigation">
-      <ul class="nav nav-tabs">
-         <li><a href="#ios">iOS</a></li>
-         <li><a href="#svn">SVN</a></li>
-         <li class="dropdown">
-            <a href="#" id="navbarDrop1" class="dropdown-toggle" 
-               data-toggle="dropdown">Java
-               <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu" 
-               aria-labelledby="navbarDrop1">
-               <li><a href="#jmeter" tabindex="-1">jmeter</a></li>
-               <li><a href="#ejb" tabindex="-1">ejb</a></li>
-               <li class="divider"></li>
-               <li><a href="#spring" tabindex="-1">spring</a></li>
-            </ul>
-         </li>
-      </ul>
-</nav>
-<div data-spy="scroll" data-target="#navbar-example" data-offset="0" 
-   style="height:200px;overflow:auto; position: relative;">
-   <h4 id="ios">iOS</h4>
-   <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
-      TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。
-   </p>
-   <h4 id="svn">SVN</h4>
-   <p>Apache Subversion，通常缩写为 SVN，是一款开源的版本控制系统软件。Subversion 由 CollabNet 公司在 2000 年创建。但是现在它已经发展为 Apache Software Foundation 的一个项目，因此拥有丰富的开发人员和用户社区。
-   </p>
-   <h4 id="jmeter">jMeter</h4>
-   <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。
-   </p>
-   <h4 id="ejb">EJB</h4>
-   <p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
-   </p>
-   <h4 id="spring">Spring</h4>
-   <p>Spring 框架是一个开源的 Java 平台，为快速开发功能强大的 Java 应用程序提供了完备的基础设施支持。
-   </p>
-   <p>Spring 框架最初是由 Rod Johnson 编写的，在 2003 年 6 月首次发布于 Apache 2.0 许可证下。
-   </p>
-</div>
-      <div class="bs-docs-sidebar1">  
-			    <ul class="nav bs-docs-sidebar">  
-			        <li><a href="#one">hello Bootstrp 3</a></li>  
-			        <li><a href="#two">hello jQuery</a></li>  
-			        <li><a href="#three">hello ScrollSpy</a></li>  
-			    </ul>  
-			</div> 
-			<div>  
-			    <h2 id="one" class="tile">This is one.</h2>  
-			    <p>${detail.content}</p>
-			    <p>${detail.content}</p>  
-			    <h2 id="two" class="tile">This is two.</h2>  
-			    <p>......</p>
-			    <p>${detail.content}</p>
-			    <p>${detail.content}</p>
-			    <p>${detail.content}</p>  
-			    <h2 id="three" class="tile">This is three.</h2>  
-			    <p>......</p>  
-			</div>
+      <c:forEach var="image" items="${houseImages}">
+      <c:set var="imagesNum" value="${imagesNum + 1}" />
+      </c:forEach>
+      <c:forEach var="image" items="${buildingImages}">
+      <c:set var="imagesNum" value="${imagesNum + 1}" />
+      </c:forEach>
       
+      <div class="tabbable tabs-right">
+        <ul class="nav nav-tabs" id="myTab3">
+          <li class="active"><a data-toggle="tab" href="#home3">房源描述</a></li>
+          <li><a data-toggle="tab" href="#profile3">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
+          <li><a data-toggle="tab" href="#dropdown13"></a></li>
+        </ul>
+
+        <div class="tab-content tabbable-content">
+          <div id="home3" class="tab-pane in active">
+            <h3 class="page-header">房源描述</h3>
+            <p>${detail.content}</p>
+          </div>
+
+          <div id="profile3" class="tab-pane">
+            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+          </div>
+
+          <div id="dropdown13" class="tab-pane">
+            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+          </div>
+        </div>
+      </div>
+
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a href="#desc" aria-controls="desc">房源描述</a></li>
-        <li role="presentation"><a href="#images" aria-controls="images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
-        <li role="presentation"><a href="#location" aria-controls="location">地图位置</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings">小区简介</a></li>
+        <li role="presentation" class="active"><a href="#content" data-toggle="tab" role="tab" aria-controls="content">房源描述</a></li>
+        <li role="presentation"><a href="#images" data-toggle="tab" role="tab" aria-controls="images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
+        <li role="presentation"><a href="#location" data-toggle="tab" role="tab" aria-controls="location">地图位置</a></li>
+        <li role="presentation"><a href="#settings" data-toggle="tab" role="tab" aria-controls="settings">小区简介</a></li>
       </ul>
       
       <!-- Tab panes -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active tab-box">
-          <p>${detail.content}</p>
-          <h5 id="images" class="page-header">房源图片<span class="badge bg-badge">${imagesNum}</span></h5>
+        <div role="tabpanel" class="tab-pane active tab-box" id="content">
+          <p>${detail.content}</p>       
+        </div>
+        <div role="tabpanel" class="tab-pane tab-box" id="images">
           <c:forEach var="image" items="${images}">
           <img class="img-responsive" src="${imageUrl}/${image.url}">
           <p>${image.title}</p>
@@ -235,7 +219,8 @@
           <c:forEach var="image" items="${buildingImages}">
           <img class="img-responsive" src="${imageUrl}/${image.url}">
           </c:forEach>
-          <h5 id="location" class="page-header">地图位置</h5>
+        </div>
+        <div role="tabpanel" class="tab-pane tab-box" id="location">
           <div id="mapLocation"></div>
         </div>
       </div><!-- Tab panes -->
@@ -264,15 +249,6 @@
   <script src="http://api.map.baidu.com/api?v=2.0&ak=CrfAyNgjXIv8p9Agk11UaBT2"></script>
   <script>
   $(document).ready(function() {
-	  $('.tile').on('scrollSpy:enter', function() {
-	    console.log('enter:', $(this).attr('id'));
-	  });
-
-	  $('.tile').on('scrollSpy:exit', function() {
-	    console.log('exit:', $(this).attr('id'));
-	  });
-	  //$('#navbar-example').scrollspy();
-	  $('body').scrollspy({ target: '#navbar-example', offset: 50});
 	  $(".banner").thumbnailImg({
 		  large_elem: ".large-box",
 		  small_elem: ".small-list",

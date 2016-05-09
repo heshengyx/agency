@@ -1,0 +1,51 @@
+.tabbable:before,.tabbable:after {
+  display: table;
+  content: " "
+}
+
+.tabbable:after {
+  clear: both
+}
+
+.tabbable:before,.tabbable:after {
+  display: table;
+  content: " "
+}
+
+.tabbable:after {
+  clear: both
+}
+  
+.tabs-right .tab-content {
+  overflow: auto
+}
+
+.tabs-right>.nav-tabs>li>a {
+  min-width: 60px
+}
+
+.tabs-right>.nav-tabs {
+  top: auto;
+  margin-bottom: 0;
+  border-color: #c5d0dc;
+  float: right
+}
+
+.tabs-right>.nav-tabs>li {
+  float: none
+}
+
+.tabs-right>.nav-tabs>li>a,.tabs-right>.nav-tabs>li>a:focus,.tabs-right>.nav-tabs>li>a:hover {
+  border-color: #c5d0dc;
+  margin: 0 -1px
+}
+
+.tabs-right>.nav-tabs>li.active>a,.tabs-right>.nav-tabs>li.active>a:focus,.tabs-right>.nav-tabs>li.active>a:hover {
+  border-color: #c5d0dc;
+  border-top-width: 1px;
+  border-right: 2px solid #4c8fbd;
+  border-left-color: transparent;
+  margin: 0 -2px 0 -1px;
+  -webkit-box-shadow: 2px 0 3px 0 rgba(0,0,0,0.15);
+  box-shadow: 2px 0 3px 0 rgba(0,0,0,0.15)
+}
