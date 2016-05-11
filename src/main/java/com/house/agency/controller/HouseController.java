@@ -91,14 +91,14 @@ public class HouseController extends BaseController {
 		param.setTradeId(tradeId);
 		param.setForeignId(detail.getBuildingId());
 		param.setType("2");
-		images = imageService.listData(param);
+		images = imageService.queryDataByFid(param);
 		model.addAttribute("buildingImages", images);
 		
 		param = new ImageQueryParam();
 		param.setTradeId(tradeId);
 		param.setForeignId(detail.getHouseId());
 		param.setType("1");
-		images = imageService.listData(param);
+		images = imageService.queryDataByFid(param);
 		model.addAttribute("houseImages", images);
 		return "houseInfo";
 	}

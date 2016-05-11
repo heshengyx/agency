@@ -48,6 +48,18 @@
 	.img-thumbnail {
 	  margin-bottom: 0;
 	  border: 0;
+	  height: 170px;
+	}
+	
+	.img-thumbnail .img-tip {
+	  position: absolute;
+	  bottom: 0;
+	  left: 15px;
+	  font-size: 11px;
+	  color: #fff;
+	  padding: 5px;
+	  text-align: left;
+	  background-color: #ddd!important;
 	}
 	
 	.alert-btn {
@@ -360,7 +372,7 @@
         	var content = '';
         	content += '<div class="row">';
           content += '  <div class="col-sm-4 col-md-4">';
-          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank" class="thumbnail img-thumbnail" title="' + data.buildingName + '"><img src="${imageUrl}' + data.url + '"></a>';
+          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank" class="thumbnail img-thumbnail" title="' + data.buildingName + '"><img src="${imageUrl}/' + data.url + '"><div class="img-tip">' + data.images + '&nbsp;<span class="glyphicon glyphicon-picture"></span></div></a>';
           content += '  </div>';
           content += '  <div class="col-sm-8 col-md-8">';
           content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';
