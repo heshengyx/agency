@@ -289,14 +289,20 @@
   </div><!-- /.row -->
   <jscript>
   <script src="${ctx}/js/format.js"></script>
+  <script src="${ctx}/js/mapper.js"></script>
   <script src="${ctx}/js/dialog-min.js"></script>
   <script src="${ctx}/js/jquery.dataTables.min.js"></script>
   <script src="${ctx}/js/dataTables.bootstrap.js"></script>
   <script src="${ctx}/js/jquery.autocompleter.js"></script>
   <script>
+  var Agency = {};
   var d = null;
   var table = null;
   $(document).ready(function() {
+	  Agency.map = new Map();
+	  <c:forEach var="data" items="${faces}">
+	  Agency.map.put('${data.key}', '${data.value}');
+	  </c:forEach>
 	  $('#conditionsPane').hide();
 	  $('#townsPane').hide();
 	  
@@ -376,7 +382,7 @@
           content += '  </div>';
           content += '  <div class="col-sm-8 col-md-8">';
           content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';
-          content += '    <h4 class="text-warning">' + jmoney(data.area) + '<small>㎡&nbsp;&nbsp;' + data.room + '室' + data.saloon + '厅&nbsp;&nbsp;|&nbsp;&nbsp;' + data.floor + '/' + data.buildingFloor + '层&nbsp;&nbsp;|&nbsp;&nbsp;南北向&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：' + data.buildingYear + '</small></h4>';
+          content += '    <h4 class="text-warning">' + jmoney(data.area) + '<small>㎡&nbsp;&nbsp;' + data.room + '室' + data.saloon + '厅&nbsp;&nbsp;|&nbsp;&nbsp;' + data.floor + '/' + data.buildingFloor + '层&nbsp;&nbsp;|&nbsp;&nbsp;' + Agency.map.get(data.face) + '&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：' + data.buildingYear + '</small></h4>';
           content += '    <h5 class="text-info">' + data.buildingName + '&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>' + data.townName + '-' + data.buildingAddress + '</small></h5>';
           content += '    <h3 class="text-danger">' + jmoney(data.price) + '&nbsp;&nbsp;<small>' + symbol + '</small></h3>';
           content += '    <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>';

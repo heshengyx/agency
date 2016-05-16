@@ -1,6 +1,8 @@
 package com.house.agency.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import com.house.agency.data.HouseData;
 import com.house.agency.data.HouseInfoData;
 import com.house.agency.entity.Image;
 import com.house.agency.entity.Region;
+import com.house.agency.enums.ConfigureEnum;
 import com.house.agency.page.IPage;
 import com.house.agency.param.HouseQueryParam;
 import com.house.agency.param.ImageQueryParam;
@@ -25,6 +28,7 @@ import com.house.agency.service.IHouseService;
 import com.house.agency.service.IImageService;
 import com.house.agency.service.IRegionService;
 import com.myself.common.message.JsonResult;
+import com.myself.common.utils.MapUtil;
 
 @Controller
 @RequestMapping("/house")
@@ -52,8 +56,19 @@ public class HouseController extends BaseController {
 		List<Region> regions = regionService.list(param);
 		model.addAttribute("regions", regions);
 		
-		String imageUrl = configureService.getValueByKey("image_url");
-		model.addAttribute("imageUrl", imageUrl);
+		String imageUrl = ConfigureEnum.IMAGE_URL.getValue();
+		String faces = ConfigureEnum.FACES.getValue();
+		
+		StringBuilder keys = new StringBuilder("");
+		keys.append("'");
+		keys.append(imageUrl);
+		keys.append("','");
+		keys.append(faces);
+		keys.append("'");
+		
+		Map<String, String> map = configureService.queryValueByKey(keys.toString());
+		model.addAttribute("imageUrl", map.get(imageUrl));
+		model.addAttribute("faces", MapUtil.getMap(map.get(faces), "[,]"));
 		return "house";
 	}
 	
@@ -72,12 +87,30 @@ public class HouseController extends BaseController {
 	
 	@RequestMapping(value = "/info/{tradeId}", method = RequestMethod.GET)
 	public String info(@PathVariable String tradeId, Model model) {
-		String imageUrl = configureService.getValueByKey("image_url");
-		model.addAttribute("imageUrl", imageUrl);
-		String uploadFolder = configureService.getValueByKey("upload_folder");
-		model.addAttribute("uploadFolder", uploadFolder);
-		String profileBlank = configureService.getValueByKey("profile_blank");
-		model.addAttribute("profileBlank", profileBlank);
+		String imageUrl = ConfigureEnum.IMAGE_URL.getValue();
+		String faces = ConfigureEnum.FACES.getValue();
+		String uploadFolder = ConfigureEnum.UPLOAD_FOLDER.getValue();
+		String profileBlank = ConfigureEnum.PROFILE_BLANK.getValue();
+		
+		StringBuilder keys = new StringBuilder("");
+		keys.append("'");
+		keys.append(imageUrl);
+		keys.append("','");
+		keys.append(faces);
+		keys.append("','");
+		keys.append(uploadFolder);
+		keys.append("'");
+		
+		Map<String, String> map = configureService.queryValueByKey(keys.toString());
+		model.addAttribute("imageUrl", map.get(imageUrl));
+		model.addAttribute("uploadFolder", map.get(uploadFolder));
+		model.addAttribute("profileBlank", map.get(profileBlank));
+		model.addAttribute("faces", MapUtil.getMap(map.get(faces), "[,]"));
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("E", "东");
+		m.put("S", "南");
+		model.addAttribute("m", m);
+		model.addAttribute("k", "S");
 		
 		HouseInfoData detail = houseService.getData(tradeId);
 		model.addAttribute("detail", detail);

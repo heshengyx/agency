@@ -96,8 +96,10 @@
               <tr>
                 <td class="td-title text-right">户&nbsp;&nbsp;型：</td>
                 <td><div class="td-content">${detail.room}室${detail.saloon}厅${detail.toilet}卫</div></td>
-                <td class="td-title text-right">朝&nbsp;&nbsp;向：</td>
-                <td><div class="td-content">${detail.faceName}</div></td>
+                <td class="td-title text-right">朝&nbsp;&nbsp;向${k}：</td>
+                <c:set var="keys" value="${k}"/>
+                <c:set var="faceName" value="${m[keys]}"/>
+                <td><div class="td-content">${detail.faceName}${faceName}</div></td>
               </tr>
               <tr>
                 <td class="bg-info" colspan="4">
