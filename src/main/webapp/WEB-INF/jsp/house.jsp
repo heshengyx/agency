@@ -95,7 +95,7 @@
 				  <div class="tab-content search-content">
 				    <div role="tabpanel" class="tab-pane active search-pane" id="area">
 				      <ul class="list-inline" id="districts">
-							  <li><button type="button" class="btn btn-danger btn-xs" onclick="queryRegions('0', '', this);">不限</button></li>
+							  <li><button type="button" class="btn btn-danger btn-xs" onclick="queryRegions('', '', this);">不限</button></li>
 							  <c:forEach var="data" items="${regions}">
 							  <li><button type="button" class="btn btn-link btn-xs" onclick="queryRegions('${data.id}', '${data.name}', this);">${data.name}</button></li>
 							  </c:forEach> 
@@ -109,7 +109,7 @@
 				    </div>
 				    <div role="tabpanel" class="tab-pane search-pane" id="subway">
 				      <ul class="list-inline" id="subways">
-                <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('subways', '0', '', this);">不限</button></li>
+                <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('subways', '', '', this);">不限</button></li>
                 <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '1', '1号线', this);">1号线</button></li>
                 <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '2', '2号线', this);">2号线</button></li>
                 <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('subways', '3', '3号线', this);">3号线</button></li>
@@ -126,11 +126,10 @@
         <div class="col-md-11">
           <div class="search-pane">
 	          <ul class="list-inline" id="prices">
-	            <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('prices', '0', '', this);">不限</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '1-100', '100万以下', this);">100万以下</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '100-200', '100万-200万', this);">100万-200万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '200-300', '200万-300万', this);">200万-300万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '300-400', '300万-400万', this);">300万-400万</button></li>
+	            <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('prices', '', '', this);">不限</button></li>
+	            <c:forEach var="data" items="${prices}">
+	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '${data.key}', '${data.value}', this);">${data.value}</button></li>
+							</c:forEach>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '400-500', '400万-500万', this);">400万-500万</button></li>
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '500-700', '500万-700万', this);">500万-700万</button></li>
 	            <li><input type="text" class="input-xs" id="priceBegin">&nbsp;~&nbsp;<input type="text" class="input-xs" id="priceEnd">&nbsp;万&nbsp;<button type="button" class="btn btn-info btn-xs" id="searchHouseByPrice">确定</button></li>
@@ -143,7 +142,7 @@
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="areas">
-              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('areas', '0', '', this);">不限</button></li>
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('areas', '', '', this);">不限</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '1-50', '50平米以下', this);">50平米以下</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50-70', '50-70平米', this);">50-70平米</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '70-90', '70-90平米', this);">70-90平米</button></li>
@@ -161,7 +160,7 @@
         <div class="col-md-11">
           <div class="search-pane">
             <ul class="list-inline" id="patterns">
-              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '0', '', this);">不限</button></li>
+              <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '', '', this);">不限</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '1', '一室', this);">一室</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '2', '二室', this);">二室</button></li>
               <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '3', '三室', this);">三室</button></li>
@@ -188,7 +187,7 @@
 	<input id="districtsValue" type="hidden">
   <input id="townsValue" type="hidden">
   <input id="pricesValue" type="hidden">
-  <input id="roomsValue" type="hidden">
+  <input id="patternsValue" type="hidden">
   <input id="areasValue" type="hidden">
   <input id="districtsName" type="hidden">
   <input id="townsName" type="hidden">
@@ -299,10 +298,22 @@
   var d = null;
   var table = null;
   $(document).ready(function() {
-	  Agency.map = new Map();
+	  Agency.faces = new Map();
 	  <c:forEach var="data" items="${faces}">
-	  Agency.map.put('${data.key}', '${data.value}');
+	  Agency.faces.put('${data.key}', '${data.value}');
 	  </c:forEach>
+	  Agency.rooms = new Map();
+    <c:forEach var="data" items="${rooms}">
+    Agency.rooms.put('${data.key}', '${data.value}');
+    </c:forEach>
+    Agency.saloons = new Map();
+    <c:forEach var="data" items="${saloons}">
+    Agency.saloons.put('${data.key}', '${data.value}');
+    </c:forEach>
+    Agency.toilets = new Map();
+    <c:forEach var="data" items="${toilets}">
+    Agency.toilets.put('${data.key}', '${data.value}');
+    </c:forEach>
 	  $('#conditionsPane').hide();
 	  $('#townsPane').hide();
 	  
@@ -382,7 +393,7 @@
           content += '  </div>';
           content += '  <div class="col-sm-8 col-md-8">';
           content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';
-          content += '    <h4 class="text-warning">' + jmoney(data.area) + '<small>㎡&nbsp;&nbsp;' + data.room + '室' + data.saloon + '厅&nbsp;&nbsp;|&nbsp;&nbsp;' + data.floor + '/' + data.buildingFloor + '层&nbsp;&nbsp;|&nbsp;&nbsp;' + Agency.map.get(data.face) + '&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：' + data.buildingYear + '</small></h4>';
+          content += '    <h4 class="text-warning">' + jmoney(data.area) + '<small>㎡&nbsp;&nbsp;' + Agency.rooms.get(data.room) + Agency.saloons.get(data.saloon) + Agency.toilets.get(data.toilet) + '&nbsp;&nbsp;|&nbsp;&nbsp;' + data.floor + '/' + data.buildingFloor + '层&nbsp;&nbsp;|&nbsp;&nbsp;' + Agency.faces.get(data.face) + '&nbsp;&nbsp;|&nbsp;&nbsp;建筑年代：' + data.buildingYear + '</small></h4>';
           content += '    <h5 class="text-info">' + data.buildingName + '&nbsp;&nbsp;<small><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>' + data.townName + '-' + data.buildingAddress + '</small></h5>';
           content += '    <h3 class="text-danger">' + jmoney(data.price) + '&nbsp;&nbsp;<small>' + symbol + '</small></h3>';
           content += '    <a class="btn btn-info btn-xs" href="#" role="button">地铁房</a>';
@@ -495,18 +506,17 @@
     });
   });
   
-  function queryRegions(regionId, name, _this) {
+  function queryRegions(regionId, name, that) {
     $('#townsValue').val('');
     $('#townsName').val('');
-    addActivedName('districts', regionId, name, _this);
     var $towns = $('#towns');
     $('#towns li').remove();
-    if (regionId != '0') {
+    if (regionId) {
       var url = '${ctx}/region/list?random='+ Math.random();
       var params = {
         parentId: regionId
       };
-      var $htmlLi = $('<li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName(\'towns\', \'0\', \'\', this);">不限</button></li>');
+      var $htmlLi = $('<li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName(\'towns\', \'\', \'\', this);">不限</button></li>');
       $towns.append($htmlLi).append('\n');
       
       $.post(url, params, function(result) {
@@ -521,46 +531,49 @@
     } else {
       $('#townsPane').hide();
     }
+    addActivedName('districts', regionId, name, that);
   }
-  function addActivedName(fieldId, val, name, _this) {
+  function addActivedName(fieldId, val, name, that) {
     $('#' + fieldId + ' li>button.btn-danger').removeClass('btn-danger').addClass('btn-link');
-    if (_this) {
-      $(_this).removeClass('btn-link').addClass('btn-danger');
+    $(that).removeClass('btn-link').addClass('btn-danger');
+    
+    //if (name) {
+    $('.alert').unbind('close.bs.alert');
+    $('#' + fieldId + 'Value').val(val);
+    $('#' + fieldId + 'Name').val(name);
+    $('#conditions li').remove();
+    var townsName = $('#townsName').val();
+    if (townsName) {
+      addActived('towns', townsName);
+    } else {
+      var districtsName = $('#districtsName').val();
+      if (districtsName) {
+        addActived('districts', districtsName);
+      }
     }
     
-    if (name) {
-      $('.alert').unbind('close.bs.alert');
-      $('#' + fieldId + 'Value').val(val);
-      $('#' + fieldId + 'Name').val(name);
-      $('#conditions li').remove();
-      var townsName = $('#townsName').val();
-      if (townsName) {
-        addActived('towns', townsName);
-      } else {
-        var districtsName = $('#districtsName').val();
-        if (districtsName) {
-          addActived('districts', districtsName);
-        }
-      }
-      
-      var subwaysName = $('#subwaysName').val();
-      if (subwaysName) {
-        addActived('subways', subwaysName);
-      } 
-      
-      var pricesName = $('#pricesName').val();
-      if (pricesName) {
-        addActived('prices', pricesName);
-      } 
-      var patternsName = $('#patternsName').val();
-      if (patternsName) {
-        addActived('patterns', patternsName);
-      }
-      var areasName = $('#areasName').val();
-      if (areasName) {
-        addActived('areas', areasName);
-      }
-    }  
+    var subwaysName = $('#subwaysName').val();
+    if (subwaysName) {
+      addActived('subways', subwaysName);
+    } 
+    
+    var pricesName = $('#pricesName').val();
+    if (pricesName) {
+      addActived('prices', pricesName);
+    } 
+    var patternsName = $('#patternsName').val();
+    if (patternsName) {
+      addActived('patterns', patternsName);
+    }
+    var areasName = $('#areasName').val();
+    if (areasName) {
+      addActived('areas', areasName);
+    }
+    //}
+    var length = $('#conditions li').length;
+    if(!length) {
+      $('#conditionsPane').hide();
+    }
     loadHouse();
   }
   function addActived(fieldId, name) {
@@ -604,36 +617,36 @@
     var tabName = $('#navTabs li.active').children().attr('aria-controls');
     if (tabName == 'area') {
       var townsValue = $('#townsValue').val();
-      if (townsValue && townsValue != '0') {
+      if (townsValue) {
         search += '&townId=' + townsValue;
       } else {
         var districtsValue = $('#districtsValue').val();
-        if (districtsValue && districtsValue != '0') {
+        if (districtsValue) {
           search += '&districtId=' + districtsValue;
         }
       }
     } else {
       var tabValue = $('#' + tabName + 'sValue').val();
-      if (tabValue && tabValue != '0') {
+      if (tabValue) {
         search += '&' + tabName + '=' + tabValue;
       }
     }
     var pricesValue = $('#pricesValue').val();
-    if (pricesValue && pricesValue != '0') {
+    if (pricesValue) {
       values = pricesValue.split('-');
       search += '&priceBegin=' + (Number(values[0])*100);
       search += '&priceEnd=' + (Number(values[1])*100);
     }
-    var roomsValue = $('#roomsValue').val();
-    if (roomsValue && roomsValue != '0') {
-      values = roomsValue.split(':');
+    var patternsValue = $('#patternsValue').val();
+    if (patternsValue) {
+      values = patternsValue.split(':');
       if (values.length > 1) {
         search += '&symbol=' + values[1];
       }
       search += '&room=' + values[0];
     }
     var areasValue = $('#areasValue').val();
-    if (areasValue && areasValue != '0') {
+    if (areasValue) {
       values = areasValue.split('-');
       search += '&areaBegin=' + (Number(values[0])*100);
       search += '&areaEnd=' + (Number(values[1])*100);
@@ -641,7 +654,7 @@
     if (param) {
       search += param;
     }
-    table.ajax.url('${ctx}/house/queryData1' + search).load();
+    table.ajax.url('${ctx}/house/queryData' + search).load();
     d.close();
   }
   function loadHouse() {
@@ -665,12 +678,12 @@
 
     queryHouse(param);
   }
-  function orders(tag, _this) {
-    var flag = $(_this).hasClass('btn-info');
+  function orders(tag, that) {
+    var flag = $(that).hasClass('btn-info');
     if(!flag) {
-      var $parent = $(_this).parent();
+      var $parent = $(that).parent();
       $parent.children('.btn-info').removeClass('btn-info').addClass('btn-link');
-      $(_this).removeClass('btn-link').addClass('btn-info');
+      $(that).removeClass('btn-link').addClass('btn-info');
     }
     
     var $sort = $('#sort');
@@ -678,10 +691,10 @@
     var sort = $sort.val();
     if (sort == 'asc') {
       $sort.val('desc');
-      $(_this).children().removeClass('glyphicon-arrow-up').addClass('glyphicon-arrow-down');
+      $(that).children().removeClass('glyphicon-arrow-up').addClass('glyphicon-arrow-down');
     } else {
       $sort.val('asc');
-      $(_this).children().removeClass('glyphicon-arrow-down').addClass('glyphicon-arrow-up');
+      $(that).children().removeClass('glyphicon-arrow-down').addClass('glyphicon-arrow-up');
     }
     loadHouse();
   }

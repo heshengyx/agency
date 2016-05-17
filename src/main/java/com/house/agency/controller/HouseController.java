@@ -58,17 +58,45 @@ public class HouseController extends BaseController {
 		
 		String imageUrl = ConfigureEnum.IMAGE_URL.getValue();
 		String faces = ConfigureEnum.FACES.getValue();
+		String rooms = ConfigureEnum.ROOMS.getValue();
+		String saloons = ConfigureEnum.SALOONS.getValue();
+		String toilets = ConfigureEnum.TOILETS.getValue();
+		String prices = ConfigureEnum.PRICES.getValue();
+		String areas = ConfigureEnum.AREAS.getValue();
+		String patterns = ConfigureEnum.PATTERNS.getValue();
+		String subways = ConfigureEnum.SUBWAYS.getValue();
 		
 		StringBuilder keys = new StringBuilder("");
 		keys.append("'");
 		keys.append(imageUrl);
 		keys.append("','");
 		keys.append(faces);
+		keys.append("','");
+		keys.append(rooms);
+		keys.append("','");
+		keys.append(saloons);
+		keys.append("','");
+		keys.append(toilets);
+		keys.append("','");
+		keys.append(prices);
+		keys.append("','");
+		keys.append(areas);
+		keys.append("','");
+		keys.append(patterns);
+		keys.append("','");
+		keys.append(subways);
 		keys.append("'");
 		
 		Map<String, String> map = configureService.queryValueByKey(keys.toString());
 		model.addAttribute("imageUrl", map.get(imageUrl));
 		model.addAttribute("faces", MapUtil.getMap(map.get(faces), "[,]"));
+		model.addAttribute("rooms", MapUtil.getMapKeyLong(map.get(rooms), "[,]"));
+		model.addAttribute("saloons", MapUtil.getMapKeyLong(map.get(saloons), "[,]"));
+		model.addAttribute("toilets", MapUtil.getMapKeyLong(map.get(toilets), "[,]"));
+		model.addAttribute("prices", MapUtil.getMap(map.get(prices), "[,]"));
+		model.addAttribute("areas", MapUtil.getMap(map.get(areas), "[,]"));
+		model.addAttribute("patterns", MapUtil.getMap(map.get(patterns), "[,]"));
+		model.addAttribute("subways", MapUtil.getMap(map.get(subways), "[,]"));
 		return "house";
 	}
 	
@@ -88,29 +116,50 @@ public class HouseController extends BaseController {
 	@RequestMapping(value = "/info/{tradeId}", method = RequestMethod.GET)
 	public String info(@PathVariable String tradeId, Model model) {
 		String imageUrl = ConfigureEnum.IMAGE_URL.getValue();
-		String faces = ConfigureEnum.FACES.getValue();
 		String uploadFolder = ConfigureEnum.UPLOAD_FOLDER.getValue();
 		String profileBlank = ConfigureEnum.PROFILE_BLANK.getValue();
+		String faces = ConfigureEnum.FACES.getValue();
+		String rooms = ConfigureEnum.ROOMS.getValue();
+		String saloons = ConfigureEnum.SALOONS.getValue();
+		String toilets = ConfigureEnum.TOILETS.getValue();
+		String fitments = ConfigureEnum.FITMENTS.getValue();
+		String buildingTypes = ConfigureEnum.BUILDING_TYPES.getValue();
+		String propertys = ConfigureEnum.PROPERTYS.getValue();
 		
 		StringBuilder keys = new StringBuilder("");
 		keys.append("'");
 		keys.append(imageUrl);
 		keys.append("','");
+		keys.append(uploadFolder);
+		keys.append("','");
+		keys.append(profileBlank);
+		keys.append("','");
 		keys.append(faces);
 		keys.append("','");
-		keys.append(uploadFolder);
+		keys.append(rooms);
+		keys.append("','");
+		keys.append(saloons);
+		keys.append("','");
+		keys.append(toilets);
+		keys.append("','");
+		keys.append(fitments);
+		keys.append("','");
+		keys.append(buildingTypes);
+		keys.append("','");
+		keys.append(propertys);
 		keys.append("'");
 		
 		Map<String, String> map = configureService.queryValueByKey(keys.toString());
 		model.addAttribute("imageUrl", map.get(imageUrl));
 		model.addAttribute("uploadFolder", map.get(uploadFolder));
 		model.addAttribute("profileBlank", map.get(profileBlank));
-		model.addAttribute("faces", MapUtil.getMap(map.get(faces), "[,]"));
-		Map<String, String> m = new HashMap<String, String>();
-		m.put("E", "东");
-		m.put("S", "南");
-		model.addAttribute("m", m);
-		model.addAttribute("k", "S");
+		model.addAttribute("faces", MapUtil.getMapKeyLong(map.get(faces), "[,]"));
+		model.addAttribute("rooms", MapUtil.getMapKeyLong(map.get(rooms), "[,]"));
+		model.addAttribute("saloons", MapUtil.getMapKeyLong(map.get(saloons), "[,]"));
+		model.addAttribute("toilets", MapUtil.getMapKeyLong(map.get(toilets), "[,]"));
+		model.addAttribute("fitments", MapUtil.getMapKeyLong(map.get(fitments), "[,]"));
+		model.addAttribute("buildingTypes", MapUtil.getMapKeyLong(map.get(buildingTypes), "[,]"));
+		model.addAttribute("propertys", MapUtil.getMapKeyLong(map.get(propertys), "[,]"));
 		
 		HouseInfoData detail = houseService.getData(tradeId);
 		model.addAttribute("detail", detail);

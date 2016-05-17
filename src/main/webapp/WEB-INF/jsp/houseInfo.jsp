@@ -95,11 +95,9 @@
               </tr>
               <tr>
                 <td class="td-title text-right">户&nbsp;&nbsp;型：</td>
-                <td><div class="td-content">${detail.room}室${detail.saloon}厅${detail.toilet}卫</div></td>
-                <td class="td-title text-right">朝&nbsp;&nbsp;向${k}：</td>
-                <c:set var="keys" value="${k}"/>
-                <c:set var="faceName" value="${m[keys]}"/>
-                <td><div class="td-content">${detail.faceName}${faceName}</div></td>
+                <td><div class="td-content">${rooms[detail.room+0]}${saloons[detail.saloon+0]}${toilets[detail.toilet+0]}</div></td>
+                <td class="td-title text-right">朝&nbsp;&nbsp;向：</td>
+                <td><div class="td-content">${faces[detail.face+0]}</div></td>
               </tr>
               <tr>
                 <td class="bg-info" colspan="4">
@@ -123,13 +121,13 @@
               </tr>
               <tr>
                 <td class="td-title text-right">装&nbsp;&nbsp;修：</td>
-                <td><div class="td-content">${detail.fitmentName}</div></td>
+                <td><div class="td-content">${fitments[detail.fitment+0]}</div></td>
                 <td class="td-title text-right">类&nbsp;&nbsp;型：</td>
-                <td><div class="td-content">${detail.buildingTypeName}</div></td>
+                <td><div class="td-content">${buildingTypes[detail.buildingType+0]}</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">产&nbsp;&nbsp;权：</td>
-                <td colspan="3"><div class="td-content">${detail.ownerName}</div></td>
+                <td colspan="3"><div class="td-content">${propertys[detail.property+0]}</div></td>
               </tr>
               <tr>
                 <td class="td-title text-right">楼&nbsp;&nbsp;盘：</td>
