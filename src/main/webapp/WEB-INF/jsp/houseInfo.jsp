@@ -168,22 +168,27 @@
       <c:set var="imagesNum" value="${imagesNum + 1}" />
       </c:forEach>
       
-      <c:set var="activeDesc" value="" />
+      <c:set var="activeDesc" value="disabled" />
       <c:set var="activeImg" value="" />
       <c:if test="${!empty detail.content}">
-      
+      <c:set var="activeDesc" value="active" />
+      </c:if>
+      <c:if test="${empty detail.content}">
+      <c:set var="activeImg" value="active" />
       </c:if>
       <div class="tabbable tabs-right">
         <ul class="nav nav-tabs navbar-tabs">
-          <li class="active"><a href="#desc">房源描述</a></li>
-          <li><a href="#images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
+          <li class="${activeDesc}"><a href="#desc">房源描述</a></li>
+          <li class="${activeImg}"><a href="#images">房源图片<span class="badge bg-badge">${imagesNum}</span></a></li>
           <li><a href="#mapLocation">地图位置</a></li>
         </ul>
 
         <div class="tab-content tabbable-content">
           <div data-spy="scroll" data-target=".navbar-tabs" class="tab-pane active tab-box">
-	          <h4 id="desc" class="page-header active-header">房源描述</h4>
+            <c:if test="${!empty detail.content}">
+	          <h4 id="desc" class="page-header">房源描述</h4>
 	          <p>${detail.content}</p>
+	          </c:if>
 	          <h4 id="images" class="page-header">房源图片<span class="badge bg-badge">${imagesNum}</span></h4>
 	          <c:forEach var="image" items="${images}">
 	          <img class="img-responsive" src="${imageUrl}/${image.url}">

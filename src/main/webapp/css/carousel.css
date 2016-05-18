@@ -27,7 +27,7 @@
   height: 350px;
   cursor: pointer;
   text-align: center;
-  background: #F9F9F9;
+  background: #646464;
 }
 
 .small-box {
@@ -52,7 +52,7 @@
 	display: block;
 	height: 75px;
 	cursor: pointer;
-	background: #F9F9F9;
+	background: #646464;
 	text-align: center;
 	border: 1px solid #ddd;
 }

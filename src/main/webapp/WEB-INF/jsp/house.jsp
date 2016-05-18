@@ -225,10 +225,10 @@
         </thead>
       </table>
       <div style="height:888px;"></div> 
-    </div><!-- /.blog-main -->
+    </div><!-- /.blog-main data-spy="affix"-->
 
     <div class="col-md-3 hidden-sm hidden-xs">
-      <div class="panel panel-default" id="rightNav" data-spy="affix">
+      <div class="panel panel-default" id="rightNav">
 			  <div class="panel-heading">热点房源</div>
 			  <table class="table">
          <tbody>
@@ -294,11 +294,11 @@
   var d = null;
   var table = null;
   $(document).ready(function() {
-	  $('#rightNav').affix({
+	  /* $('#rightNav').affix({
 		    offset: {
 		        top: $('#rightNav').offset().top
 		    }
-		});
+		}); */
 	  Agency.faces = new Map();
 	  <c:forEach var="data" items="${faces}">
 	  Agency.faces.put('${data.key}', '${data.value}');
