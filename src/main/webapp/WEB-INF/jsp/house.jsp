@@ -15,7 +15,7 @@
     padding-top: 20px;
     padding-bottom: 15px;
 	}
-	.text-title {font-weight: bold;}
+	.text-title {font-weight: bold; margin-top: 10px;}
 	.panel-search {margin-top: 20px;}
 	
 	.search-title {margin-top: 12px;}
@@ -49,6 +49,7 @@
 	  margin-bottom: 0;
 	  border: 0;
 	  height: 170px;
+	  background-color: #fcf8e3;
 	}
 	
 	.img-thumbnail .img-tip {
@@ -74,6 +75,10 @@
     width: 50px;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+  .affix {
+    top: 20px;
+    width: 216px;
   }
 	</style>
 </head>
@@ -130,8 +135,6 @@
 	            <c:forEach var="data" items="${prices}">
 	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '${data.key}', '${data.value}', this);">${data.value}</button></li>
 							</c:forEach>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '400-500', '400万-500万', this);">400万-500万</button></li>
-	            <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('prices', '500-700', '500万-700万', this);">500万-700万</button></li>
 	            <li><input type="text" class="input-xs" id="priceBegin">&nbsp;~&nbsp;<input type="text" class="input-xs" id="priceEnd">&nbsp;万&nbsp;<button type="button" class="btn btn-info btn-xs" id="searchHouseByPrice">确定</button></li>
 	          </ul>
           </div>
@@ -143,13 +146,9 @@
           <div class="search-pane">
             <ul class="list-inline" id="areas">
               <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('areas', '', '', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '1-50', '50平米以下', this);">50平米以下</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '50-70', '50-70平米', this);">50-70平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '70-90', '70-90平米', this);">70-90平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '90-120', '90-120平米', this);">90-120平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '120-150', '120-150平米', this);">120-150平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '150-200', '150-200平米', this);">150-200平米</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '200-300', '200-300平米', this);">200-300平米</button></li>
+              <c:forEach var="data" items="${areas}">
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('areas', '${data.key}', '${data.value}', this);">${data.value}</button></li>
+              </c:forEach>
               <li><input type="text" class="input-xs" id="areaBegin">&nbsp;~&nbsp;<input type="text" class="input-xs" id="areaEnd">&nbsp;平米&nbsp;<button type="button" class="btn btn-info btn-xs" id="searchHouseByArea">确定</button></li>
             </ul>
           </div>
@@ -161,12 +160,9 @@
           <div class="search-pane">
             <ul class="list-inline" id="patterns">
               <li><button type="button" class="btn btn-danger btn-xs" onclick="addActivedName('patterns', '', '', this);">不限</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '1', '一室', this);">一室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '2', '二室', this);">二室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '3', '三室', this);">三室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '4', '四室', this);">四室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5', '五室', this);">五室</button></li>
-              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '5:gt', '五室以上', this);">五室以上</button></li>
+              <c:forEach var="data" items="${patterns}">
+              <li><button type="button" class="btn btn-link btn-xs" onclick="addActivedName('patterns', '${data.key}', '${data.value}', this);">${data.value}</button></li>
+              </c:forEach>
             </ul>
           </div>
         </div>
@@ -228,11 +224,11 @@
           </tr>
         </thead>
       </table>
-
+      <div style="height:888px;"></div> 
     </div><!-- /.blog-main -->
 
-    <div class="col-sm-12 col-md-3 hidden-sm hidden-xs">
-      <div class="panel panel-default">
+    <div class="col-md-3 hidden-sm hidden-xs">
+      <div class="panel panel-default" id="rightNav" data-spy="affix">
 			  <div class="panel-heading">热点房源</div>
 			  <table class="table">
          <tbody>
@@ -298,6 +294,11 @@
   var d = null;
   var table = null;
   $(document).ready(function() {
+	  $('#rightNav').affix({
+		    offset: {
+		        top: $('#rightNav').offset().top
+		    }
+		});
 	  Agency.faces = new Map();
 	  <c:forEach var="data" items="${faces}">
 	  Agency.faces.put('${data.key}', '${data.value}');
@@ -385,11 +386,14 @@
         	if (data.type == '2') {
         		symbol = '元';
         	}
-        	
+        	var contentImg = '';
+        	if (data.images) {
+        		contentImg = '<div class="img-tip">' + data.images + '&nbsp;<span class="glyphicon glyphicon-picture"></span></div>';
+        	}
         	var content = '';
         	content += '<div class="row">';
           content += '  <div class="col-sm-4 col-md-4">';
-          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank" class="thumbnail img-thumbnail" title="' + data.buildingName + '"><img src="${imageUrl}/' + data.url + '"><div class="img-tip">' + data.images + '&nbsp;<span class="glyphicon glyphicon-picture"></span></div></a>';
+          content += '    <a href="${ctx}/house/info/' + data.tradeId + '" target="_blank" class="thumbnail img-thumbnail" title="' + data.buildingName + '"><img src="${imageUrl}/' + data.url + '">' + contentImg + '</a>';
           content += '  </div>';
           content += '  <div class="col-sm-8 col-md-8">';
           content += '    <h3 class="text-primary text-title"><a href="${ctx}/house/info/' + data.tradeId + '" target="_blank">' + data.title + '</a></h3>';

@@ -45,15 +45,13 @@
     <!-- /.container -->
 
     <footer class="blog-footer">
-      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
+      <p>Copyright © 1996-2016 IFANG Corporation, All Rights Reserved</p>
+      <p>爱房科技　版权所有</p>
     </footer>
-
     <!-- js -->
     <script src="${ctx}/js/jquery.min.js" ></script>
     <script src="${ctx}/js/bootstrap.min.js"></script>
     <sitemesh:write property="jscript" />
+    <!-- js -->
   </body>
 </html>

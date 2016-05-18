@@ -168,6 +168,11 @@
       <c:set var="imagesNum" value="${imagesNum + 1}" />
       </c:forEach>
       
+      <c:set var="activeDesc" value="" />
+      <c:set var="activeImg" value="" />
+      <c:if test="${!empty detail.content}">
+      
+      </c:if>
       <div class="tabbable tabs-right">
         <ul class="nav nav-tabs navbar-tabs">
           <li class="active"><a href="#desc">房源描述</a></li>
