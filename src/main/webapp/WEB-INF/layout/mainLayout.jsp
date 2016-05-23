@@ -30,8 +30,8 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item" href="#">首页</a>
-          <a class="blog-nav-item" href="#">新房</a>
-          <a class="blog-nav-item active" href="#">二手房</a>
+          <a class="blog-nav-item" href="${ctx}/house/new">新房</a>
+          <a class="blog-nav-item" href="${ctx}/house/esf">二手房</a>
           <a class="blog-nav-item" href="#">写字楼</a>
           <a class="blog-nav-item" href="#">商铺</a>
         </nav>
@@ -51,6 +51,19 @@
     <!-- js -->
     <script src="${ctx}/js/jquery.min.js" ></script>
     <script src="${ctx}/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    	var href = window.location.href;
+      $(".blog-nav-item").removeClass("active");
+      $(".blog-nav-item").each(function() {
+        var $this = $(this);
+        var $href = $this.attr("href");
+        if (href.indexOf($href) != -1) {
+          $this.addClass("active");
+        }
+      });
+    });
+    </script>
     <sitemesh:write property="jscript" />
     <!-- js -->
   </body>

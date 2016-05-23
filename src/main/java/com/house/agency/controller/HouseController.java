@@ -49,8 +49,45 @@ public class HouseController extends BaseController {
 	@Autowired
 	private IConfigureService configureService;
 
-	@RequestMapping("")
-	public String page(Model model) {
+	@RequestMapping("/esf")
+	public String pageEsf(Model model) {
+		page(model);
+		return "houseEsf";
+	}
+	
+	@RequestMapping("/esf/queryData")
+	@ResponseBody
+	public Object queryEsfData(HouseQueryParam param) {
+		IPage<HouseData> datas = houseService.queryData(param, param.getPage(),
+				param.getLength());
+		JsonResult<HouseData> jResult = new JsonResult<HouseData>();
+		jResult.setDraw(param.getDraw());
+		jResult.setRecordsTotal(datas.getTotalRecord());
+		jResult.setRecordsFiltered(datas.getTotalRecord());
+		jResult.setData((List<HouseData>) datas.getData());
+		return jResult;
+	}
+	
+	@RequestMapping("/new")
+	public String pageNew(Model model) {
+		page(model);
+		return "houseNew";
+	}
+	
+	@RequestMapping("/new/queryData")
+	@ResponseBody
+	public Object queryNewData(HouseQueryParam param) {
+		IPage<HouseData> datas = houseService.queryData(param, param.getPage(),
+				param.getLength());
+		JsonResult<HouseData> jResult = new JsonResult<HouseData>();
+		jResult.setDraw(param.getDraw());
+		jResult.setRecordsTotal(datas.getTotalRecord());
+		jResult.setRecordsFiltered(datas.getTotalRecord());
+		jResult.setData((List<HouseData>) datas.getData());
+		return jResult;
+	}
+	
+	private void page(Model model) {
 		RegionQueryParam param = new RegionQueryParam();
 		param.setCode("SZ");
 		List<Region> regions = regionService.list(param);
@@ -97,20 +134,6 @@ public class HouseController extends BaseController {
 		model.addAttribute("areas", MapUtil.getMap(map.get(areas), "[,]"));
 		model.addAttribute("patterns", MapUtil.getMap(map.get(patterns), "[,]"));
 		model.addAttribute("subways", MapUtil.getMap(map.get(subways), "[,]"));
-		return "house";
-	}
-	
-	@RequestMapping("/queryData")
-	@ResponseBody
-	public Object queryData(HouseQueryParam param) {
-		IPage<HouseData> datas = houseService.queryData(param, param.getPage(),
-				param.getLength());
-		JsonResult<HouseData> jResult = new JsonResult<HouseData>();
-		jResult.setDraw(param.getDraw());
-		jResult.setRecordsTotal(datas.getTotalRecord());
-		jResult.setRecordsFiltered(datas.getTotalRecord());
-		jResult.setData((List<HouseData>) datas.getData());
-		return jResult;
 	}
 	
 	@RequestMapping(value = "/info/{tradeId}", method = RequestMethod.GET)

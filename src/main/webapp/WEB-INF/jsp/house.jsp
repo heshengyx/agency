@@ -224,7 +224,6 @@
           </tr>
         </thead>
       </table>
-      <div style="height:888px;"></div> 
     </div><!-- /.blog-main data-spy="affix"-->
 
     <div class="col-md-3 hidden-sm hidden-xs">
@@ -367,7 +366,7 @@
       'serverSide': true, //开启服务器模式
       //'deferRender': true, //开启延迟渲染
       'ajax': {
-        'url': '${ctx}/house/queryData',
+        'url': '${ctx}/house/esf/queryData',
         'type': 'POST',
         'data': function ( d ) { //添加额外的参数发送到服务器
           //d.tag = 'release';
