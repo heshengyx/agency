@@ -366,7 +366,7 @@
       'serverSide': true, //开启服务器模式
       //'deferRender': true, //开启延迟渲染
       'ajax': {
-        'url': '${ctx}/house/esf/queryData',
+        'url': '${ctx}/house/used/queryData',
         'type': 'POST',
         'data': function ( d ) { //添加额外的参数发送到服务器
           //d.tag = 'release';
@@ -657,7 +657,7 @@
     if (param) {
       search += param;
     }
-    table.ajax.url('${ctx}/house/queryData' + search).load();
+    table.ajax.url('${ctx}/house/used/queryData' + search).load();
     d.close();
   }
   function loadHouse() {

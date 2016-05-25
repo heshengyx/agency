@@ -657,7 +657,7 @@
     if (param) {
       search += param;
     }
-    table.ajax.url('${ctx}/house/queryData' + search).load();
+    table.ajax.url('${ctx}/house/new/queryData' + search).load();
     d.close();
   }
   function loadHouse() {

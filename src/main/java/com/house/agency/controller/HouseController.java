@@ -1,6 +1,5 @@
 package com.house.agency.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +18,8 @@ import com.house.agency.data.HouseInfoData;
 import com.house.agency.entity.Image;
 import com.house.agency.entity.Region;
 import com.house.agency.enums.ConfigureEnum;
+import com.house.agency.enums.HouseEnum;
+import com.house.agency.enums.TradeEnum;
 import com.house.agency.page.IPage;
 import com.house.agency.param.HouseQueryParam;
 import com.house.agency.param.ImageQueryParam;
@@ -49,23 +50,10 @@ public class HouseController extends BaseController {
 	@Autowired
 	private IConfigureService configureService;
 
-	@RequestMapping("/esf")
-	public String pageEsf(Model model) {
+	@RequestMapping("/used")
+	public String pageUsed(Model model) {
 		page(model);
-		return "houseEsf";
-	}
-	
-	@RequestMapping("/esf/queryData")
-	@ResponseBody
-	public Object queryEsfData(HouseQueryParam param) {
-		IPage<HouseData> datas = houseService.queryData(param, param.getPage(),
-				param.getLength());
-		JsonResult<HouseData> jResult = new JsonResult<HouseData>();
-		jResult.setDraw(param.getDraw());
-		jResult.setRecordsTotal(datas.getTotalRecord());
-		jResult.setRecordsFiltered(datas.getTotalRecord());
-		jResult.setData((List<HouseData>) datas.getData());
-		return jResult;
+		return "houseUsed";
 	}
 	
 	@RequestMapping("/new")
@@ -74,9 +62,23 @@ public class HouseController extends BaseController {
 		return "houseNew";
 	}
 	
+	@RequestMapping("/used/queryData")
+	@ResponseBody
+	public Object queryUsedData(HouseQueryParam param) {
+		param.setType(TradeEnum.SALE.getValue());
+		param.setStyle(HouseEnum.USED.getValue());
+		return queryData(param);
+	}
+	
 	@RequestMapping("/new/queryData")
 	@ResponseBody
 	public Object queryNewData(HouseQueryParam param) {
+		param.setStyle(HouseEnum.NEW.getValue());
+		param.setType(TradeEnum.SALE.getValue());
+		return queryData(param);
+	}
+	
+	private JsonResult<HouseData> queryData(HouseQueryParam param) {
 		IPage<HouseData> datas = houseService.queryData(param, param.getPage(),
 				param.getLength());
 		JsonResult<HouseData> jResult = new JsonResult<HouseData>();

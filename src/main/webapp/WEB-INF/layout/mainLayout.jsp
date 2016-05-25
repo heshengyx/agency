@@ -31,7 +31,7 @@
         <nav class="blog-nav">
           <a class="blog-nav-item" href="#">首页</a>
           <a class="blog-nav-item" href="${ctx}/house/new">新房</a>
-          <a class="blog-nav-item" href="${ctx}/house/esf">二手房</a>
+          <a class="blog-nav-item" href="${ctx}/house/used">二手房</a>
           <a class="blog-nav-item" href="#">写字楼</a>
           <a class="blog-nav-item" href="#">商铺</a>
         </nav>
